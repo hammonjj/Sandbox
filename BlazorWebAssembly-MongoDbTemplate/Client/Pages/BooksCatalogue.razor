@@ -1,0 +1,32 @@
+﻿@page "/bookscatalogue"
+@using MondoDbTemplate.Client.ViewModels
+@inject IBookViewModel bookViewModel
+
+
+
+<h1>Books Catalogue</h1>
+
+<div class="col-12">
+    <input type="text" @bind-value="bookViewModel.Id" class="form-control" placeholder="Book Id" readonly />
+    <br />
+    <input type="text" @bind-value="bookViewModel.Name" class="form-control" placeholder="Book Name" />
+    <br />
+    <input type="text" @bind-value="bookViewModel.Price" class="form-control" placeholder="9.99" />
+    <br />
+
+    <button class="btn btn-primary" @onclick="bookViewModel.UpdateBook">Update Book</button>
+    <br />
+    <br />
+    <button class="btn btn-primary" @onclick="ClearBook">Clear Book</button>
+</div>
+
+
+@code {
+    protected override async Task OnInitializedAsync() => await bookViewModel.GetBook();
+
+    private void ClearBook() {
+        bookViewModel.Id = "";
+        bookViewModel.Name = "";
+        bookViewModel.Price = 0;
+    }
+}

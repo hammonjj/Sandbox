@@ -1,0 +1,103 @@
+class
+ refid "en_US$champion_search_tag_resources_properties"
+ instance QName(PackageNamespace(""), "en_US$champion_search_tag_resources_properties")
+  extends QName(PackageNamespace("mx.resources"), "ResourceBundle")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("en_US$champion_search_tag_resources_properties")
+  iinit
+   refid "en_US$champion_search_tag_resources_properties/iinit"
+   body
+    maxstack 3
+    localcount 1
+    initscopedepth 5
+    maxscopedepth 6
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     pushstring          "en_US"
+     pushstring          "champion_search_tag_resources"
+     constructsuper      2
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait method QName(ProtectedNamespace("en_US$champion_search_tag_resources_properties"), "getContent") flag OVERRIDE
+   method
+    refid "en_US$champion_search_tag_resources_properties/en_US$champion_search_tag_resources_properties:getContent"
+    returns QName(PackageNamespace(""), "Object")
+    body
+     maxstack 24
+     localcount 2
+     initscopedepth 5
+     maxscopedepth 6
+     code
+      getlocal0
+      pushscope
+
+      pushstring          "champion_search_tag_melee"
+      pushstring          "melee"
+      pushstring          "champion_search_tag_fighter"
+      pushstring          "fighter"
+      pushstring          "champion_search_tag_tank"
+      pushstring          "tank"
+      pushstring          "champion_search_tag_carry"
+      pushstring          "carry"
+      pushstring          "champion_search_tag_mage"
+      pushstring          "mage"
+      pushstring          "champion_search_tag_recommended"
+      pushstring          "recommended"
+      pushstring          "champion_search_tag_stealth"
+      pushstring          "stealth"
+      pushstring          "champion_search_tag_ranged"
+      pushstring          "ranged"
+      pushstring          "champion_search_tag_assassin"
+      pushstring          "assassin"
+      pushstring          "champion_search_tag_support"
+      pushstring          "support"
+      pushstring          "champion_search_tag_jungler"
+      pushstring          "jungler"
+      pushstring          "champion_search_tag_pusher"
+      pushstring          "pusher"
+      pushstring          "champion_search_tag_top"
+      pushstring          "top"
+      pushstring          "champion_search_tag_mid"
+      pushstring          "mid"
+      pushstring          "champion_search_tag_jungle"
+      pushstring          "jungle"
+      pushstring          "champion_search_tag_bans"
+      pushstring          "bans"
+      newobject           16
+      coerce              QName(PackageNamespace(""), "Object")
+      setlocal1
+
+      getlocal1
+      returnvalue
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+ end ; instance
+ cinit
+  refid "en_US$champion_search_tag_resources_properties/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 4
+   maxscopedepth 5
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+end ; class
+
+
+
+

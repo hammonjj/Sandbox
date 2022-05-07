@@ -1,0 +1,17 @@
+#version 3
+program
+ minorversion 16
+ majorversion 46
+
+ #include "mx/modules/ModuleBase.script.asasm"
+ #include "GeneratedResourceModule1899562379699259142.script.asasm"
+ #include "en_US$champion_skin_resources_properties.script.asasm"
+ #include "en_US$champion_resources_properties.script.asasm"
+ #include "en_US$effect_resources_properties.script.asasm"
+ #include "en_US$item_resources_properties.script.asasm"
+ #include "en_US$spell_resources_properties.script.asasm"
+ #include "en_US$champion_search_tag_resources_properties.script.asasm"
+ #include "en_US$map_resources_properties.script.asasm"
+ #include "en_US$talent_resources_properties.script.asasm"
+
+end ; program

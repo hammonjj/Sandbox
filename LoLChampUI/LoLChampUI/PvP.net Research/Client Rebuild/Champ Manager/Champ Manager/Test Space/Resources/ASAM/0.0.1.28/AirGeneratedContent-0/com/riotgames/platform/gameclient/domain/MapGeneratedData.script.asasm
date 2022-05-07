@@ -1,0 +1,29 @@
+script ; 3
+ sinit
+  refid "com.riotgames.platform.gameclient.domain:MapGeneratedData.sinit"
+  body
+   maxstack 2
+   localcount 1
+   initscopedepth 1
+   maxscopedepth 3
+   code
+    getlocal0
+    pushscope
+
+    findpropstrict      Multiname("MapGeneratedData", [PackageNamespace("com.riotgames.platform.gameclient.domain")])
+    getlex              QName(PackageNamespace(""), "Object")
+    pushscope
+
+    getlex              QName(PackageNamespace(""), "Object")
+    newclass            "com.riotgames.platform.gameclient.domain:MapGeneratedData"
+    popscope
+    initproperty        QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "MapGeneratedData")
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait class QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "MapGeneratedData")
+  #include "MapGeneratedData.class.asasm"
+ end ; trait
+end ; script

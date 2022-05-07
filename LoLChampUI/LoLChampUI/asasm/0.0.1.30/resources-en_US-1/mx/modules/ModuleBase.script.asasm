@@ -1,0 +1,33 @@
+script ; 0
+ sinit
+  refid "mx.modules:ModuleBase.sinit"
+  body
+   maxstack 2
+   localcount 1
+   initscopedepth 1
+   maxscopedepth 4
+   code
+    getlocal0
+    pushscope
+
+    findpropstrict      Multiname("ModuleBase", [PackageNamespace("mx.modules")])
+    getlex              QName(PackageNamespace(""), "Object")
+    pushscope
+
+    getlex              QName(PackageNamespace("flash.events"), "EventDispatcher")
+    pushscope
+
+    getlex              QName(PackageNamespace("flash.events"), "EventDispatcher")
+    newclass            "mx.modules:ModuleBase"
+    popscope
+    popscope
+    initproperty        QName(PackageNamespace("mx.modules"), "ModuleBase")
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait class QName(PackageNamespace("mx.modules"), "ModuleBase")
+  #include "ModuleBase.class.asasm"
+ end ; trait
+end ; script

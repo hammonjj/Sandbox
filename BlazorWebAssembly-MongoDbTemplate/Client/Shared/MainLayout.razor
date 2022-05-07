@@ -1,0 +1,54 @@
+﻿@inherits LayoutComponentBase
+@inject ILanguageContainerService languageContainer
+@inject ILocalStorageService localStore
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <AccessControl />
+        <!--
+        <div class="dropdown" style="cursor: pointer">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Language
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li @onclick='() => SetLanguage("en-US")'><img src="https://www.countryflags.io/us/shiny/64.png" style="height:50px;cursor:pointer;margin:10px" /> English</li>
+                <li @onclick='() => SetLanguage("es-US")'><img src="https://www.countryflags.io/es/shiny/64.png" style="height:50px;cursor:pointer;margin:10px" /> Spanish</li>
+                <li @onclick='() => SetLanguage("de-DE")'><img src="https://www.countryflags.io/de/shiny/64.png" style="height:50px;cursor:pointer;margin:10px" /> German</li>
+            </ul>
+        </div>
+        -->
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@code {
+
+    //This will initialize the localization for the entire site since it loads on every page
+    protected override async Task OnInitializedAsync() {
+        var cultureCode = "en-US";
+        try {
+            cultureCode = await localStore.GetItemAsync<string>("localization");
+        } catch(Exception) {
+            //Ignore the exception and default to English
+        }
+
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(cultureCode));
+    }
+
+    public async void SetLanguage(string cultureCode = "en-US") {
+        languageContainer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(cultureCode));
+        await localStore.SetItemAsync("localization", cultureCode);
+
+        OnLanguageChange.Invoke();
+    }
+
+    public static event Action OnLanguageChange = () => { };
+}

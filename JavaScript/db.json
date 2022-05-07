@@ -1,0 +1,81 @@
+{
+  "workouts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "GHX Strength",
+      "exercises": [
+        {
+          "Squat": [
+            {
+              "type": "reps"
+            }
+          ],
+          "Calf Raise": [
+            {
+              "type": "reps"
+            }
+          ],
+          "Knee Extension": [
+            {
+              "type": "reps"
+            }
+          ],
+          "Leg Curl": [
+            {
+              "type": "reps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "title": "Core and Plyometrics",
+      "exercises": [
+        {
+          "Reverse Angel": [
+            {
+              "type": "time"
+            }
+          ],
+          "Plank": [
+            {
+              "type": "time"
+            }
+          ],
+          "Squat Jump": [
+            {
+              "type": "reps"
+            }
+          ],
+          "Lung Jump": [
+            {
+              "type": "reps"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "workoutData": [
+    {
+      "id": 1,
+      "userId": 1,
+      "workoutId": 1,
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "workoutId": 2,
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "id": 1,
+    "name": "james",
+    "email": "james@jamesjhammond.com"
+  }
+}

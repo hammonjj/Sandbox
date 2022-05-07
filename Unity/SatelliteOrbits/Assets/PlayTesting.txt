@@ -1,0 +1,13 @@
+===================================================================================================
+Play Testing																					  =
+===================================================================================================
+Lindsay - 4/21/18
+- Addictive, but needs easier levels at the beginning
+- Super satisfying to collect cargo, but it's too hard at the moment
+- Cargo should have gravitational pull, so they are easier to pick up
+- Need a way to maneuver better
+- Need an explicit tutorial
+- Game shouldn't end when you hit a planet
+	- Extend collider outward so it looks like you are orbiting
+- Too hard to visualize where the satellite is going
+	- Predictive orbiting line

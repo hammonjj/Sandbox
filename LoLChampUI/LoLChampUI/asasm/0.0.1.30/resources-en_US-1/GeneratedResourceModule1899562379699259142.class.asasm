@@ -1,0 +1,135 @@
+class
+ refid "GeneratedResourceModule1899562379699259142"
+ instance QName(PackageNamespace(""), "GeneratedResourceModule1899562379699259142")
+  extends QName(PackageNamespace("mx.modules"), "ModuleBase")
+  implements Multiname("IResourceModule", [PackageNamespace("mx.resources")])
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("GeneratedResourceModule1899562379699259142")
+  iinit
+   refid "GeneratedResourceModule1899562379699259142/iinit"
+   body
+    maxstack 1
+    localcount 1
+    initscopedepth 6
+    maxscopedepth 7
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     constructsuper      0
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait getter QName(PackageNamespace(""), "resourceBundles")
+   method
+    refid "GeneratedResourceModule1899562379699259142/resourceBundles/getter"
+    returns QName(PackageNamespace(""), "Array")
+    body
+     maxstack 4
+     localcount 5
+     initscopedepth 6
+     maxscopedepth 7
+     code
+      getlocal0
+      pushscope
+
+      pushbyte            0
+      setlocal1
+
+      pushbyte            0
+      setlocal2
+
+      pushnull
+      coerce              QName(PackageNamespace(""), "Class")
+      setlocal3
+
+      pushnull
+      coerce              QName(PackageNamespace("mx.resources"), "ResourceBundle")
+      setlocal            4
+
+      getlex              QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles")
+      iftrue              L45
+
+      findproperty        QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles")
+      newarray            0
+      initproperty        QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles")
+
+      getlex              QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "resourceBundleClassNames")
+      getproperty         QName(PackageNamespace(""), "length")
+      convert_i
+      setlocal1
+
+      pushbyte            0
+      setlocal2
+
+      jump                L42
+
+L24:
+      label
+      findpropstrict      QName(PackageNamespace(""), "Class")
+      findpropstrict      QName(PackageNamespace("flash.utils"), "getDefinitionByName")
+      getlex              QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "resourceBundleClassNames")
+      getlocal2
+      getproperty         MultinameL([PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), PackageNamespace(""), PrivateNamespace(null, "GeneratedResourceModule1899562379699259142/resourceBundles/getter"), PackageInternalNs(""), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("GeneratedResourceModule1899562379699259142"), StaticProtectedNs("GeneratedResourceModule1899562379699259142"), StaticProtectedNs("mx.modules:ModuleBase"), StaticProtectedNs("flash.events:EventDispatcher"), StaticProtectedNs("Object")])
+      callproperty        QName(PackageNamespace("flash.utils"), "getDefinitionByName"), 1
+      callproperty        QName(PackageNamespace(""), "Class"), 1
+      coerce              QName(PackageNamespace(""), "Class")
+      setlocal3
+
+      getlocal3
+      construct           0
+      coerce              QName(PackageNamespace("mx.resources"), "ResourceBundle")
+      setlocal            4
+
+      getlex              QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles")
+      getlocal            4
+      callpropvoid        QName(Namespace("http://adobe.com/AS3/2006/builtin"), "push"), 1
+
+      inclocal_i          2
+L42:
+      getlocal2
+      getlocal1
+      iflt                L24
+
+L45:
+      getlex              QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles")
+      returnvalue
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+  trait slot QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "_resourceBundles") type QName(PackageNamespace(""), "Array") end
+ end ; instance
+ cinit
+  refid "GeneratedResourceModule1899562379699259142/cinit"
+  body
+   maxstack 9
+   localcount 1
+   initscopedepth 5
+   maxscopedepth 6
+   code
+    getlocal0
+    pushscope
+
+    findproperty        QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "resourceBundleClassNames")
+    pushstring          "en_US$champion_resources_properties"
+    pushstring          "en_US$champion_search_tag_resources_properties"
+    pushstring          "en_US$champion_skin_resources_properties"
+    pushstring          "en_US$effect_resources_properties"
+    pushstring          "en_US$item_resources_properties"
+    pushstring          "en_US$map_resources_properties"
+    pushstring          "en_US$spell_resources_properties"
+    pushstring          "en_US$talent_resources_properties"
+    newarray            8
+    setproperty         QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "resourceBundleClassNames")
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait slot QName(PrivateNamespace(null, "GeneratedResourceModule1899562379699259142"), "resourceBundleClassNames") slotid 1 type QName(PackageNamespace(""), "Array") end
+end ; class

@@ -1,0 +1,29 @@
+script ; 2
+ sinit
+  refid "com.riotgames.platform.gameclient.domain:RuneGeneratedData.sinit"
+  body
+   maxstack 2
+   localcount 1
+   initscopedepth 1
+   maxscopedepth 3
+   code
+    getlocal0
+    pushscope
+
+    findpropstrict      Multiname("RuneGeneratedData", [PackageNamespace("com.riotgames.platform.gameclient.domain")])
+    getlex              QName(PackageNamespace(""), "Object")
+    pushscope
+
+    getlex              QName(PackageNamespace(""), "Object")
+    newclass            "com.riotgames.platform.gameclient.domain:RuneGeneratedData"
+    popscope
+    initproperty        QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "RuneGeneratedData")
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait class QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "RuneGeneratedData")
+  #include "RuneGeneratedData.class.asasm"
+ end ; trait
+end ; script

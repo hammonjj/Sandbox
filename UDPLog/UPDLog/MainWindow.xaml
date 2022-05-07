@@ -1,0 +1,119 @@
+﻿<Window x:Class="UPDLog.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uiComponents="clr-namespace:UPDLog.UIComponents"
+        Title="UDP Log" Height="435.947" Width="1400" Closing="WindowClosing" Icon="./aventura_icon.ico" >
+
+    <Grid>
+        <Grid>
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_Save Log" Click="SaveLogClicked"/>
+                        <MenuItem Header="_Exit" Click="ExitClicked"/>
+                    </MenuItem>
+                    <MenuItem Header="_Edit">
+                        <MenuItem Header="_Filter" Click="FilterConfigClicked"/>
+                        <MenuItem Header="_Preferences" Click="PreferencesClicked" IsEnabled="False"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+        </Grid>
+        <Grid>
+            <Button 
+                Content="{StaticResource StartIcon}"
+                HorizontalAlignment="Left" 
+                Margin="10,31,0,0" 
+                VerticalAlignment="Top" 
+                Width="28" 
+                Height="28" 
+                Click="ListenClicked" 
+                Name="BtnStart" />
+            
+            <Button 
+            	Content="{StaticResource PauseIcon}"
+            	HorizontalAlignment="Left" 
+            	Margin="10,64,0,0" 
+            	VerticalAlignment="Top" 
+            	Width="28" 
+            	Height="28" 
+            	Click="StopListeningClicked" 
+            	x:Name="BtnStop" />
+
+            <Button 
+                Content="{StaticResource CrossIcon}"
+                HorizontalAlignment="Left" 
+                Margin="10,97,0,0" 
+                VerticalAlignment="Top" 
+                Width="28" 
+                Height="28"  
+                Click="ClearLogClicked" 
+                Name="BtnClear"/>
+            
+            <ToggleButton 
+                Content="{StaticResource FilterIcon}"
+                HorizontalAlignment="Left" 
+                Margin="10,130,0,0" 
+                VerticalAlignment="Top" 
+                Width="28" 
+                Height="28" 
+                Click="ApplyFilterClicked" 
+                Name="BtnFilter"/>
+            
+            <Button 
+                Content="{StaticResource MarkerIcon}"
+                HorizontalAlignment="Left" 
+                Margin="10,163,0,0" 
+                VerticalAlignment="Top" 
+                Width="28" 
+                Height="28" 
+                Click="AddMarkerClicked" 
+                Name="BtnMarker"/>
+            
+        </Grid>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="ListViewItem">
+                    <!-- Highlighting for Alternating Rows -->
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                            <Setter Property="Background" Value="LightBlue" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+
+                        <!-- Highlighting for Errors and Warnings -->
+                        <DataTrigger Binding="{Binding Severity}" Value="Error">
+                            <Setter Property="Background" Value="IndianRed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Severity}" Value="Warning">
+                            <Setter Property="Background" Value="Yellow" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <uiComponents:LogMessageView 
+                Margin="50,25,10,10" 
+                x:Name="LvLogMessages" 
+                AlternationCount="2" 
+                ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                <uiComponents:LogMessageView.View>
+                    <GridView AllowsColumnReorder="False">
+                        <GridViewColumn Header="Received" Width="180" DisplayMemberBinding="{Binding Received}" />
+                        <GridViewColumn Header="Severity" Width="50" DisplayMemberBinding="{Binding Severity}" />
+                        <GridViewColumn Header="HostName" Width="130" DisplayMemberBinding="{Binding HostName}" />
+                        <GridViewColumn Header="IP Address" Width="100" DisplayMemberBinding="{Binding IpAddress}" />
+                        <GridViewColumn Header="Process" Width="150" DisplayMemberBinding="{Binding Process}" />
+                        <GridViewColumn Header="File" Width="200" DisplayMemberBinding="{Binding File}" />
+                        <GridViewColumn Header="Thread" Width="60" DisplayMemberBinding="{Binding Thread}" />
+                        <GridViewColumn Header="Project" Width="110" DisplayMemberBinding="{Binding Project}" />
+                        <GridViewColumn Header="TI Error" Width="110" DisplayMemberBinding="{Binding TiError}" />
+                        <GridViewColumn Header="Message" Width="400" DisplayMemberBinding="{Binding Message}" />
+                        <GridViewColumn Header="Raw Message" Width="400" DisplayMemberBinding="{Binding RawMessage}" />
+                    </GridView>
+                </uiComponents:LogMessageView.View>
+            </uiComponents:LogMessageView>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,68 @@
+===================================================================================================
+Satellite Sandbox																				  =
+===================================================================================================
+Target Platform: Mobile
+Pricing: $0.99 + Levels
+
+-------------------------------------------------------------------------------
+- Name Ideas																  -
+-------------------------------------------------------------------------------
+Gravimetric
+Gravidarium
+Vectorz
+Pull Me In
+
+GraBity
+Kick Asteroid
+Full Thrust
+Thrusterz
+
+-------------------------------------------------------------------------------
+- Concept Questions  														  -
+-------------------------------------------------------------------------------
+What happens when you run into a planet?
+ - The satellite blows up and the level is restarted
+
+ How do you complete or leave a level?
+ - Leave the borders of the screen
+ - A wormhole opens on screen the you need to fly through
+-------------------------------------------------------------------------------
+- Current Concept(s)														  -
+-------------------------------------------------------------------------------
+1) The player has various cargo containers that they have to intercept that are
+floating through space. 
+	- Planets and other gravitational bodies will be provided as obstacles to
+	challenge the player's ability to navigate a star field
+
+	- This is still pretty difficult, but is much more doable than obtaining
+	new orbits. Biggest problem is that the game play is slow and it takes a 
+	while to reset the level in order to try again.
+
+Challenges
+	- Debris floating through space
+		- Asteroid Field
+		- Navigate a solar system
+	- More gravity producing objects
+	- Limited fuel
+	- Enemies
+
+Mechanics/Movement
+	- Tap for thrust behind satellite
+	- Tap for thrust in direction of tap
+
+2) Instead of a satellite, a spaceship must navigate the star field to obtain
+cargo
+	- Provide tap thrust direction
+		- Ship will turn to the appropriate direction and then fire thrusters
+
+3) Keep the underlying gravity like mechanic, but change it to magnets, so 
+bouncing off a planet isn't such a big deal
+
+-------------------------------------------------------------------------------
+- Rejected Concept(s)														  -
+-------------------------------------------------------------------------------
+1) Player maneuvers a satellite to obtain a stable orbit or orbits around other
+planets or features
+	- This is incredibly hard. I was only able to obtain a decent orbit a couple
+	of times, but I could possible increase the mass of the planets to generate
+	stronger gravitational pulls

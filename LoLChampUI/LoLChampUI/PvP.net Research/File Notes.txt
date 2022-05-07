@@ -1,0 +1,9 @@
+C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\assets\locale\Game\resources-en_US.swf
+
+Controls checkbox search metadata as well as textfield search data.
+
+en_US$champion_search_tag_resources_properties
+champion_search_tag_mage -> checkbox tag name
+NOTE: Changing this does NOT change the checkbox name, but it does confuse the client.  Same with deleting it.
+
+"mage" -> Supported search string

@@ -1,0 +1,7 @@
+Cube Crush Task List:
+ - Add Splash VFX when player goes in the water
+ - Add particle explosion when hazards hit the ground
+ - Add main menu (Play, Scoreboard)
+ - Add Scoreboard
+ - Add Touch Controls
+ - Add Tap to Start opening

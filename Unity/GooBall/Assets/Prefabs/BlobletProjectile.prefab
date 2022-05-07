@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!58 &-8443377292463849182
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437750460309359645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!58 &-3254545709620819674
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437750460309359645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &867316782574261693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437750460309359645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f157fa9342d064da4191a60d621a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTime: 0.25
+  DistanceToTravel: 10
+  _defaultMask:
+    serializedVersion: 2
+    m_Bits: 4
+  ProjectileSelfDamage: 0
+  TravelDirection: 0
+  PlayerMovement: {fileID: 0}
+--- !u!114 &3890114949483781243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437750460309359645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 1
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &9011424801286049171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437750460309359645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223bea2675824774b932e524958109cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChaseSpeed: 6
+  NextWaypointDistance: 3
+  TransformToFollow: {fileID: 0}
+--- !u!1001 &5128769950814802177
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107800, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107804, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_Name
+      value: BlobletProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196198574048107804, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerProjectile
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2196198574048107805, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8, type: 3}
+    - {fileID: -8281543459705384751, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8, type: 3}
+--- !u!1 &6437750460309359645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2196198574048107804, guid: 8cad8b5dbc06e1a4a9a9c5e9eb46c1f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 5128769950814802177}
+  m_PrefabAsset: {fileID: 0}

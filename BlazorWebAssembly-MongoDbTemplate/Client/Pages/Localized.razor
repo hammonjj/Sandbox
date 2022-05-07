@@ -1,0 +1,16 @@
+@page "/localized"
+@attribute [Authorize] 
+@inject ILanguageContainerService languageContainer
+
+<h1>@languageContainer.Keys["Localization:Title"]</h1>
+
+<p>@languageContainer.Keys["Localization:Message"]</p>
+
+@code {
+
+    protected override void OnInitialized() {
+        MainLayout.OnLanguageChange += () => {
+            StateHasChanged();
+        };
+    }
+}

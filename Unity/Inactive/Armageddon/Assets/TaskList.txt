@@ -1,0 +1,8 @@
+Armageddon Task List:
+ - Main Menu
+	- Play
+	- Leaderboard
+	- Options
+ - Options
+	- Music
+	- Sound Effects

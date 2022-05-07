@@ -1,0 +1,12 @@
+===================================================================================================
+Tutorial																						  =
+===================================================================================================
+
+-------------------------------------------------------------------------------
+- On-Screen Text  															  -
+-------------------------------------------------------------------------------
+Tap to produce thrust in the direction you are traveling, but a little goes a 
+long way!
+
+Your satellite's other thrusters are broken, so you will have to use gravity 
+from planets and asteroids to help you collect your cargo

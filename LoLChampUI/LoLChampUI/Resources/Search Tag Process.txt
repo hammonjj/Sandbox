@@ -1,0 +1,52 @@
+To Add/Remove a Category
+Step 1:
+File: C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\assets\swfs\AirGeneratedContent.swf
+
+Path: com.riotgames.platform.gameclient.domain
+Code: ChampionGeneratedData
+Line: 3696
+
+Action Script Changes: In the championSearchTags array, add/remove one of the category labels and change newarray in byte code to reflect change in array size.
+
+Byte Code Changes: add/remove pushstring and associated string, and then change newarray in byte code to reflect change in array size.
+
+
+Step 2:
+File: C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\assets\locale\Game\resources-en_US.swf
+
+Path: mx.resources.ResourceBundle
+Code: en_US$champion_search_tag_resources_properties
+Line: 13
+
+Action Script Changes: In var _loc1_:Object, add/remove one of the category labels and change newobject in byte code to reflect change in object size.
+
+Example: champion_search_tag_favorite:"favorite"
+
+Byte Code Changes: add/remove pushstring and associated string, and then change newobject in byte code to reflect change in object size.
+
+
+Questions:
+1) Can I make the search filters hidden?
+2) Can I indefinitely extend the memory registers?
+
+
+
+
+
+
+To Add/Remove a Tag from Champion:
+File: C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\assets\swfs\AirGeneratedContent.swf
+
+Path: com.riotgames.platform.gameclient.domain
+Code: ChampionGeneratedData
+Line: 66 - Akali
+
+Action Script Changes: Change 12th parameter in createChampion() to the desired search tag.
+
+Byte Code Changes: add/remove pushstring and associated string, and then change newarray in byte code to reflect change in array size.
+
+
+Questions:
+1) How many search tags can I have?
+a. Is there a limit to the newarray memory register?
+

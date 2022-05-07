@@ -1,0 +1,25 @@
+===================================================================================================
+Task List																						  =
+===================================================================================================
+
+-------------------------------------------------------------------------------
+- General																	  -
+-------------------------------------------------------------------------------
+- New Scenes
+	- Level select
+	- Start Menu
+	- Options Menu
+- Create dynamic way of getting the magnet object in MagneticObject.cs
+	- Lessens burden and error proneness of making levels
+- Add trail behind objects as they move
+- Implement tap controls
+
+-------------------------------------------------------------------------------
+- Play Testing  															  -
+-------------------------------------------------------------------------------
+- Create curve to show current/future trajectory
+	- This may be more computation than a phone can handle
+- Create tractor beam between cargo and spaceship
+	- Visual indicator
+	- Need a stronger tractor beam. Simple magnetism isn't strong enough to
+	hold the cargo in place

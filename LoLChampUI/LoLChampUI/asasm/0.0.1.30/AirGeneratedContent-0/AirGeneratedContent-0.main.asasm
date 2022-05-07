@@ -1,0 +1,13 @@
+#version 3
+program
+ minorversion 16
+ majorversion 46
+
+ #include "AirGeneratedContent.script.asasm"
+ #include "com/riotgames/platform/gameclient/domain/ChampionGeneratedData.script.asasm"
+ #include "com/riotgames/platform/gameclient/domain/RuneGeneratedData.script.asasm"
+ #include "com/riotgames/platform/gameclient/domain/MapGeneratedData.script.asasm"
+ #include "com/riotgames/platform/gameclient/domain/SpellGeneratedData.script.asasm"
+ #include "com/riotgames/platform/gameclient/domain/GameItemGeneratedData.script.asasm"
+
+end ; program

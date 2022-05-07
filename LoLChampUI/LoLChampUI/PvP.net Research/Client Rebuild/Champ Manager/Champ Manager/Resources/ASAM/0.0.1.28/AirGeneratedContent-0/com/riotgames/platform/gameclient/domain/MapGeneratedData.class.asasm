@@ -1,0 +1,217 @@
+class
+ refid "com.riotgames.platform.gameclient.domain:MapGeneratedData"
+ instance QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "MapGeneratedData")
+  extends QName(PackageNamespace(""), "Object")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData")
+  iinit
+   refid "com.riotgames.platform.gameclient.domain:MapGeneratedData/iinit"
+   body
+    maxstack 1
+    localcount 1
+    initscopedepth 4
+    maxscopedepth 5
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     constructsuper      0
+
+     findpropstrict      QName(PackageNamespace(""), "fillMapData")
+     callpropvoid        QName(PackageNamespace(""), "fillMapData"), 0
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait method QName(PackageNamespace(""), "fillMapData")
+   method
+    refid "com.riotgames.platform.gameclient.domain:MapGeneratedData/fillMapData"
+    returns QName(PackageNamespace(""), "void")
+    body
+     maxstack 8
+     localcount 1
+     initscopedepth 4
+     maxscopedepth 5
+     code
+      getlocal0
+      pushscope
+
+      findproperty        QName(PackageNamespace(""), "maps")
+      findpropstrict      QName(PackageNamespace("flash.utils"), "Dictionary")
+      constructprop       QName(PackageNamespace("flash.utils"), "Dictionary"), 0
+      initproperty        QName(PackageNamespace(""), "maps")
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            1
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            1
+      pushstring          "SummonersRift"
+      pushstring          "Summoner's Rift"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            2
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            2
+      pushstring          "SummonersRiftWinter"
+      pushstring          "Summoner's Rift (Autumn)"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            4
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            4
+      pushstring          "OldTwistedTreeline"
+      pushstring          "The Twisted Treeline"
+      pushstring          ""
+      pushbyte            6
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            7
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            7
+      pushstring          "ProvingGroundsARAM"
+      pushstring          "The Proving Grounds"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            8
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            8
+      pushstring          "CrystalScar"
+      pushstring          "The Crystal Scar"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            10
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            10
+      pushstring          "TwistedTreeline"
+      pushstring          "The Twisted Treeline"
+      pushstring          ""
+      pushbyte            6
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            11
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            11
+      pushstring          "DebugMap1"
+      pushstring          "Debug Map 1"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            12
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            12
+      pushstring          "HowlingAbyss"
+      pushstring          "The Howling Abyss"
+      pushstring          ""
+      pushbyte            10
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "maps")
+      pushbyte            13
+      findpropstrict      QName(PackageNamespace(""), "createMap")
+      pushbyte            13
+      pushstring          "DebugMap3"
+      pushstring          "Debug Map 3"
+      pushstring          ""
+      pushbyte            4
+      callproperty        QName(PackageNamespace(""), "createMap"), 5
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+      returnvoid
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+  trait slot QName(PackageNamespace(""), "maps") type QName(PackageNamespace("flash.utils"), "Dictionary") end
+ end ; instance
+ cinit
+  refid "com.riotgames.platform.gameclient.domain:MapGeneratedData/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 3
+   maxscopedepth 4
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait method QName(PackageNamespace(""), "createMap") flag FINAL dispid 3
+  method
+   refid "com.riotgames.platform.gameclient.domain:MapGeneratedData/createMap"
+   param QName(PackageNamespace(""), "int")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "int")
+   returns QName(PackageNamespace(""), "Object")
+   body
+    maxstack 2
+    localcount 7
+    initscopedepth 3
+    maxscopedepth 4
+    code
+     getlocal0
+     pushscope
+
+     findpropstrict      QName(PackageNamespace(""), "Object")
+     constructprop       QName(PackageNamespace(""), "Object"), 0
+     coerce              QName(PackageNamespace(""), "Object")
+     dup
+     setlocal            6
+
+     getlocal1
+     setproperty         Multiname("mapId", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            6
+     getlocal2
+     setproperty         Multiname("name", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            6
+     getlocal3
+     setproperty         Multiname("displayName", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            6
+     getlocal            4
+     setproperty         Multiname("description", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            6
+     getlocal            5
+     setproperty         Multiname("totalPlayers", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:MapGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:MapGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            6
+     returnvalue
+    end ; code
+   end ; body
+  end ; method
+ end ; trait
+end ; class

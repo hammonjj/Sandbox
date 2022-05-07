@@ -1,0 +1,37 @@
+script ; 1
+ sinit
+  refid "GeneratedResourceModule1899562379699259142.sinit"
+  body
+   maxstack 2
+   localcount 1
+   initscopedepth 1
+   maxscopedepth 5
+   code
+    getlocal0
+    pushscope
+
+    getscopeobject      0
+    getlex              QName(PackageNamespace(""), "Object")
+    pushscope
+
+    getlex              QName(PackageNamespace("flash.events"), "EventDispatcher")
+    pushscope
+
+    getlex              QName(PackageNamespace("mx.modules"), "ModuleBase")
+    pushscope
+
+    getlex              QName(PackageNamespace("mx.modules"), "ModuleBase")
+    newclass            "GeneratedResourceModule1899562379699259142"
+    popscope
+    popscope
+    popscope
+    initproperty        QName(PackageNamespace(""), "GeneratedResourceModule1899562379699259142")
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait class QName(PackageNamespace(""), "GeneratedResourceModule1899562379699259142") slotid 1
+  #include "GeneratedResourceModule1899562379699259142.class.asasm"
+ end ; trait
+end ; script

@@ -1,0 +1,135 @@
+class
+ refid "en_US$spell_resources_properties"
+ instance QName(PackageNamespace(""), "en_US$spell_resources_properties")
+  extends QName(PackageNamespace("mx.resources"), "ResourceBundle")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("en_US$spell_resources_properties")
+  iinit
+   refid "en_US$spell_resources_properties/iinit"
+   body
+    maxstack 3
+    localcount 1
+    initscopedepth 5
+    maxscopedepth 6
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     pushstring          "en_US"
+     pushstring          "spell_resources"
+     constructsuper      2
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait method QName(ProtectedNamespace("en_US$spell_resources_properties"), "getContent") flag OVERRIDE
+   method
+    refid "en_US$spell_resources_properties/en_US$spell_resources_properties:getContent"
+    returns QName(PackageNamespace(""), "Object")
+    body
+     maxstack 68
+     localcount 2
+     initscopedepth 5
+     maxscopedepth 6
+     code
+      getlocal0
+      pushscope
+
+      pushstring          "summoner_data_spell_name_SummonerHaste"
+      pushstring          "Ghost"
+      pushstring          "summoner_data_spell_name_SummonerSmite"
+      pushstring          "Smite"
+      pushstring          "summoner_data_spell_name_SummonerPromoteSR"
+      pushstring          "Promote"
+      pushstring          "summoner_data_spell_name_SummonerFlash"
+      pushstring          "Flash"
+      pushstring          "summoner_data_spell_description_SummonerFortify"
+      pushstring          "Grants invulnerability to all allied turrets and causes them to attack 100% faster.  While Fortify is ready to cast, you deal 9 bonus damage to minions."
+      pushstring          "summoner_data_spell_description_SummonerBarrier"
+      pushstring          "Shields your champion for 115-455 (depending on champion level) for 2 seconds."
+      pushstring          "summoner_data_spell_name_SummonerRally"
+      pushstring          "Rally"
+      pushstring          "summoner_data_spell_name_SummonerHeal"
+      pushstring          "Heal"
+      pushstring          "summoner_data_spell_description_SummonerBoost"
+      pushstring          "Removes all disables and summoner spell debuffs affecting your champion and lowers the duration of incoming disables by 65% for 3 seconds."
+      pushstring          "summoner_data_spell_description_SummonerPromoteSR"
+      pushstring          "Promotes a nearby allied siege minion, healing it, granting it bonus stats, and causing it to grant the caster gold for its kills."
+      pushstring          "summoner_data_spell_description_SummonerOdinGarrison"
+      pushstring          "Allied Turret: Grants massive regeneration for 8 seconds. Enemy Turret: Reduces damage dealt by 80% for 8 seconds."
+      pushstring          "summoner_data_spell_name_SummonerDot"
+      pushstring          "Ignite"
+      pushstring          "summoner_data_spell_description_SummonerRevive"
+      pushstring          "Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration."
+      pushstring          "summoner_data_spell_name_SummonerMana"
+      pushstring          "Clarity"
+      pushstring          "summoner_data_spell_name_SummonerFortify"
+      pushstring          "Fortify"
+      pushstring          "summoner_data_spell_description_SummonerExhaust"
+      pushstring          "Exhausts target enemy champion, reducing their Movement Speed and damage dealt by 30% for 2.5 seconds and reduces their Attack Speed by 50% for the duration."
+      pushstring          "summoner_data_spell_name_SummonerBoost"
+      pushstring          "Cleanse"
+      pushstring          "summoner_data_spell_description_SummonerHeal"
+      pushstring          "Restores 90-345 Health (depending on champion level) to your champion and to nearby allies."
+      pushstring          "summoner_data_spell_name_SummonerRevive"
+      pushstring          "Revive"
+      pushstring          "summoner_data_spell_description_SummonerHaste"
+      pushstring          "Your champion can move through units and has 27% increased Movement Speed for 10 seconds"
+      pushstring          "summoner_data_spell_description_SummonerSmite"
+      pushstring          "Deals 490-1000 true damage (depending on champion level) to target enemy minion or pet."
+      pushstring          "summoner_data_spell_description_SummonerClairvoyance"
+      pushstring          "Reveals a small area of the map for your team for 5 seconds."
+      pushstring          "summoner_data_spell_description_SummonerFlash"
+      pushstring          "Teleports your champion a short distance toward your cursor's location."
+      pushstring          "summoner_data_spell_name_SummonerBattleCry"
+      pushstring          "Surge"
+      pushstring          "summoner_data_spell_description_SummonerMana"
+      pushstring          "Restores 40% of your champion's maximum Mana. Also restores allies for 40% of their maximum Mana"
+      pushstring          "summoner_data_spell_name_SummonerClairvoyance"
+      pushstring          "Clairvoyance"
+      pushstring          "summoner_data_spell_name_SummonerExhaust"
+      pushstring          "Exhaust"
+      pushstring          "summoner_data_spell_description_SummonerRally"
+      pushstring          "Summons a beacon with 200 + 25 x level Health for 15 seconds which increases allied Attack Damage by 10-35."
+      pushstring          "summoner_data_spell_name_SummonerOdinGarrison"
+      pushstring          "Garrison"
+      pushstring          "summoner_data_spell_name_SummonerBarrier"
+      pushstring          "Barrier"
+      pushstring          "summoner_data_spell_description_SummonerBattleCry"
+      pushstring          "Empowers your champion, increasing Attack Speed by 35% and Ability Power by 10-78 (depending on champion level) for 12 seconds."
+      pushstring          "summoner_data_spell_description_SummonerDot"
+      pushstring          "Ignites target enemy champion, dealing 70-410 true damage (depending on champion level) over 5 seconds and reduces healing effects on the target for the duration."
+      pushstring          "summoner_data_spell_description_SummonerTeleport"
+      pushstring          "After casting for 4 seconds, teleports your champion to target allied minion, turret, or ward."
+      pushstring          "summoner_data_spell_name_SummonerTeleport"
+      pushstring          "Teleport"
+      newobject           34
+      coerce              QName(PackageNamespace(""), "Object")
+      setlocal1
+
+      getlocal1
+      returnvalue
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+ end ; instance
+ cinit
+  refid "en_US$spell_resources_properties/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 4
+   maxscopedepth 5
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+end ; class

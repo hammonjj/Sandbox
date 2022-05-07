@@ -1,0 +1,197 @@
+class
+ refid "en_US$effect_resources_properties"
+ instance QName(PackageNamespace(""), "en_US$effect_resources_properties")
+  extends QName(PackageNamespace("mx.resources"), "ResourceBundle")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("en_US$effect_resources_properties")
+  iinit
+   refid "en_US$effect_resources_properties/iinit"
+   body
+    maxstack 3
+    localcount 1
+    initscopedepth 5
+    maxscopedepth 6
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     pushstring          "en_US"
+     pushstring          "effect_resources"
+     constructsuper      2
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait method QName(ProtectedNamespace("en_US$effect_resources_properties"), "getContent") flag OVERRIDE
+   method
+    refid "en_US$effect_resources_properties/en_US$effect_resources_properties:getContent"
+    returns QName(PackageNamespace(""), "Object")
+    body
+     maxstack 130
+     localcount 2
+     initscopedepth 5
+     maxscopedepth 6
+     code
+      getlocal0
+      pushscope
+
+      pushstring          "summoner_data_effect_description_rFlatHPRegenModPerLevel"
+      pushstring          "Health Regen / 5 at level 18"
+      pushstring          "summoner_data_effect_description_rFlatArmorModPerLevel"
+      pushstring          "Armor at level 18"
+      pushstring          "summoner_data_effect_description_FlatSpellBlockMod"
+      pushstring          "Magic Resist"
+      pushstring          "summoner_data_effect_description_rFlatMagicDamageModPerLevel"
+      pushstring          "Ability Power at level 18"
+      pushstring          "summoner_data_effect_description_rFlatPhysicalDamageModPerLevel"
+      pushstring          "Physical Dmg at level 18"
+      pushstring          "summoner_data_effect_description_rPercentMovementSpeedModPerLevel"
+      pushstring          "Move Speed % at level 18"
+      pushstring          "summoner_data_effect_description_FlatEnergyRegenMod"
+      pushstring          "Energy Regen / 5"
+      pushstring          "summoner_data_effect_description_rFlatMagicPenetrationModPerLevel"
+      pushstring          "Magic Pen. at level 18"
+      pushstring          "summoner_data_effect_description_rFlatDodgeMod"
+      pushstring          "Dodge"
+      pushstring          "summoner_data_effect_description_rFlatEnergyRegenModPerLevel"
+      pushstring          "Energy Regen / 5 at level 18"
+      pushstring          "summoner_data_effect_description_rFlatGoldPer10Mod"
+      pushstring          "Gold per 10"
+      pushstring          "summoner_data_effect_description_rPercentMagicPenetrationMod"
+      pushstring          "Magic Pen. %"
+      pushstring          "summoner_data_effect_description_rFlatMagicPenetrationMod"
+      pushstring          "Magic Pen."
+      pushstring          "summoner_data_effect_description_FlatArmorMod"
+      pushstring          "Armor"
+      pushstring          "summoner_data_effect_description_rFlatMPRegenModPerLevel"
+      pushstring          "Mana Regen / 5 at level 18"
+      pushstring          "summoner_data_effect_description_FlatAttackSpeedMod"
+      pushstring          "Attack Speed"
+      pushstring          "summoner_data_effect_description_rPercentCooldownMod"
+      pushstring          "Cooldown %"
+      pushstring          "summoner_data_effect_description_FlatPhysicalDamageMod"
+      pushstring          "Physical Dmg"
+      pushstring          "summoner_data_effect_description_rFlatArmorPenetrationModPerLevel"
+      pushstring          "Armor Pen. at level 18"
+      pushstring          "summoner_data_effect_description_PercentArmorMod"
+      pushstring          "Armor %"
+      pushstring          "summoner_data_effect_description_rFlatArmorPenetrationMod"
+      pushstring          "Armor Pen."
+      pushstring          "summoner_data_effect_description_rFlatHPModPerLevel"
+      pushstring          "Health at level 18"
+      pushstring          "summoner_data_effect_description_rPercentArmorPenetrationMod"
+      pushstring          "Armor Pen. %"
+      pushstring          "summoner_data_effect_description_rPercentAttackSpeedModPerLevel"
+      pushstring          "Attack Speed % at level 18"
+      pushstring          "summoner_data_effect_description_FlatHPPoolMod"
+      pushstring          "Health"
+      pushstring          "summoner_data_effect_description_PercentAttackSpeedMod"
+      pushstring          "Attack Speed %"
+      pushstring          "summoner_data_effect_description_FlatMagicDamageMod"
+      pushstring          "Ability Power"
+      pushstring          "summoner_data_effect_description_PercentSpellVampMod"
+      pushstring          "Spellvamp Bonus %"
+      pushstring          "summoner_data_effect_description_PercentHPPoolMod"
+      pushstring          "Max Health %"
+      pushstring          "summoner_data_effect_description_FlatHPRegenMod"
+      pushstring          "Health Regen / 5"
+      pushstring          "summoner_data_effect_description_FlatMPPoolMod"
+      pushstring          "Mana"
+      pushstring          "summoner_data_effect_description_rFlatMovementSpeedModPerLevel"
+      pushstring          "Move Speet at level 18"
+      pushstring          "summoner_data_effect_description_FlatMPRegenMod"
+      pushstring          "Mana Regen / 5"
+      pushstring          "summoner_data_effect_description_rPercentMagicPenetrationModPerLevel"
+      pushstring          "Magic Pen. % at level 18"
+      pushstring          "summoner_data_effect_description_PercentMagicDamageMod"
+      pushstring          "Max Ability Power %"
+      pushstring          "summoner_data_effect_description_FlatMovementSpeedMod"
+      pushstring          "Move Speed"
+      pushstring          "summoner_data_effect_description_FlatEnergyPoolMod"
+      pushstring          "Energy"
+      pushstring          "summoner_data_effect_description_rFlatTimeDeadMod"
+      pushstring          "Time Dead"
+      pushstring          "summoner_data_effect_description_FlatEXPBonus"
+      pushstring          "Exp Bonus"
+      pushstring          "summoner_data_effect_description_PercentMPPoolMod"
+      pushstring          "Max Mana %"
+      pushstring          "summoner_data_effect_description_PercentHPRegenMod"
+      pushstring          "Health % / 5"
+      pushstring          "summoner_data_effect_description_rFlatEnergyModPerLevel"
+      pushstring          "Energy at level 18"
+      pushstring          "summoner_data_effect_description_rFlatSpellBlockModPerLevel"
+      pushstring          "Magic Resist at level 18"
+      pushstring          "summoner_data_effect_description_rFlatCritDamageModPerLevel"
+      pushstring          "Crit Dmg at level 18"
+      pushstring          "summoner_data_effect_description_PercentLifeStealMod"
+      pushstring          "Lifesteal Bonus %"
+      pushstring          "summoner_data_effect_description_rPercentCooldownModPerLevel"
+      pushstring          "Cooldown % at level 18"
+      pushstring          "summoner_data_effect_description_PercentCritChanceMod"
+      pushstring          "Crit Chance %"
+      pushstring          "summoner_data_effect_description_rPercentTimeDeadMod"
+      pushstring          "Time Dead %"
+      pushstring          "summoner_data_effect_description_PercentMPRegenMod"
+      pushstring          "Mana % / 5"
+      pushstring          "summoner_data_effect_description_FlatBlockMod"
+      pushstring          "Block"
+      pushstring          "summoner_data_effect_description_rPercentArmorPenetrationModPerLevel"
+      pushstring          "Armor Pen. % at level 18"
+      pushstring          "summoner_data_effect_description_PercentEXPBonus"
+      pushstring          "Exp Bonus %"
+      pushstring          "summoner_data_effect_description_PercentCritDamageMod"
+      pushstring          "Crit Dmg %"
+      pushstring          "summoner_data_effect_description_PercentDodgeMod"
+      pushstring          "Dodge %"
+      pushstring          "summoner_data_effect_description_FlatCritChanceMod"
+      pushstring          "Crit Chance"
+      pushstring          "summoner_data_effect_description_PercentBlockMod"
+      pushstring          "Block %"
+      pushstring          "summoner_data_effect_description_rFlatTimeDeadModPerLevel"
+      pushstring          "Time Dead at level 18"
+      pushstring          "summoner_data_effect_description_rFlatDodgeModPerLevel"
+      pushstring          "Dodge at level 18"
+      pushstring          "summoner_data_effect_description_PercentMovementSpeedMod"
+      pushstring          "Move Speed %"
+      pushstring          "summoner_data_effect_description_PercentPhysicalDamageMod"
+      pushstring          "Physical Dmg %"
+      pushstring          "summoner_data_effect_description_rFlatMPModPerLevel"
+      pushstring          "Mana at level 18"
+      pushstring          "summoner_data_effect_description_rPercentTimeDeadModPerLevel"
+      pushstring          "Time Dead % / lvl"
+      pushstring          "summoner_data_effect_description_FlatCritDamageMod"
+      pushstring          "Crit Dmg"
+      pushstring          "summoner_data_effect_description_PercentSpellBlockMod"
+      pushstring          "Magic Resist %"
+      pushstring          "summoner_data_effect_description_rFlatCritChanceModPerLevel"
+      pushstring          "Crit Chance at level 18"
+      newobject           65
+      coerce              QName(PackageNamespace(""), "Object")
+      setlocal1
+
+      getlocal1
+      returnvalue
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+ end ; instance
+ cinit
+  refid "en_US$effect_resources_properties/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 4
+   maxscopedepth 5
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+end ; class

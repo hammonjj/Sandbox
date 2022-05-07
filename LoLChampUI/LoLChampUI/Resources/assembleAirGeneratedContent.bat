@@ -1,0 +1,3 @@
+@echo off
+"C:\Users\admin\Documents\GitHub\LoLChampUI\LoLChampUI\Resources\RABCDAsm_v1.13\rabcasm.exe" "C:\Users\admin\Documents\GitHub\LoLChampUI\LoLChampUI\asasm\0.0.1.30\AirGeneratedContent-0\AirGeneratedContent-0.main.asasm"
+"C:\Users\admin\Documents\GitHub\LoLChampUI\LoLChampUI\Resources\RABCDAsm_v1.13\abcreplace.exe" "C:\Users\admin\Documents\GitHub\LoLChampUI\LoLChampUI\asasm\0.0.1.30\AirGeneratedContent.swf" 0 "C:\Users\admin\Documents\GitHub\LoLChampUI\LoLChampUI\asasm\0.0.1.30\AirGeneratedContent-0\AirGeneratedContent-0.main.abc"

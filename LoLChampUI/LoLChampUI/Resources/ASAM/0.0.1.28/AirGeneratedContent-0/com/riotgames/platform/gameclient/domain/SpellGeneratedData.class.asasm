@@ -1,0 +1,404 @@
+class
+ refid "com.riotgames.platform.gameclient.domain:SpellGeneratedData"
+ instance QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "SpellGeneratedData")
+  extends QName(PackageNamespace(""), "Object")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData")
+  iinit
+   refid "com.riotgames.platform.gameclient.domain:SpellGeneratedData/iinit"
+   body
+    maxstack 1
+    localcount 1
+    initscopedepth 4
+    maxscopedepth 5
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     constructsuper      0
+
+     findpropstrict      QName(PackageNamespace(""), "fillSpellData")
+     callpropvoid        QName(PackageNamespace(""), "fillSpellData"), 0
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait slot QName(PackageNamespace(""), "spells") type QName(PackageNamespace("flash.utils"), "Dictionary") end
+  trait method QName(PackageNamespace(""), "fillSpellData")
+   method
+    refid "com.riotgames.platform.gameclient.domain:SpellGeneratedData/fillSpellData"
+    returns QName(PackageNamespace(""), "void")
+    body
+     maxstack 13
+     localcount 1
+     initscopedepth 4
+     maxscopedepth 5
+     code
+      getlocal0
+      pushscope
+
+      findproperty        QName(PackageNamespace(""), "spells")
+      findpropstrict      QName(PackageNamespace("flash.utils"), "Dictionary")
+      constructprop       QName(PackageNamespace("flash.utils"), "Dictionary"), 0
+      initproperty        QName(PackageNamespace(""), "spells")
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            21
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            21
+      pushstring          "SummonerBarrier"
+      pushstring          "Barrier"
+      pushstring          "Shields your champion for 115-455 (depending on champion level) for 2 seconds."
+      pushbyte            6
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            16
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            16
+      pushstring          "SummonerBattleCry"
+      pushstring          "Surge"
+      pushstring          "Empowers your champion, increasing Attack Speed by 35% and Ability Power by 10-78 (depending on champion level) for 12 seconds."
+      pushbyte            1
+      pushfalse
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            1
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            1
+      pushstring          "SummonerBoost"
+      pushstring          "Cleanse"
+      pushstring          "Removes all disables and summoner spell debuffs affecting your champion and lowers the duration of incoming disables by 65% for 3 seconds."
+      pushbyte            2
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            2
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            2
+      pushstring          "SummonerClairvoyance"
+      pushstring          "Clairvoyance"
+      pushstring          "Reveals a small area of the map for your team for 5 seconds."
+      pushbyte            10
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            3
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            14
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            14
+      pushstring          "SummonerDot"
+      pushstring          "Ignite"
+      pushstring          "Ignites target enemy champion, dealing 70-410 true damage (depending on champion level) over 5 seconds and reduces healing effects on the target for the duration."
+      pushbyte            8
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            3
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            3
+      pushstring          "SummonerExhaust"
+      pushstring          "Exhaust"
+      pushstring          "Exhausts target enemy champion, reducing their Movement Speed and damage dealt by 30% for 2.5 seconds and reduces their Attack Speed by 50% for the duration."
+      pushbyte            8
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            4
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            4
+      pushstring          "SummonerFlash"
+      pushstring          "Flash"
+      pushstring          "Teleports your champion a short distance toward your cursor's location."
+      pushbyte            12
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            5
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            5
+      pushstring          "SummonerFortify"
+      pushstring          "Fortify"
+      pushstring          "Grants invulnerability to all allied turrets and causes them to attack 100% faster.  While Fortify is ready to cast, you deal 9 bonus damage to minions."
+      pushbyte            4
+      pushfalse
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      newarray            2
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            6
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            6
+      pushstring          "SummonerHaste"
+      pushstring          "Ghost"
+      pushstring          "Your champion can move through units and has 27% increased Movement Speed for 10 seconds"
+      pushbyte            1
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            7
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            7
+      pushstring          "SummonerHeal"
+      pushstring          "Heal"
+      pushstring          "Restores 90-345 Health (depending on champion level) to your champion and to nearby allies."
+      pushbyte            1
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            13
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            13
+      pushstring          "SummonerMana"
+      pushstring          "Clarity"
+      pushstring          "Restores 40% of your champion's maximum Mana. Also restores allies for 40% of their maximum Mana"
+      pushbyte            1
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            4
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            17
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            17
+      pushstring          "SummonerOdinGarrison"
+      pushstring          "Garrison"
+      pushstring          "Allied Turret: Grants massive regeneration for 8 seconds. Enemy Turret: Reduces damage dealt by 80% for 8 seconds."
+      pushbyte            1
+      pushtrue
+      pushstring          "ODIN"
+      newarray            1
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            20
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            20
+      pushstring          "SummonerPromoteSR"
+      pushstring          "Promote"
+      pushstring          "Promotes a nearby allied siege minion, healing it, granting it bonus stats, and causing it to grant the caster gold for its kills."
+      pushbyte            8
+      pushfalse
+      pushstring          "CLASSIC"
+      pushstring          "ARAM"
+      pushstring          "ODIN"
+      newarray            3
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            9
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            9
+      pushstring          "SummonerRally"
+      pushstring          "Rally"
+      pushstring          "Summons a beacon with 200 + 25 x level Health for 15 seconds which increases allied Attack Damage by 10-35."
+      pushbyte            8
+      pushfalse
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      newarray            2
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            10
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            10
+      pushstring          "SummonerRevive"
+      pushstring          "Revive"
+      pushstring          "Instantly revives your champion at your team's Summoner Platform and increases their Movement Speed for a short duration."
+      pushbyte            1
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            3
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            11
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            11
+      pushstring          "SummonerSmite"
+      pushstring          "Smite"
+      pushstring          "Deals 490-1000 true damage (depending on champion level) to target enemy minion or pet."
+      pushbyte            1
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      pushstring          "ODIN"
+      newarray            3
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      getlex              QName(PackageNamespace(""), "spells")
+      pushbyte            12
+      findpropstrict      QName(PackageNamespace(""), "createSpell")
+      pushbyte            12
+      pushstring          "SummonerTeleport"
+      pushstring          "Teleport"
+      pushstring          "After casting for 4 seconds, teleports your champion to target allied minion, turret, or ward."
+      pushbyte            2
+      pushtrue
+      pushstring          "CLASSIC"
+      pushstring          "TUTORIAL"
+      newarray            2
+      callproperty        QName(PackageNamespace(""), "createSpell"), 7
+      setproperty         MultinameL([PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+      returnvoid
+     end ; code
+    end ; body
+   end ; method
+  end ; trait
+ end ; instance
+ cinit
+  refid "com.riotgames.platform.gameclient.domain:SpellGeneratedData/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 3
+   maxscopedepth 4
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+ trait method QName(PackageNamespace(""), "createSpell") flag FINAL dispid 3
+  method
+   refid "com.riotgames.platform.gameclient.domain:SpellGeneratedData/createSpell"
+   param QName(PackageNamespace(""), "int")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "String")
+   param QName(PackageNamespace(""), "int")
+   param QName(PackageNamespace(""), "Boolean")
+   param QName(PackageNamespace(""), "Array")
+   returns QName(PackageNamespace(""), "Object")
+   body
+    maxstack 2
+    localcount 9
+    initscopedepth 3
+    maxscopedepth 4
+    code
+     getlocal0
+     pushscope
+
+     findpropstrict      QName(PackageNamespace(""), "Object")
+     constructprop       QName(PackageNamespace(""), "Object"), 0
+     coerce              QName(PackageNamespace(""), "Object")
+     dup
+     setlocal            8
+
+     getlocal1
+     setproperty         Multiname("spellId", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal2
+     setproperty         Multiname("name", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal3
+     setproperty         Multiname("displayName", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal            4
+     setproperty         Multiname("description", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal            5
+     setproperty         Multiname("minLevel", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal            6
+     setproperty         Multiname("active", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     getlocal            7
+     setproperty         Multiname("gameModes", [PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#0"), PackageNamespace(""), PrivateNamespace(null, "com.riotgames.platform.gameclient.domain:SpellGeneratedData#1"), PackageNamespace("com.riotgames.platform.gameclient.domain"), PackageInternalNs("com.riotgames.platform.gameclient.domain"), Namespace("http://adobe.com/AS3/2006/builtin"), ProtectedNamespace("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("com.riotgames.platform.gameclient.domain:SpellGeneratedData"), StaticProtectedNs("Object")])
+
+     getlocal            8
+     returnvalue
+    end ; code
+   end ; body
+  end ; method
+ end ; trait
+end ; class

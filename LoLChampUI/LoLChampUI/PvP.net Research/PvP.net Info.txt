@@ -1,0 +1,17 @@
+http://l3cdn.riotgames.com/ - Origin Storage 1.5
+
+Monica IP:
+216.133.234.21-22
+54.244.21.158 - beeyond-media
+
+SQLite Databases for Champion tab (Not Champ Select)
+C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\assets\data\gameStats\
+
+SQL Call for Search ID Tags
+C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.1.26\deploy\lib\ClientLibChampion
+DetailServices.dat -- ChampionDetailsDao, Line 222
+
+Blix SQL Connection Code
+C:\Riot Games\League of Legends\RADS\projects\lol_air_client\releases\0.0.0.223\deploy\lib\blix\BlixCore.dat
+
+54.244.21.158 - TCP - 54 - close-combat ? HTTPS [ACK]

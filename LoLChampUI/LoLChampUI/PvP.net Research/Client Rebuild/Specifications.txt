@@ -1,0 +1,10 @@
+Features:
+Change champion search tags
+Add champion search tags
+Remove champion search tags
+
+Add search categories
+Remove search categories
+
+Restore default champion search tags
+Restore default categories

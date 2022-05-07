@@ -1,0 +1,47 @@
+class
+ refid "AirGeneratedContent"
+ instance QName(PackageNamespace(""), "AirGeneratedContent")
+  extends QName(PackageNamespace("flash.display"), "Sprite")
+  flag SEALED
+  flag PROTECTEDNS
+  protectedns ProtectedNamespace("AirGeneratedContent")
+  iinit
+   refid "AirGeneratedContent/iinit"
+   body
+    maxstack 1
+    localcount 1
+    initscopedepth 9
+    maxscopedepth 10
+    code
+     getlocal0
+     pushscope
+
+     getlocal0
+     constructsuper      0
+
+     returnvoid
+    end ; code
+   end ; body
+  end ; method
+  trait slot QName(PackageNamespace(""), "championGeneratedData") type QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "ChampionGeneratedData") end
+  trait slot QName(PackageNamespace(""), "spellGeneratedData") type QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "SpellGeneratedData") end
+  trait slot QName(PackageNamespace(""), "gameItemGeneratedData") type QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "GameItemGeneratedData") end
+  trait slot QName(PackageNamespace(""), "mapGeneratedData") type QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "MapGeneratedData") end
+  trait slot QName(PackageNamespace(""), "runeGeneratedData") type QName(PackageNamespace("com.riotgames.platform.gameclient.domain"), "RuneGeneratedData") end
+ end ; instance
+ cinit
+  refid "AirGeneratedContent/cinit"
+  body
+   maxstack 1
+   localcount 1
+   initscopedepth 8
+   maxscopedepth 9
+   code
+    getlocal0
+    pushscope
+
+    returnvoid
+   end ; code
+  end ; body
+ end ; method
+end ; class

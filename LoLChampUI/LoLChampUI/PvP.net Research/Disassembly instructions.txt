@@ -1,0 +1,7 @@
+abcexport doggy.swf
+rabcdasm doggy-0.abc
+
+
+Commands - Disassemble:
+"C:\Program Files\LoL Champ Manager\rabcdasm\abcexport.exe" "C:\Program Files\LoL Champ Manager\asasm\0.0.1.30\AirGeneratedContent.swf"
+"C:\Program Files\LoL Champ Manager\rabcdasm\rabcdasm.exe" "C:\Program Files\LoL Champ Manager\asasm\0.0.1.30\AirGeneratedContent-0.abc"
