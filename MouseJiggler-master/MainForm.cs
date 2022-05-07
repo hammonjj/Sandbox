@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace MouseJiggle
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form 
     {
         private const string REGISTRYLOCATION = @"Software\MouseJiggle";
         private const string REGISTRYKEY = "ZenJiggleEnabled";
