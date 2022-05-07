@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RandomArchiveCreator": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\james\\OneDrive\\Desktop\\RandomDataFileCreator\\data.json"
+    }
+  }
+}

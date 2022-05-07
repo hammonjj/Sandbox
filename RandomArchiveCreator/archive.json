@@ -1,0 +1,10 @@
+{
+	"ArchiveName":"SampleData",
+	"Crn":"FakeRef",
+	"IsForReporter": "TRUE",
+	"FileOptions":[
+		{ "Prefix":"txt-", "Extension":"txt", "Size":100, "Unit":"kB", "NumberOfFiles":10 },
+		{ "Prefix":"img-", "Extension":"img", "Size":10, "Unit":"MB", "NumberOfFiles":10 },
+		{ "Prefix":"mp4-", "Extension":"mp4", "Size":1, "Unit":"GB", "NumberOfFiles":1 }
+	]
+}
