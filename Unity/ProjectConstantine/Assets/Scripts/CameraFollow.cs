@@ -6,23 +6,26 @@ public class CameraFollow : MonoBehaviour
 
     private Transform _transform;
 
-    private float initial_y;
-    private float initial_z; //Fixed Camera Height
+    private float offset_x;
+    private float offset_y;
+    private float offset_z;
 
     void Start()
     {
         _transform = gameObject.transform;
 
-        initial_z = _transform.position.z;
-        initial_y = ObjectToFollow.transform.position.y + _transform.position.y;
+        //Need to distance
+        offset_z = _transform.position.z;
+        offset_x = ObjectToFollow.transform.position.x - _transform.position.x;
+        offset_y = ObjectToFollow.transform.position.y + _transform.position.y;
     }
 
     void Update()
     {
         var newPos = new Vector3(
-            ObjectToFollow.transform.position.x,
-            ObjectToFollow.transform.position.y + initial_y,
-            ObjectToFollow.transform.position.z + initial_z);
+            ObjectToFollow.transform.position.x - offset_x,
+            ObjectToFollow.transform.position.y + offset_y,
+            ObjectToFollow.transform.position.z + offset_z);
 
         _transform.position = newPos;
     }
