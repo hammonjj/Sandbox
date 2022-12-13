@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -18,8 +19,9 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 5.335f;
 
-        [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
+        //Will eventually be changed to dash speed
+        [Tooltip("Dash speed of the character in m/s")]
+        public float DashSpeed = 15.335f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -31,18 +33,14 @@ namespace StarterAssets
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
-/*
-        [Space(10)]
-        [Tooltip("The height the player can jump")]
-        public float JumpHeight = 1.2f;
-*/
+
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
-/*
+
         [Space(10)]
-        [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-        public float JumpTimeout = 0.50f;
-*/
+        [Tooltip("Time required to pass before being able to dash again. Set to 0f to instantly dash again")]
+        public float DashTimeout = 0.50f;
+
         [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
         public float FallTimeout = 0.15f;
 
@@ -87,7 +85,13 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
+
+        private bool _isDashing;
+        private bool _canDash;
+
         // timeout deltatime
+        private float _totaldashTime;
+        private float _dashTimeoutDelta;
 //        private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
@@ -148,7 +152,8 @@ namespace StarterAssets
             AssignAnimationIDs();
 
             // reset our timeouts on start
-//            _jumpTimeoutDelta = JumpTimeout;
+            //            _jumpTimeoutDelta = JumpTimeout;
+            _dashTimeoutDelta = DashTimeout;
             _fallTimeoutDelta = FallTimeout;
         }
 
@@ -158,12 +163,28 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
+            Dash();
             Move();
-        }
 
-        private void LateUpdate()
-        {
-            CameraRotation();
+            //Update dash timers
+            if (_isDashing)
+            {
+                _totaldashTime -= Time.deltaTime;
+
+                if(_totaldashTime <= 0)
+                {
+                    _isDashing = false;
+                    _canDash = false;
+
+                    //Reset Total Dash Time - move to setting later
+                    _totaldashTime = 0.5f;
+                }
+            }
+
+            if (!_canDash)
+            {
+
+            }
         }
 
         private void AssignAnimationIDs()
@@ -190,32 +211,12 @@ namespace StarterAssets
             }
         }
 
-        private void CameraRotation()
-        {
-/*
-            // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
-            {
-                //Don't multiply mouse input by Time.deltaTime;
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
-            }
-
-            // clamp our rotations so our values are limited 360 degrees
-            _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-*/
-            // Cinemachine will follow this target
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
-                _cinemachineTargetYaw, 0.0f);
-        }
-
         private void Move()
         {
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            //float targetSpeed = _input.sprint ? DashSpeed : MoveSpeed;
+            float targetSpeed = _isDashing && _canDash ? DashSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -277,6 +278,44 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            }
+        }
+
+        private void Dash()
+        {
+            if (!Grounded)
+            {
+                _input.sprint = false;
+                return;
+            }
+
+            //Check to see if we are allowed to dash
+            if (!_canDash)
+            {
+                return;
+            }
+
+            //If dash pressed and timeout is 0
+            if (_input.sprint && _dashTimeoutDelta <= 0.0f)
+            {
+                _isDashing = true;
+                // update animator if using character
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDJump, true);
+                }
+            }
+
+            //Decrease dash timeout
+            if (_dashTimeoutDelta >= 0.0f)
+            {
+                _dashTimeoutDelta -= Time.deltaTime;
+
+                //If dash timeout hits zero, stop dashing
+                if(_dashTimeoutDelta <= 0.0f)
+                {
+                    _isDashing = false;
+                }
             }
         }
 
