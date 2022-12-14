@@ -61,11 +61,25 @@ public class TransparentTerrain : MonoBehaviourBase
         foreach(var terrain in terrainNoLongerBlocking)
         {
             LogDebug($"Object no longer obstructing view: {terrain.name}");
-            MakeTerrainOpaque(terrain);
+//            MakeTerrainOpaque(terrain);
             terrainToRemove.Add(terrain);
         }
 
         _currentlytransparentTerrain.RemoveAll(x => terrainToRemove.Contains(x));
+    }
+
+    public enum SurfaceType
+    {
+        Opaque,
+        Transparent
+    }
+
+    public enum BlendMode
+    {
+        Alpha,
+        Premultiply,
+        Additive,
+        Multiply
     }
 
     private void MakeTerrainTransparent(GameObject gameObjectHit)
@@ -73,17 +87,54 @@ public class TransparentTerrain : MonoBehaviourBase
         //Try getting all renderers of children and setting them to transparent
         //  - https://docs.unity3d.com/ScriptReference/GameObject.GetComponentsInChildren.html
         //var renderers = gameObjectHit.GetComponentsInChildren<Renderer>();
+        //
+        //A second option to try is to see if there is a collection of materials on the renderer
+        //or more than one renderer that needs to be iterated over
+        //
+        //A third option if all else fails:
+        // - https://www.youtube.com/watch?v=vmLIy62Gsnk
+        //Fourth Option
+        //  - https://answers.unity.com/questions/1608815/change-surface-type-with-lwrp.html
+        //  - https://www.youtube.com/watch?v=nDsTBk6eano
+
         var renderer = gameObjectHit.GetComponent<Renderer>();
-        renderer.material.color = new Color(
-            renderer.material.color.r,
-            renderer.material.color.g,
-            renderer.material.color.b,
-            TransparentAlpha);
+        var material = renderer.material;
+
+        material.SetFloat("_Surface", (float)SurfaceType.Transparent);
+        material.SetFloat("_Blend", (float)BlendMode.Alpha);
+
+
+        bool alphaClip = renderer.material.GetFloat("_AlphaClip") == 1;
+        LogDebug($"alphaClip: {alphaClip}");
+
+        material.DisableKeyword("_ALPHATEST_ON");
+
+
+        SurfaceType surfaceType = (SurfaceType)material.GetFloat("_Surface");
+        BlendMode blendMode = (BlendMode)material.GetFloat("_Blend");
+        LogDebug($"SurfaceType: {surfaceType}");
+        LogDebug($"BlendMode: {blendMode}");
+
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+        material.SetShaderPassEnabled("ShadowCaster", false);
+        /*
+        material.SetOverrideTag("RenderType", "");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = -1;
+        material.SetShaderPassEnabled("ShadowCaster", true);
+        */
     }
 
     private void MakeTerrainOpaque(GameObject gameObjectHit)
     {
-        
         //This might be an issue if I use materials that aren't always totally opaque
         //Might need to modify so we store both the GameObject as well as its original
         //color value in a key/value pair
