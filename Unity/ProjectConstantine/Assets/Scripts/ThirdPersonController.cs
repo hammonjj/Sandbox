@@ -23,6 +23,14 @@ namespace StarterAssets
         [Tooltip("Dash speed of the character in m/s")]
         public float DashSpeed = 15.335f;
 
+        [Space(10)]
+        [Tooltip("Time required to pass before being able to dash again. Set to 0f to instantly dash again")]
+        public float DashTimeout = 0.50f;
+
+        [Space(10)]
+        [Tooltip("The amount of time that the character will dash for")]
+        public float DashTime = 0.50f;
+
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -36,10 +44,6 @@ namespace StarterAssets
 
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
-
-        [Space(10)]
-        [Tooltip("Time required to pass before being able to dash again. Set to 0f to instantly dash again")]
-        public float DashTimeout = 0.50f;
 
         [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
         public float FallTimeout = 0.15f;
@@ -87,11 +91,11 @@ namespace StarterAssets
 
 
         private bool _isDashing;
-        private bool _canDash;
+        private bool _canDash = true;
 
         // timeout deltatime
         private float _totaldashTime;
-        private float _dashTimeoutDelta;
+        private float _dashTimeoutCurrent;
 //        private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
@@ -153,7 +157,7 @@ namespace StarterAssets
 
             // reset our timeouts on start
             //            _jumpTimeoutDelta = JumpTimeout;
-            _dashTimeoutDelta = DashTimeout;
+            _dashTimeoutCurrent = DashTimeout;
             _fallTimeoutDelta = FallTimeout;
         }
 
@@ -165,26 +169,6 @@ namespace StarterAssets
             GroundedCheck();
             Dash();
             Move();
-
-            //Update dash timers
-            if (_isDashing)
-            {
-                _totaldashTime -= Time.deltaTime;
-
-                if(_totaldashTime <= 0)
-                {
-                    _isDashing = false;
-                    _canDash = false;
-
-                    //Reset Total Dash Time - move to setting later
-                    _totaldashTime = 0.5f;
-                }
-            }
-
-            if (!_canDash)
-            {
-
-            }
         }
 
         private void AssignAnimationIDs()
@@ -213,16 +197,16 @@ namespace StarterAssets
 
         private void Move()
         {
-
-            // set target speed based on move speed, sprint speed and if sprint is pressed
-            //float targetSpeed = _input.sprint ? DashSpeed : MoveSpeed;
-            float targetSpeed = _isDashing && _canDash ? DashSpeed : MoveSpeed;
+            float targetSpeed = _isDashing ? DashSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if(_input.move == Vector2.zero) 
+            { 
+                targetSpeed = 0.0f; 
+            }
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -283,38 +267,44 @@ namespace StarterAssets
 
         private void Dash()
         {
+            //Update Dash Timers
+            _dashTimeoutCurrent -= Time.deltaTime;
+
+            if(_isDashing)
+            {
+                _totaldashTime += Time.deltaTime;
+            }
+
+            //Update Dash Status
+            if(_dashTimeoutCurrent <= 0.0f)
+            {
+                _canDash = true;
+            }
+
+            if(_totaldashTime >= DashTime)
+            {
+                _isDashing = false;
+            }
+
+            /*
+            //I don't know if I want this or not
             if (!Grounded)
             {
-                _input.sprint = false;
+                _canDash = false;
                 return;
             }
+            */
 
-            //Check to see if we are allowed to dash
-            if (!_canDash)
+            if (_input.sprint && _canDash)
             {
-                return;
-            }
-
-            //If dash pressed and timeout is 0
-            if (_input.sprint && _dashTimeoutDelta <= 0.0f)
-            {
+                _canDash = false;
                 _isDashing = true;
-                // update animator if using character
+                _totaldashTime = 0f;
+                _dashTimeoutCurrent = DashTimeout;
+
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, true);
-                }
-            }
-
-            //Decrease dash timeout
-            if (_dashTimeoutDelta >= 0.0f)
-            {
-                _dashTimeoutDelta -= Time.deltaTime;
-
-                //If dash timeout hits zero, stop dashing
-                if(_dashTimeoutDelta <= 0.0f)
-                {
-                    _isDashing = false;
                 }
             }
         }
