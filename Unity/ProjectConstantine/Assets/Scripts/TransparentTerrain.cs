@@ -71,6 +71,7 @@ public class TransparentTerrain : MonoBehaviourBase
     private void MakeTerrainTransparent(GameObject gameObjectHit)
     {
         //Try getting all renderers of children and setting them to transparent
+        //  - https://docs.unity3d.com/ScriptReference/GameObject.GetComponentsInChildren.html
         //var renderers = gameObjectHit.GetComponentsInChildren<Renderer>();
         var renderer = gameObjectHit.GetComponent<Renderer>();
         renderer.material.color = new Color(
