@@ -1,5 +1,4 @@
-﻿/*
-using System.IO;
+﻿using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using static Enums;
@@ -49,4 +48,3 @@ public class MonoBehaviourBase : MonoBehaviour
         }
     }
 }
-*/
