@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,24 @@ public class TransparentTerrain : MonoBehaviourBase
     private RaycastHit _castHit;
     private List<GameObject> _currentlytransparentTerrain = new List<GameObject>();
 
-    void Start()
+    private enum SurfaceType
     {
+        Opaque,
+        Transparent
     }
+
+    private enum BlendMode
+    {
+        Alpha,
+        Premultiply,
+        Additive,
+        Multiply
+    }
+    //Possible Updates:
+    //  - Use coroutines to fade out the objects over a half a second
+    //  - Remove old transparency code
+    //  - Understand how the shader code works
+    //      - Watch: https://www.youtube.com/watch?v=vmLIy62Gsnk
     
     void Update()
     {
@@ -44,11 +60,13 @@ public class TransparentTerrain : MonoBehaviourBase
             {
                 continue;
             }
+
             LogDebug($"Valid Hit Detected: {gameObjectHit.name}");
-            MakeTerrainTransparent(gameObjectHit);
+
+            FadeObjectOut(gameObjectHit.GetComponent<Renderer>().materials);
             _currentlytransparentTerrain.Add(gameObjectHit);
         }
-        
+
         //No need to continue if nothing is transparent
         if(_currentlytransparentTerrain.Count == 0)
         {
@@ -61,88 +79,167 @@ public class TransparentTerrain : MonoBehaviourBase
         foreach(var terrain in terrainNoLongerBlocking)
         {
             LogDebug($"Object no longer obstructing view: {terrain.name}");
-//            MakeTerrainOpaque(terrain);
+            FadeObjectIn(terrain.GetComponent<Renderer>().materials);
             terrainToRemove.Add(terrain);
         }
 
         _currentlytransparentTerrain.RemoveAll(x => terrainToRemove.Contains(x));
     }
 
-    public enum SurfaceType
+    private void FadeObjectOut(Material[] materials)
     {
-        Opaque,
-        Transparent
+        foreach (Material material in materials)
+        {
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.SetInt("_Surface", 1);
+
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+            material.SetShaderPassEnabled("DepthOnly", false);
+            material.SetShaderPassEnabled("SHADOWCASTER", true);
+
+            material.SetOverrideTag("RenderType", "Transparent");
+
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        }
+
+        while (materials[0].color.a > TransparentAlpha)
+        {
+            foreach (Material material in materials)
+            {
+                if (material.HasProperty("_Color"))
+                {
+                    material.color = new Color(
+                        material.color.r,
+                        material.color.g,
+                        material.color.b,
+                        TransparentAlpha
+                    );
+                }
+            }
+        }
     }
 
-    public enum BlendMode
+    private void FadeObjectIn(Material[] materials)
     {
-        Alpha,
-        Premultiply,
-        Additive,
-        Multiply
+        while (materials[0].color.a < 1.0f) //Sub in initial alpha here
+        {
+            foreach (Material material in materials)
+            {
+                if (material.HasProperty("_Color"))
+                {
+                    material.color = new Color(
+                        material.color.r,
+                        material.color.g,
+                        material.color.b,
+                        1.0f //Will likely need to store original alpha
+                    );
+                }
+            }
+        }
+
+        foreach (Material material in materials)
+        {
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetInt("_ZWrite", 1);
+            material.SetInt("_Surface", 0);
+
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+
+            material.SetShaderPassEnabled("DepthOnly", true);
+            material.SetShaderPassEnabled("SHADOWCASTER", true);
+
+            material.SetOverrideTag("RenderType", "Opaque");
+
+            material.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        }
     }
 
-    private void MakeTerrainTransparent(GameObject gameObjectHit)
+    /**********************************************************************/
+    private void ChangeTransparency(bool makeTransparent, Material material)
     {
-        //Try getting all renderers of children and setting them to transparent
-        //  - https://docs.unity3d.com/ScriptReference/GameObject.GetComponentsInChildren.html
-        //var renderers = gameObjectHit.GetComponentsInChildren<Renderer>();
-        //
-        //A second option to try is to see if there is a collection of materials on the renderer
-        //or more than one renderer that needs to be iterated over
-        //
-        //A third option if all else fails:
-        // - https://www.youtube.com/watch?v=vmLIy62Gsnk
-        //Fourth Option
-        //  - https://answers.unity.com/questions/1608815/change-surface-type-with-lwrp.html
-        //  - https://www.youtube.com/watch?v=nDsTBk6eano
+        if (makeTransparent)
+        {
+            material.SetFloat("_Surface", (float)SurfaceType.Transparent);
+            material.SetFloat("_Blend", (float)BlendMode.Alpha);
+        }
+        else
+        {
+            material.SetFloat("_Surface", (float)SurfaceType.Opaque);
+        }
 
-        var renderer = gameObjectHit.GetComponent<Renderer>();
-        var material = renderer.material;
-
-        material.SetFloat("_Surface", (float)SurfaceType.Transparent);
-        material.SetFloat("_Blend", (float)BlendMode.Alpha);
-
-
-        bool alphaClip = renderer.material.GetFloat("_AlphaClip") == 1;
-        LogDebug($"alphaClip: {alphaClip}");
-
-        material.DisableKeyword("_ALPHATEST_ON");
-
-
-        SurfaceType surfaceType = (SurfaceType)material.GetFloat("_Surface");
-        BlendMode blendMode = (BlendMode)material.GetFloat("_Blend");
-        LogDebug($"SurfaceType: {surfaceType}");
-        LogDebug($"BlendMode: {blendMode}");
-
-        material.SetOverrideTag("RenderType", "Transparent");
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        material.SetInt("_ZWrite", 0);
-        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-        material.SetShaderPassEnabled("ShadowCaster", false);
-        /*
-        material.SetOverrideTag("RenderType", "");
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-        material.SetInt("_ZWrite", 1);
-        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = -1;
-        material.SetShaderPassEnabled("ShadowCaster", true);
-        */
+        SetupMaterialBlendMode(material);
     }
 
-    private void MakeTerrainOpaque(GameObject gameObjectHit)
+    void SetupMaterialBlendMode(Material material)
     {
-        //This might be an issue if I use materials that aren't always totally opaque
-        //Might need to modify so we store both the GameObject as well as its original
-        //color value in a key/value pair
-        var renderer = gameObjectHit.GetComponent<Renderer>();
-        renderer.material.color = new Color(
-            renderer.material.color.r,
-            renderer.material.color.g,
-            renderer.material.color.b,
-            1.0f);
+        LogDebug($"AlphaClip: {material.GetFloat("_AlphaClip") == 1}");
+        if(material.GetFloat("_AlphaClip") == 1)
+        {
+            material.EnableKeyword("_ALPHATEST_ON");
+        }
+        else
+        {
+            material.DisableKeyword("_ALPHATEST_ON");
+        }
+        LogDebug($"SurfaceType: {(SurfaceType)material.GetFloat("_Surface")}");
+        if((SurfaceType)material.GetFloat("_Surface") == 0)
+        {
+            material.SetOverrideTag("RenderType", "");
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetInt("_ZWrite", 1);
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.renderQueue = -1;
+            material.SetShaderPassEnabled("ShadowCaster", true);
+        }
+        else
+        {
+            LogDebug($"BlendMode: {(BlendMode)material.GetFloat("_Blend")}");
+            switch ((BlendMode)material.GetFloat("_Blend"))
+            {
+                case BlendMode.Alpha:
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    material.SetInt("_ZWrite", 0);
+                    material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    break;
+                case BlendMode.Premultiply:
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    material.SetInt("_ZWrite", 0);
+                    material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    break;
+                case BlendMode.Additive:
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    material.SetInt("_ZWrite", 0);
+                    material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    break;
+                case BlendMode.Multiply:
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.DstColor);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                    material.SetInt("_ZWrite", 0);
+                    material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    break;
+            }
+        }
     }
 }
