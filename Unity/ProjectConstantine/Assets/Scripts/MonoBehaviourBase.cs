@@ -1,10 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using static Enums;
 
 public class MonoBehaviourBase : MonoBehaviour
 {
+    [Flags]
+    public enum LoggingMask
+    {
+        Debug = (1 << 0),
+        Warning = (1 << 1),
+        Error = (1 << 2),
+        Verbose = (1 << 3),
+    }
+
     [Header("Base")]
     public LoggingMask LoggingLevel;
 

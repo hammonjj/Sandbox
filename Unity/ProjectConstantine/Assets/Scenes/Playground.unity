@@ -715,9 +715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141e96eb22c3a4713b5df7536a1b3bd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoggingLevel: 1
+  LoggingLevel: 0
   PlayerTransform: {fileID: 700051398}
-  TransparentAlpha: 0.5
+  TransparentAlpha: 0.1
 --- !u!4 &1023672450
 Transform:
   m_ObjectHideFlags: 0
