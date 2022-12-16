@@ -14,23 +14,39 @@ namespace Constantine
 		[DisplayWithoutEdit()]
 		public bool Dash;
 
-		public void OnMove(InputValue value)
+		private GameStateManager _gameStateManager;
+
+        void Awake()
+        {
+            _gameStateManager = GameObject.Find("GameStateManager")
+				.GetComponent<GameStateManager>();
+        }
+
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
-		}
+        }
 
 		public void OnAttack(InputValue value)
 		{
 			LogDebug("Attack Pressed");
 			AttackInput(value.isPressed);
-		}
+        }
 
 		public void OnDash(InputValue value)
 		{
-			DashInput(value.isPressed);
+            LogDebug("Dash Pressed");
+            DashInput(value.isPressed);
 		}
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void OnPause(InputValue value)
+        {
+            LogDebug("Paused Pressed");
+            _gameStateManager.PauseOrUnpauseGame();
+        }
+
+		/* Methods below are triggered by UI - Will need to eventually remove */
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			Move = newMoveDirection;
 		} 
@@ -44,6 +60,7 @@ namespace Constantine
 		{
 			Dash = newDashState;
 		}
+		/**********************************************************************/
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
@@ -54,5 +71,7 @@ namespace Constantine
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+
+        
+    }
 }

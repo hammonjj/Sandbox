@@ -56,7 +56,7 @@ namespace EditorExtensions
                     break;
                 case SerializedPropertyType.Vector2:
                     EditorGUI.LabelField(position, label, new GUIContent(
-                        $"X: {property.vector2Value.x} - Y: {property.vector2Value.y}"));
+                        $"X: {property.vector2Value.x} Y: {property.vector2Value.y}"));
                     break;
                 case SerializedPropertyType.Vector3:
                     break;
