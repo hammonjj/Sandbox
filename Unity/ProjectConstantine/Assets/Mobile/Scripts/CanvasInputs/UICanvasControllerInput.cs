@@ -1,33 +1,26 @@
 using UnityEngine;
 
-namespace StarterAssets
+namespace Constantine
 {
     public class UICanvasControllerInput : MonoBehaviour
     {
 
         [Header("Output")]
-        public StarterAssetsInputs starterAssetsInputs;
+        public PlayerInputs PlayerInputs;
 
         public void VirtualMoveInput(Vector2 virtualMoveDirection)
         {
-            starterAssetsInputs.MoveInput(virtualMoveDirection);
+            PlayerInputs.MoveInput(virtualMoveDirection);
         }
 
-        public void VirtualLookInput(Vector2 virtualLookDirection)
+        public void VirtualAttackInput(bool virtualJumpState)
         {
-            starterAssetsInputs.LookInput(virtualLookDirection);
+            PlayerInputs.AttackInput(virtualJumpState);
         }
 
-        public void VirtualJumpInput(bool virtualJumpState)
+        public void VirtualSprintInput(bool virtualDashState)
         {
-            starterAssetsInputs.JumpInput(virtualJumpState);
+            PlayerInputs.DashInput(virtualDashState);
         }
-
-        public void VirtualSprintInput(bool virtualSprintState)
-        {
-            starterAssetsInputs.SprintInput(virtualSprintState);
-        }
-        
     }
-
 }

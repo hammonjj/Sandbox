@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
-namespace StarterAssets
+namespace Constantine
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerInput))]
@@ -15,7 +15,6 @@ namespace StarterAssets
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 5.335f;
 
-        //Will eventually be changed to dash speed
         [Tooltip("Dash speed of the character in m/s")]
         public float DashSpeed = 15.335f;
 
@@ -80,13 +79,10 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
-        private PlayerInput _playerInput;
         private Animator _animator;
         private CharacterController _controller;
-        private StarterAssetsInputs _input;
+        private PlayerInputs _input;
         private GameObject _mainCamera;
-
-        private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
 
@@ -100,13 +96,10 @@ namespace StarterAssets
         }
 
         private void Start()
-        {
-            //_cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+        {            
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
-            _input = GetComponent<StarterAssetsInputs>();
-            _playerInput = GetComponent<PlayerInput>();
+            _input = GetComponent<PlayerInputs>();
 
             AssignAnimationIDs();
 
@@ -123,16 +116,6 @@ namespace StarterAssets
             GroundedCheck();
             Dash();
             Move();
-/*
-            //Check Input Devices
-            var inputDevices = InputSystem.devices;
-            LogDebug($"InputDevices Count: {inputDevices.Count}");
-            foreach(var inputDevice in inputDevices)
-            {
-                LogDebug($"Name: {inputDevice.name} - DisplayName: {inputDevice.displayName} - " +
-                    $"Description: {inputDevice.description}");
-            }
-*/
         }
 
         private void AssignAnimationIDs()
@@ -167,7 +150,7 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if(_input.move == Vector2.zero) 
+            if(_input.Move == Vector2.zero) 
             { 
                 targetSpeed = 0.0f; 
             }
@@ -176,7 +159,6 @@ namespace StarterAssets
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -184,7 +166,7 @@ namespace StarterAssets
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed,
                     Time.deltaTime * SpeedChangeRate);
 
                 // round speed to 3 decimal places
@@ -199,11 +181,11 @@ namespace StarterAssets
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(_input.Move.x, 0.0f, _input.Move.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (_input.move != Vector2.zero)
+            if (_input.Move != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
@@ -225,7 +207,7 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                _animator.SetFloat(_animIDMotionSpeed, 1f);
             }
         }
 
@@ -259,7 +241,7 @@ namespace StarterAssets
             }
             */
 
-            if (_input.sprint && _canDash)
+            if (_input.Dash && _canDash)
             {
                 _canDash = false;
                 _isDashing = true;
@@ -275,12 +257,10 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
-            if (Grounded)
+            if(Grounded)
             {
-                // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
 
-                // update animator if using character
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, false);
@@ -309,8 +289,8 @@ namespace StarterAssets
                     }
                 }
 
-                // if we are not grounded, do not jump
-                _input.jump = false;
+                // if we are not grounded, do not attack??????
+                _input.Attack = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
