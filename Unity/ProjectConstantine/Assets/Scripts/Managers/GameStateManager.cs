@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviourBase
 {
+    public GameObject PauseMenu;
+
     public bool IsGamePaused { get; private set; }
-
-    void Start()
-    {   
-    }
-
-    void Update()
-    {
-    }
 
     public void PauseOrUnpauseGame()
     {
@@ -21,6 +13,7 @@ public class GameStateManager : MonoBehaviourBase
         Time.timeScale = IsGamePaused ? 0f : 1f;
         AudioListener.pause = IsGamePaused;
 
+        PauseMenu.SetActive(IsGamePaused);
         LogDebug($"Game Pause: {IsGamePaused}");
     }
 }

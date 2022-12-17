@@ -24,19 +24,19 @@ namespace Constantine
 
         public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
-        }
+			Move = value.Get<Vector2>();
+		}
 
 		public void OnAttack(InputValue value)
 		{
 			LogDebug("Attack Pressed");
-			AttackInput(value.isPressed);
-        }
+			Attack = value.isPressed;
+		}
 
 		public void OnDash(InputValue value)
 		{
             LogDebug("Dash Pressed");
-            DashInput(value.isPressed);
+			Dash = value.isPressed;
 		}
 
         public void OnPause(InputValue value)
@@ -44,23 +44,6 @@ namespace Constantine
             LogDebug("Paused Pressed");
             _gameStateManager.PauseOrUnpauseGame();
         }
-
-		/* Methods below are triggered by UI - Will need to eventually remove */
-        public void MoveInput(Vector2 newMoveDirection)
-		{
-			Move = newMoveDirection;
-		} 
-
-		public void AttackInput(bool newAttackState)
-		{
-			Attack = newAttackState;
-		}
-
-		public void DashInput(bool newDashState)
-		{
-			Dash = newDashState;
-		}
-		/**********************************************************************/
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
@@ -71,7 +54,5 @@ namespace Constantine
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-
-        
     }
 }
