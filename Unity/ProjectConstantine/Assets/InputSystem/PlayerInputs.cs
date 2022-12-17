@@ -18,8 +18,7 @@ namespace Constantine
 
         void Awake()
         {
-            _gameStateManager = GameObject.Find("GameStateManager")
-				.GetComponent<GameStateManager>();
+            _gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         }
 
         public void OnMove(InputValue value)
