@@ -12,7 +12,7 @@ public class EnemyBase : MonoBehaviourBase
     
     //TODO: Draw Gizmo Around Attack Range
     [Header("Attack")]
-    [Tooltip("In Degrees, with Zero being direclt in front")]
+    [Tooltip("In Degrees, with Zero being direclty in front")]
     public float AttackWidth;
     public float AttackRange;
     public float AttackSpeed;
@@ -25,19 +25,21 @@ public class EnemyBase : MonoBehaviourBase
 
     private void Awake()
     {
+        MessageEnding = $"GameObject: {gameObject.name} - Name: {name}";
+
         _player = GameObject.FindGameObjectWithTag(Player);
         if(_player == null)
         {
-            LogError($"Unable to find player - GameObject: {gameObject.name} - Name: {name}");
+            LogError($"Unable to find player");
         }
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
         if(_navMeshAgent)
         {
-            LogError($"Failed to get NavMeshAgent - GameObject: {gameObject.name} - Name: {name}");
+            LogError($"Failed to get NavMeshAgent");
         }
 
-        SetAiPreferences();
+        SetuoAi();
     }
 
     private void Update()
@@ -50,9 +52,18 @@ public class EnemyBase : MonoBehaviourBase
         }
 
         //Attack if close enough
+        if(Vector3.Distance(_player.transform.position, gameObject.transform.position) <= AttackRange)
+        {
+            Attack();
+        }
     }
 
-    private void SetAiPreferences()
+    private void Attack()
+    {
+        LogDebug("Attacking Player");
+    }
+
+    private void SetuoAi()
     {
     }
 }

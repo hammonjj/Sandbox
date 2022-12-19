@@ -17,13 +17,16 @@ public class MonoBehaviourBase : MonoBehaviour
     [Header("Base")]
     public LoggingMask LoggingLevel;
 
+    protected string MessageEnding;
+
     public virtual void LogDebug(string message, 
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
         if((LoggingLevel & LoggingMask.Debug) != 0)
         {
-            Debug.Log($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            //Debug.Log($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }
     }
 
@@ -33,7 +36,8 @@ public class MonoBehaviourBase : MonoBehaviour
     {
         if((LoggingLevel & LoggingMask.Warning) != 0)
         {
-            Debug.LogWarning($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            //Debug.LogWarning($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }
     }
 
@@ -43,7 +47,8 @@ public class MonoBehaviourBase : MonoBehaviour
     {
         if((LoggingLevel & LoggingMask.Error) != 0)
         {
-            Debug.LogError($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            //Debug.LogError($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }
     }
 
@@ -53,7 +58,16 @@ public class MonoBehaviourBase : MonoBehaviour
     {
         if((LoggingLevel & LoggingMask.Verbose) != 0)
         {
-            Debug.Log($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            //Debug.Log($"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}");
+            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }
+    }
+
+    private string ComposeLogMessage(string message,
+        [CallerLineNumber] int lineNumber = 0,
+        [CallerFilePath] string sourceFilePath = "")
+    {
+        return $"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}" + 
+            (string.IsNullOrEmpty(MessageEnding) ? string.Empty : " - " + MessageEnding);
     }
 }

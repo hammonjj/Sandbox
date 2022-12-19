@@ -21,10 +21,19 @@ namespace Constantine
         [Tooltip("Time required to pass before being able to dash again. Set to 0f to instantly dash again")]
         public float DashTimeout = 0.50f;
 
-        [Space(10)]
         [Tooltip("The amount of time that the character will dash for")]
         public float DashTime = 0.50f;
 
+        [Tooltip("Time required to pass before being able to attack again. Set to 0f to instantly attack again")]
+        public float AttackTimeout = 0.50f;
+
+        [Space(10)]
+        [Tooltip("Where the player's attack spawns from")]
+        public Transform AttackSpawnPoint;
+
+        public GameObject ProjectileAttack;
+
+        [Space(10)]
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -63,13 +72,17 @@ namespace Constantine
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
-
+        //Dash
         private bool _isDashing;
         private bool _canDash = true;
-
         private float _totaldashTime;
         private float _dashTimeoutCurrent;
         private float _fallTimeoutDelta;
+
+        //Attack
+//        private bool _isAttacking;
+        private bool _canAttack = true;
+        private float _attackTimeoutCurrent;
 
         //Animation IDs
         private int _animIDSpeed;
@@ -105,6 +118,7 @@ namespace Constantine
             //Reset timeouts on start
             _dashTimeoutCurrent = DashTimeout;
             _fallTimeoutDelta = FallTimeout;
+            _attackTimeoutCurrent = AttackTimeout;
         }
 
         private void Update()
@@ -114,6 +128,7 @@ namespace Constantine
             JumpAndGravity();
             GroundedCheck();
             Dash();
+            Attack();
             Move();
         }
 
@@ -207,6 +222,33 @@ namespace Constantine
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, 1f);
+            }
+        }
+
+        private void Attack()
+        {
+            _attackTimeoutCurrent -= Time.deltaTime;
+
+            //Update Attack Status
+            if(_attackTimeoutCurrent <= 0.0f)
+            {
+                _canAttack = true;
+            }
+
+            if(_input.Attack && _canAttack)
+            {
+                LogDebug("Player Attack");
+                _canAttack = false;
+                _attackTimeoutCurrent = AttackTimeout;
+
+                //Spawn Attack
+                //AttackSpawnPoint
+                Instantiate(ProjectileAttack, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
+
+                if(_hasAnimator)
+                {
+                    //_animator.SetBool(_animIDJump, true);
+                }
             }
         }
 
