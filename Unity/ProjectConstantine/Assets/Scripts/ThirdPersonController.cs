@@ -242,7 +242,6 @@ namespace Constantine
                 _attackTimeoutCurrent = AttackTimeout;
 
                 //Spawn Attack
-                //AttackSpawnPoint
                 Instantiate(ProjectileAttack, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
 
                 if(_hasAnimator)

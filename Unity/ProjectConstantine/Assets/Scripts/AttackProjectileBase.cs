@@ -19,7 +19,7 @@ public class AttackProjectileBase : MonoBehaviourBase
         if(Vector3.Distance(_InitialPosition, gameObject.transform.position) > AttackRange)
         {
             LogDebug("Projectile passed AttackRange - Destroying");
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         //Update Position
@@ -30,7 +30,8 @@ public class AttackProjectileBase : MonoBehaviourBase
     {
         if(other.gameObject.tag != "Enemy")
         {
-            //Destroy(this);
+            LogDebug($"Attack Hit Object - {other.gameObject.name}");
+            //Destroy(gameObject);
             return;
         } 
         else if(other.gameObject.tag == "Enemy")
@@ -38,7 +39,7 @@ public class AttackProjectileBase : MonoBehaviourBase
             LogDebug("Attack Hit Enemy");
 
             //Do damage to enemy
-            //Destroy(this);
+            //Destroy(gameObject);
             return;
         }
     }
