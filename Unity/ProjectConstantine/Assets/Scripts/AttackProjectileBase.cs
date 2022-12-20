@@ -5,7 +5,7 @@ public class AttackProjectileBase : MonoBehaviourBase
     [Header("AttackBase")]
     public float AttackSpeed = 20f;
     public float AttackRange = 10f;
-    public float AttackDamage = 5f;
+    public int AttackDamage = 5;
 
     private Vector3 _InitialPosition;
 
@@ -31,7 +31,7 @@ public class AttackProjectileBase : MonoBehaviourBase
         if(other.gameObject.tag != "Enemy")
         {
             LogDebug($"Attack Hit Object - {other.gameObject.name}");
-            //Destroy(gameObject);
+            Destroy(gameObject);
             return;
         } 
         else if(other.gameObject.tag == "Enemy")
@@ -39,7 +39,14 @@ public class AttackProjectileBase : MonoBehaviourBase
             LogDebug("Attack Hit Enemy");
 
             //Do damage to enemy
-            //Destroy(gameObject);
+            var enemyBase = other.gameObject.GetComponent<EnemyBase>();
+            if(enemyBase == null)
+            {
+                LogError($"Failed to get enemy base");
+            }
+
+            enemyBase.TakeDamage(AttackDamage);
+            Destroy(gameObject);
             return;
         }
     }

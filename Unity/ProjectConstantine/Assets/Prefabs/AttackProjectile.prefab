@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4086304453671802730}
   m_Layer: 8
   m_Name: AttackProjectile
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: 1
-  AttackSpeed: 5
+  AttackSpeed: 10
   AttackRange: 5
   AttackDamage: 5
 --- !u!54 &4086304453671802730

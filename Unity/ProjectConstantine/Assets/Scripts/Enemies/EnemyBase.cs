@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviourBase
 {
     [Header("EnemyBase")]
-    public int Health;
+    public int MaxHealth;
     public string Name;
     public float MovementSpeed;
+    public bool Stop;
     
-    //TODO: Draw Gizmo Around Attack Range
     [Header("Attack")]
     [Tooltip("In Degrees, with Zero being direclty in front")]
     public float AttackWidth;
@@ -23,6 +21,9 @@ public class EnemyBase : MonoBehaviourBase
 
     private NavMeshAgent _navMeshAgent;
 
+    private int _currentHealth;
+    private HealthBar _healthBar;
+
     private void Awake()
     {
         MessageEnding = $"GameObject: {gameObject.name} - Name: {name}";
@@ -34,19 +35,30 @@ public class EnemyBase : MonoBehaviourBase
         }
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        if(_navMeshAgent)
+        if(_navMeshAgent == null)
         {
             LogError($"Failed to get NavMeshAgent");
         }
 
-        SetuoAi();
+        _currentHealth = MaxHealth;
+        _healthBar = GetComponent<HealthBar>();
+        if(_healthBar == null)
+        {
+            LogError($"Failed to get HealthBar");
+        }
+
+        SetupAi();
     }
 
     private void Update()
     {
+        if(Stop)
+        {
+            return;
+        }
+
         _navMeshAgent.SetDestination(_player.transform.position);
 
-        //If the path is still be computed, animate taunt
         if(_navMeshAgent.pathPending)
         {
         }
@@ -58,12 +70,28 @@ public class EnemyBase : MonoBehaviourBase
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        LogDebug($"I got hit - Current Health: {_currentHealth}");
+
+        _currentHealth -= damage;
+        if(_currentHealth <= 0)
+        {
+            LogDebug("I Died");
+            //Play death animation and despawn
+            Destroy(gameObject);
+            return;
+        }
+
+        _healthBar.UpdateHealth((float)_currentHealth / MaxHealth);
+    }
+
     private void Attack()
     {
         LogDebug("Attacking Player");
     }
 
-    private void SetuoAi()
+    private void SetupAi()
     {
     }
 }
