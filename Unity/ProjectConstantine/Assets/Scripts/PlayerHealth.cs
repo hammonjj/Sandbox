@@ -10,10 +10,13 @@ public class PlayerHealth : MonoBehaviour
 
     private int _currentHealth;
     private GameStateManager _gameStateManager;
+    private HealthBar _healthBar;
+
     private void Awake()
     {
         _currentHealth = MaxHealth;
 
+        _healthBar = GetComponent<HealthBar>();
         _gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         onPlayerDeath += _gameStateManager.OnPlayerDeath;
     }
@@ -27,5 +30,7 @@ public class PlayerHealth : MonoBehaviour
             //Invoke Death Animation
             onPlayerDeath.Invoke();
         }
+
+        _healthBar.UpdateHealth((float)_currentHealth / MaxHealth);
     }
 }

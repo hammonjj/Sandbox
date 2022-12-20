@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-/* Note: animations are called via the controller for both the character and capsule using animator null checks
- */
-
 namespace Constantine
 {
     [RequireComponent(typeof(CharacterController))]
@@ -99,7 +96,6 @@ namespace Constantine
 
         private void Awake()
         {
-            // get a reference to our main camera
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
