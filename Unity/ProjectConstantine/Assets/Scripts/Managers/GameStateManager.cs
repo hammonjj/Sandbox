@@ -6,6 +6,11 @@ public class GameStateManager : MonoBehaviourBase
 
     public bool IsGamePaused { get; private set; }
 
+    public void Awake()
+    {
+        
+    }
+
     public void PauseOrUnpauseGame()
     {
         IsGamePaused = !IsGamePaused;
@@ -15,5 +20,10 @@ public class GameStateManager : MonoBehaviourBase
 
         PauseMenu.SetActive(IsGamePaused);
         LogDebug($"Game Pause: {IsGamePaused}");
+    }
+
+    public void OnPlayerDeath()
+    {
+        LogDebug("Player has died");
     }
 }

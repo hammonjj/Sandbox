@@ -80,7 +80,6 @@ namespace Constantine
         private float _fallTimeoutDelta;
 
         //Attack
-//        private bool _isAttacking;
         private bool _canAttack = true;
         private float _attackTimeoutCurrent;
 
@@ -328,9 +327,6 @@ namespace Constantine
                         _animator.SetBool(_animIDFreeFall, true);
                     }
                 }
-
-                // if we are not grounded, do not attack??????
-                _input.Attack = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
