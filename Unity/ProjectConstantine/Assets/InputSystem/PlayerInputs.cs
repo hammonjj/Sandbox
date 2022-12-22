@@ -1,3 +1,4 @@
+using System;
 using EditorExtensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,11 +11,13 @@ namespace Constantine
 		[DisplayWithoutEdit()]
 		public Vector2 Move;
 		[DisplayWithoutEdit()]
-		public bool Attack;
-		[DisplayWithoutEdit()]
 		public bool Dash;
 
-		private GameStateManager _gameStateManager;
+		//Player Action Events
+        public Action onPlayerPrimaryAttack;
+        public Action onPlayerSecondaryAttack;
+
+        private GameStateManager _gameStateManager;
 
         void Awake()
         {
@@ -26,22 +29,25 @@ namespace Constantine
 			Move = value.Get<Vector2>();
 		}
 
-		public void OnAttack(InputValue value)
+		public void OnPrimaryAttack(InputValue value)
 		{
-			LogDebug("Attack Pressed");
-			Attack = value.isPressed;
-		}
+            onPlayerPrimaryAttack?.Invoke();
+        }
 
-		public void OnDash(InputValue value)
+        public void OnSecondaryAttack(InputValue value)
+        {
+			onPlayerSecondaryAttack?.Invoke();
+        }
+
+        public void OnDash(InputValue value)
 		{
-            LogDebug("Dash Pressed");
 			Dash = value.isPressed;
 		}
 
         public void OnPause(InputValue value)
         {
             LogDebug("Paused Pressed");
-            _gameStateManager.PauseOrUnpauseGame();
+			_gameStateManager.PauseOrUnpauseGame();
         }
 
 		private void OnApplicationFocus(bool hasFocus)

@@ -8,7 +8,9 @@ public class EnemyBase : MonoBehaviourBase
     public string Name;
     public float MovementSpeed;
     public bool Stop;
-    
+
+    //Detection Range
+
     [Header("Attack")]
     [Tooltip("In Degrees, with Zero being direclty in front")]
     public float AttackWidth;

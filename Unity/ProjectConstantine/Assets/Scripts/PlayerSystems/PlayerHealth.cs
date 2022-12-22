@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
         if(_currentHealth <= 0)
         {
             //Invoke Death Animation
-            onPlayerDeath.Invoke();
+            onPlayerDeath?.Invoke();
         }
 
         _healthBar.UpdateHealth((float)_currentHealth / MaxHealth);

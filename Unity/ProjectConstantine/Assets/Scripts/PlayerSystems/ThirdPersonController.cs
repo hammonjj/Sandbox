@@ -21,15 +21,6 @@ namespace Constantine
         [Tooltip("The amount of time that the character will dash for")]
         public float DashTime = 0.50f;
 
-        [Tooltip("Time required to pass before being able to attack again. Set to 0f to instantly attack again")]
-        public float AttackTimeout = 0.50f;
-
-        [Space(10)]
-        [Tooltip("Where the player's attack spawns from")]
-        public Transform AttackSpawnPoint;
-
-        public GameObject ProjectileAttack;
-
         [Space(10)]
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -61,7 +52,7 @@ namespace Constantine
         [Tooltip("What layers the character uses as ground")]
         public LayerMask GroundLayers;
 
-        // player
+        //Player
         private float _speed;
         private float _animationBlend;
         private float _targetRotation = 0.0f;
@@ -76,23 +67,10 @@ namespace Constantine
         private float _dashTimeoutCurrent;
         private float _fallTimeoutDelta;
 
-        //Attack
-        private bool _canAttack = true;
-        private float _attackTimeoutCurrent;
-
-        //Animation IDs
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
-
         private Animator _animator;
         private CharacterController _controller;
         private PlayerInputs _input;
         private GameObject _mainCamera;
-
-        private bool _hasAnimator;
 
         private void Awake()
         {
@@ -104,36 +82,21 @@ namespace Constantine
 
         private void Start()
         {            
-            _hasAnimator = TryGetComponent(out _animator);
+            _animator = GetComponent<Animator>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<PlayerInputs>();
-
-            AssignAnimationIDs();
 
             //Reset timeouts on start
             _dashTimeoutCurrent = DashTimeout;
             _fallTimeoutDelta = FallTimeout;
-            _attackTimeoutCurrent = AttackTimeout;
         }
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
             JumpAndGravity();
             GroundedCheck();
             Dash();
-            Attack();
             Move();
-        }
-
-        private void AssignAnimationIDs()
-        {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
         private void GroundedCheck()
@@ -144,11 +107,7 @@ namespace Constantine
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDGrounded, Grounded);
-            }
+            _animator?.SetBool(PlayerConstants.AnimID_Grounded, Grounded);
         }
 
         private void Move()
@@ -205,45 +164,17 @@ namespace Constantine
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
-
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-            // update animator if using character
-            if (_hasAnimator)
+            if(Mathf.Abs(_input.Move.x) > .3f || Mathf.Abs(_input.Move.y) > 0.3)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, 1f);
-            }
-        }
-
-        private void Attack()
-        {
-            _attackTimeoutCurrent -= Time.deltaTime;
-
-            //Update Attack Status
-            if(_attackTimeoutCurrent <= 0.0f)
-            {
-                _canAttack = true;
+                // move the player
+                _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             }
 
-            if(_input.Attack && _canAttack)
-            {
-                LogDebug("Player Attack");
-                _canAttack = false;
-                _attackTimeoutCurrent = AttackTimeout;
-
-                //Spawn Attack
-                Instantiate(ProjectileAttack, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
-
-                if(_hasAnimator)
-                {
-                    //_animator.SetBool(_animIDJump, true);
-                }
-            }
+            _animator?.SetFloat(PlayerConstants.AnimID_Speed, _animationBlend);
+            _animator?.SetFloat(PlayerConstants.AnimID_MotionSpeed, 1f);
         }
 
         private void Dash()
@@ -283,10 +214,7 @@ namespace Constantine
                 _totaldashTime = 0f;
                 _dashTimeoutCurrent = DashTimeout;
 
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, true);
-                }
+                _animator?.SetBool(PlayerConstants.AnimID_Jump, true);
             }
         }
 
@@ -296,11 +224,8 @@ namespace Constantine
             {
                 _fallTimeoutDelta = FallTimeout;
 
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                }
+                _animator?.SetBool(PlayerConstants.AnimID_Jump, false);
+                _animator?.SetBool(PlayerConstants.AnimID_FreeFall, false);
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -317,11 +242,7 @@ namespace Constantine
                 }
                 else
                 {
-                    // update animator if using character
-                    if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDFreeFall, true);
-                    }
+                    _animator?.SetBool(PlayerConstants.AnimID_FreeFall, true);
                 }
             }
 

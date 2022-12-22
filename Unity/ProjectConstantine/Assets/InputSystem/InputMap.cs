@@ -37,7 +37,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""PrimaryAttack"",
                     ""type"": ""PassThrough"",
                     ""id"": ""8c4abdf8-4099-493a-aa1a-129acec7c3df"",
                     ""expectedControlType"": """",
@@ -182,7 +182,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""PrimaryAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -193,7 +193,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Attack"",
+                    ""action"": ""PrimaryAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -297,7 +297,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_PrimaryAttack = m_Player.FindAction("PrimaryAttack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
@@ -360,7 +360,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_PrimaryAttack;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
@@ -368,7 +368,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         private @InputMap m_Wrapper;
         public PlayerActions(@InputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @PrimaryAttack => m_Wrapper.m_Player_PrimaryAttack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -383,9 +383,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
-                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
-                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @PrimaryAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryAttack;
+                @PrimaryAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryAttack;
+                @PrimaryAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryAttack;
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
@@ -399,9 +399,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Attack.started += instance.OnAttack;
-                @Attack.performed += instance.OnAttack;
-                @Attack.canceled += instance.OnAttack;
+                @PrimaryAttack.started += instance.OnPrimaryAttack;
+                @PrimaryAttack.performed += instance.OnPrimaryAttack;
+                @PrimaryAttack.canceled += instance.OnPrimaryAttack;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -451,7 +451,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
+        void OnPrimaryAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }

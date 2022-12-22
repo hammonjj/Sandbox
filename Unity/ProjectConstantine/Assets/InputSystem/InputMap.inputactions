@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "PrimaryAttack",
                     "type": "PassThrough",
                     "id": "8c4abdf8-4099-493a-aa1a-129acec7c3df",
                     "expectedControlType": "",
@@ -160,7 +160,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Attack",
+                    "action": "PrimaryAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -171,7 +171,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Attack",
+                    "action": "PrimaryAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
