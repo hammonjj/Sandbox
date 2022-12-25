@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Constantine;
 using UnityEngine;
 
@@ -18,6 +16,7 @@ public class PlayerAttack : MonoBehaviourBase
     [Tooltip("Where the player's attack spawns from")]
     public Transform AttackSpawnPoint;
 
+    public GameObject HeadAimTarget;
     public GameObject ProjectileAttack;
 
     //Attack
@@ -28,12 +27,11 @@ public class PlayerAttack : MonoBehaviourBase
 
     private float _attackRange = 5f;
 
-    private Animator _animator;
+    private float _headAimYOffset;
+    private float _headAimZOffset;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
-
         //Setup Input Events
         var playerInputs = GetComponent<PlayerInputs>();
         playerInputs.onPlayerPrimaryAttack += OnPrimaryAttack;
@@ -42,6 +40,9 @@ public class PlayerAttack : MonoBehaviourBase
         //Reset Timeouts
         _primaryAttackTimeoutCurrent = PrimaryAttackTimeout;
         _secondaryAttackTimeoutCurrent = SecondaryAttackTimeout;
+
+        _headAimYOffset = HeadAimTarget.transform.position.y;
+        _headAimZOffset = HeadAimTarget.transform.position.z;
     }
 
     private void OnPrimaryAttack()
@@ -55,7 +56,6 @@ public class PlayerAttack : MonoBehaviourBase
 
         _canPrimaryAttack = false;
         _primaryAttackTimeoutCurrent = PrimaryAttackTimeout;
-
         var projectileRotation = AttackSpawnPoint.rotation;
 
         //Soft Aim Lock:
@@ -64,6 +64,8 @@ public class PlayerAttack : MonoBehaviourBase
         var collidersHit = Physics.OverlapSphere(gameObject.transform.position, _attackRange);
         if(collidersHit.Length > 0)
         {
+            var enemyFound = false;
+
             //Might want to rotate character slightly to line up with shot
             foreach(var colliderHit in collidersHit)
             {
@@ -79,13 +81,24 @@ public class PlayerAttack : MonoBehaviourBase
                 if(Vector3.Dot(normalizedColliderVector, AttackSpawnPoint.forward) > 0.5)
                 {
                     LogDebug("Enemy Detected in Range");
+
+                    enemyFound = true;
                     projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
+                    HeadAimTarget.transform.position = colliderHit.transform.position;
+                    break;
                 }
+            }
+
+            if(!enemyFound)
+            {
+                HeadAimTarget.transform.localPosition = new Vector3(0, _headAimYOffset, _headAimZOffset);
             }
         }
 
-        //_animator?.SetBool(_animIDJump, true);
         Instantiate(ProjectileAttack, AttackSpawnPoint.position, projectileRotation);
+
+        //Eventually convert this to a lerp so that the head doesn't just snap back
+        Invoke("ReturnHeadPosition", 0.25f);
     }
 
     private void OnSecondaryAttack()
@@ -100,5 +113,11 @@ public class PlayerAttack : MonoBehaviourBase
 
         _secondaryAttackTimeoutCurrent -= Time.deltaTime;
         _canSecondaryAttack = _secondaryAttackTimeoutCurrent <= 0.0f;
+    }
+
+    private void ReturnHeadPosition()
+    {
+        LogDebug("ReturnHeadPosition Called");
+        HeadAimTarget.transform.localPosition = new Vector3(0, _headAimYOffset, _headAimZOffset);
     }
 }

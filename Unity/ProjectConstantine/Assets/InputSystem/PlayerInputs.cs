@@ -16,6 +16,7 @@ namespace Constantine
 		//Player Action Events
         public Action onPlayerPrimaryAttack;
         public Action onPlayerSecondaryAttack;
+		public Action onUseItem;
 
         private GameStateManager _gameStateManager;
 
@@ -38,6 +39,11 @@ namespace Constantine
         {
 			onPlayerSecondaryAttack?.Invoke();
         }
+
+		public void OnUseItem(InputValue value)
+        {
+			onUseItem?.Invoke();
+		}
 
         public void OnDash(InputValue value)
 		{
