@@ -4287,7 +4287,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 662356415}
     m_Active: 1
   - m_Rig: {fileID: 868985705}
-    m_Active: 1
+    m_Active: 0
   m_Effectors: []
 --- !u!114 &1762682285
 MonoBehaviour:

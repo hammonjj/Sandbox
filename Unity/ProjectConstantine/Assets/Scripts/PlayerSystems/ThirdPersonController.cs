@@ -214,7 +214,7 @@ namespace Constantine
                 _totaldashTime = 0f;
                 _dashTimeoutCurrent = DashTimeout;
 
-                _animator?.SetBool(PlayerConstants.AnimID_Jump, true);
+                //_animator?.SetBool(PlayerConstants.AnimID_Jump, true);
             }
         }
 
