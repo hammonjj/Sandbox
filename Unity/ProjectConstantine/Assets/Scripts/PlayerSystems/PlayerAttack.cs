@@ -58,9 +58,9 @@ public class PlayerAttack : MonoBehaviourBase
         //Base Target Positions
         _baseHeadPosition = new Vector3(0, HeadAimTarget.transform.position.y, HeadAimTarget.transform.position.z);
         _baseRightFiringPosition = new Vector3(
-            RightArmAimTarget.transform.position.x, 
-            RightArmAimTarget.transform.position.y, 
-            RightArmAimTarget.transform.position.z);
+            RightArmAimTarget.transform.localPosition.x, 
+            RightArmAimTarget.transform.localPosition.y, 
+            RightArmAimTarget.transform.localPosition.z);
     }
 
     private void OnPrimaryAttack()
