@@ -1,6 +1,7 @@
 using Constantine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerAttack : MonoBehaviourBase
 {
@@ -21,6 +22,7 @@ public class PlayerAttack : MonoBehaviourBase
     public GameObject HeadAimTarget;
     public GameObject LeftArmAimTarget;
     public GameObject RightArmAimTarget;
+    public GameObject RightArmAimMover;
 
     public GameObject ProjectileAttack;
 
@@ -44,12 +46,16 @@ public class PlayerAttack : MonoBehaviourBase
     private IEnumerator _returnHeadPositionCoroutine;
     private IEnumerator _returnFiringPositionsCoroutine;
 
+    private IRigConstraint _rightArmMoverConstraint;
+
     private void Awake()
     {
         //Setup Input Events
         var playerInputs = GetComponent<PlayerInputs>();
         playerInputs.onPlayerPrimaryAttack += OnPrimaryAttack;
         playerInputs.onPlayerSecondaryAttack += OnSecondaryAttack;
+
+        _rightArmMoverConstraint = RightArmAimMover.GetComponent<IRigConstraint>();
 
         //Reset Timeouts
         _primaryAttackTimeoutCurrent = PrimaryAttackTimeout;
@@ -91,8 +97,6 @@ public class PlayerAttack : MonoBehaviourBase
         if(collidersHit.Length > 0)
         {
             var enemyFound = false;
-
-            //Might want to rotate character slightly to line up with shot
             foreach(var colliderHit in collidersHit)
             {
                 if(colliderHit.gameObject.tag != "Enemy")
@@ -114,6 +118,7 @@ public class PlayerAttack : MonoBehaviourBase
                     //Adjust Aim Target Animations
                     HeadAimTarget.transform.position = colliderHit.transform.position;
                     RightArmAimTarget.transform.position = colliderHit.transform.position;
+                    _rightArmMoverConstraint.weight = 1.0f;
                     //LeftArm
                     break;
                 }
@@ -124,6 +129,7 @@ public class PlayerAttack : MonoBehaviourBase
                 HeadAimTarget.transform.localPosition = new Vector3(0, _baseHeadPosition.y, _baseHeadPosition.z);
                 RightArmAimTarget.transform.localPosition = new Vector3(
                     _baseRightFiringPosition.x, _baseRightFiringPosition.y, _baseRightFiringPosition.z);
+                _rightArmMoverConstraint.weight = 1.0f;
             }
         }
 
@@ -177,6 +183,7 @@ public class PlayerAttack : MonoBehaviourBase
         var startPosition = HeadAimTarget.transform.localPosition;
         while(returnTime < returnTimeDuration)
         {
+            _rightArmMoverConstraint.weight = Mathf.Lerp(1.0f, 0.115f, returnTime / returnTimeDuration);
             RightArmAimTarget.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, returnTime / returnTimeDuration);
             returnTime += Time.deltaTime;
             yield return null;
