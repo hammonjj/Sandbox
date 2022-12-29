@@ -1,4 +1,5 @@
 using Constantine;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviourBase
@@ -15,9 +16,16 @@ public class PlayerAttack : MonoBehaviourBase
     [Space(10)]
     [Tooltip("Where the player's attack spawns from")]
     public Transform AttackSpawnPoint;
+    public Transform[] AttackSpawnPoints;
 
     public GameObject HeadAimTarget;
+    public GameObject LeftArmAimTarget;
+    public GameObject RightArmAimTarget;
+
     public GameObject ProjectileAttack;
+
+    [Tooltip("Amount of time it takes for the head to return to it's original position after firing")]
+    public float HeadReturnTime = 0.33f;
 
     //Attack
     private bool _canPrimaryAttack = true;
@@ -27,8 +35,14 @@ public class PlayerAttack : MonoBehaviourBase
 
     private float _attackRange = 5f;
 
-    private float _headAimYOffset;
-    private float _headAimZOffset;
+    private Vector3 _baseHeadPosition;
+    private Vector3 _baseRightFiringPosition;
+
+    //Animation Controls
+    private bool _returnHeadPositionRunning = false;
+    private bool _returnFiringPositionsRunning = false;
+    private IEnumerator _returnHeadPositionCoroutine;
+    private IEnumerator _returnFiringPositionsCoroutine;
 
     private void Awake()
     {
@@ -41,8 +55,12 @@ public class PlayerAttack : MonoBehaviourBase
         _primaryAttackTimeoutCurrent = PrimaryAttackTimeout;
         _secondaryAttackTimeoutCurrent = SecondaryAttackTimeout;
 
-        _headAimYOffset = HeadAimTarget.transform.position.y;
-        _headAimZOffset = HeadAimTarget.transform.position.z;
+        //Base Target Positions
+        _baseHeadPosition = new Vector3(0, HeadAimTarget.transform.position.y, HeadAimTarget.transform.position.z);
+        _baseRightFiringPosition = new Vector3(
+            RightArmAimTarget.transform.position.x, 
+            RightArmAimTarget.transform.position.y, 
+            RightArmAimTarget.transform.position.z);
     }
 
     private void OnPrimaryAttack()
@@ -54,13 +72,21 @@ public class PlayerAttack : MonoBehaviourBase
 
         LogDebug("OnPrimaryAttack called");
 
+        if(_returnHeadPositionRunning)
+        {
+            StopCoroutine(_returnHeadPositionCoroutine);
+        }
+
+        if(_returnFiringPositionsRunning)
+        {
+            StopCoroutine(_returnFiringPositionsCoroutine);
+        }
+
         _canPrimaryAttack = false;
         _primaryAttackTimeoutCurrent = PrimaryAttackTimeout;
         var projectileRotation = AttackSpawnPoint.rotation;
 
-        //Soft Aim Lock:
-        //  - https://answers.unity.com/questions/498657/detect-colliders-in-an-arc.html
-        //  - Watch for performance issues - might need to put enemies on their own layer
+        //Watch for performance issues - might need to put enemies on their own layer
         var collidersHit = Physics.OverlapSphere(gameObject.transform.position, _attackRange);
         if(collidersHit.Length > 0)
         {
@@ -84,21 +110,29 @@ public class PlayerAttack : MonoBehaviourBase
 
                     enemyFound = true;
                     projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
+                    
+                    //Adjust Aim Target Animations
                     HeadAimTarget.transform.position = colliderHit.transform.position;
+                    RightArmAimTarget.transform.position = colliderHit.transform.position;
+                    //LeftArm
                     break;
                 }
             }
 
             if(!enemyFound)
             {
-                HeadAimTarget.transform.localPosition = new Vector3(0, _headAimYOffset, _headAimZOffset);
+                HeadAimTarget.transform.localPosition = new Vector3(0, _baseHeadPosition.y, _baseHeadPosition.z);
+                RightArmAimTarget.transform.localPosition = new Vector3(
+                    _baseRightFiringPosition.x, _baseRightFiringPosition.y, _baseRightFiringPosition.z);
             }
         }
 
         Instantiate(ProjectileAttack, AttackSpawnPoint.position, projectileRotation);
 
-        //Eventually convert this to a lerp so that the head doesn't just snap back
-        Invoke("ReturnHeadPosition", 0.25f);
+        _returnHeadPositionCoroutine = ReturnHeadPosition(_baseHeadPosition, HeadReturnTime);
+        _returnFiringPositionsCoroutine = ReturnFiringPositions(_baseRightFiringPosition, HeadReturnTime);
+        StartCoroutine(_returnHeadPositionCoroutine);
+        StartCoroutine(_returnFiringPositionsCoroutine);
     }
 
     private void OnSecondaryAttack()
@@ -115,9 +149,51 @@ public class PlayerAttack : MonoBehaviourBase
         _canSecondaryAttack = _secondaryAttackTimeoutCurrent <= 0.0f;
     }
 
-    private void ReturnHeadPosition()
+    private IEnumerator ReturnHeadPosition(Vector3 targetPosition, float returnTimeDuration)
     {
-        LogDebug("ReturnHeadPosition Called");
-        HeadAimTarget.transform.localPosition = new Vector3(0, _headAimYOffset, _headAimZOffset);
+        _returnHeadPositionRunning = true;
+        yield return CoroutineWaiter();
+
+        var returnTime = 0f;
+        var startPosition = HeadAimTarget.transform.localPosition;
+        while(returnTime < returnTimeDuration)
+        {
+            HeadAimTarget.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, returnTime / returnTimeDuration);
+            returnTime += Time.deltaTime;
+            yield return null;
+        }
+
+        HeadAimTarget.transform.localPosition = targetPosition;
+        _returnHeadPositionRunning = false;
+    }
+
+    private IEnumerator ReturnFiringPositions(Vector3 targetPosition, float returnTimeDuration)
+    {
+        _returnFiringPositionsRunning = true;
+
+        yield return CoroutineWaiter();
+
+        var returnTime = 0f;
+        var startPosition = HeadAimTarget.transform.localPosition;
+        while(returnTime < returnTimeDuration)
+        {
+            RightArmAimTarget.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, returnTime / returnTimeDuration);
+            returnTime += Time.deltaTime;
+            yield return null;
+        }
+
+        RightArmAimTarget.transform.localPosition = targetPosition;
+        _returnFiringPositionsRunning = false;
+    }
+
+    private IEnumerator CoroutineWaiter()
+    {
+        var totalWaitTime = 1f;
+        var waitTimeDuration = 0f;
+        while(waitTimeDuration < totalWaitTime)
+        {
+            waitTimeDuration += Time.deltaTime;
+            yield return null;
+        }
     }
 }
