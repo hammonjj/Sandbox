@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class AttackProjectileBase : MonoBehaviourBase
 {
+    public AttackProjectile AttackProjectile;
+    /*
     [Header("AttackBase")]
     public float AttackSpeed = 20f;
     public float AttackRange = 10f;
     public int AttackDamage = 5;
-
+    */
     private Vector3 _InitialPosition;
 
     private void Awake()
@@ -16,18 +18,20 @@ public class AttackProjectileBase : MonoBehaviourBase
 
     void Update()
     {
-        if(Vector3.Distance(_InitialPosition, gameObject.transform.position) > AttackRange)
+        if(Vector3.Distance(_InitialPosition, gameObject.transform.position) > AttackProjectile.AttackRange)
         {
             LogDebug("Projectile passed AttackRange - Destroying");
             Destroy(gameObject);
         }
 
         //Update Position
-        transform.Translate(Vector3.forward * Time.deltaTime * AttackSpeed);
+        transform.Translate(Vector3.forward * Time.deltaTime * AttackProjectile.AttackSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        AttackProjectile.OnProjectileHit(other.gameObject, gameObject);
+        /*
         if(other.gameObject.tag != "Enemy")
         {
             LogDebug($"Attack Hit Object - {other.gameObject.name}");
@@ -49,5 +53,6 @@ public class AttackProjectileBase : MonoBehaviourBase
             Destroy(gameObject);
             return;
         }
+        */
     }
 }

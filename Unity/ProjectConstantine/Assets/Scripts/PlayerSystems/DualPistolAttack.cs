@@ -27,18 +27,18 @@ namespace Assets.Scripts.PlayerSystems
 
             var playerInputs = GetComponent<PlayerInputs>();
             playerInputs.onPlayerPrimaryAttack += OnAttack;
-            /*
+            
             _baseLeftFiringPosition = new Vector3(
                 LeftArmAimTarget.transform.localPosition.x,
                 LeftArmAimTarget.transform.localPosition.y,
                 LeftArmAimTarget.transform.localPosition.z);
-            */
+            
             _baseRightFiringPosition = new Vector3(
                 RightArmAimTarget.transform.localPosition.x,
                 RightArmAimTarget.transform.localPosition.y,
                 RightArmAimTarget.transform.localPosition.z);
 
-            //_leftArmMoverConstraint = LeftArmAimMover.GetComponent<IRigConstraint>();
+            _leftArmMoverConstraint = LeftArmAimMover.GetComponent<IRigConstraint>();
             _rightArmMoverConstraint = RightArmAimMover.GetComponent<IRigConstraint>();
         }
 
@@ -63,24 +63,23 @@ namespace Assets.Scripts.PlayerSystems
             _canAttack = false;
             _attackCooldownCurrent = AttackCooldown;
 
-            //_leftArmMoverConstraint.weight = ShootAnimationConstraintWeight;
+            _leftArmMoverConstraint.weight = ShootAnimationConstraintWeight;
             _rightArmMoverConstraint.weight = ShootAnimationConstraintWeight;
 
             var (enemyPos, projectileRotation) = FindEnemiesToAttack();
             if(enemyPos == Vector3.zero)
             {
                 //Fire straight if no enemy found
-                /*
                 LeftArmAimTarget.transform.localPosition = new Vector3(
                     _baseLeftFiringPosition.x, _baseLeftFiringPosition.y, _baseLeftFiringPosition.z);
-                */
+                
                 RightArmAimTarget.transform.localPosition = new Vector3(
                     _baseRightFiringPosition.x, _baseRightFiringPosition.y, _baseRightFiringPosition.z);
             }
             else
             {
                 RightArmAimTarget.transform.position = enemyPos;
-                //LeftArmAimTarget.transform.position = enemyPos;
+                LeftArmAimTarget.transform.position = enemyPos;
             }
 
             Instantiate(AttackProjectile, AttackSpawnPoints[0].position, projectileRotation);
@@ -97,24 +96,22 @@ namespace Assets.Scripts.PlayerSystems
             while(returnTime < AimAnimationReturnTime)
             {
                 //Left Arm
-                /*
-                _leftArmMoverConstraint.weight = Mathf.Lerp(1.0f, 0.115f, returnTime / AimAnimationReturnTime);
+                _leftArmMoverConstraint.weight = Mathf.Lerp(
+                    ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
                 LeftArmAimTarget.transform.localPosition = Vector3.Lerp(
                     startPosition, _baseLeftFiringPosition, returnTime / AimAnimationReturnTime);
-                returnTime += Time.deltaTime;
-                */
 
                 //Right Arm
                 _rightArmMoverConstraint.weight = Mathf.Lerp(
                     ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
                 RightArmAimTarget.transform.localPosition = Vector3.Lerp(
                     startPosition, _baseRightFiringPosition, returnTime / AimAnimationReturnTime);
-                returnTime += Time.deltaTime;
 
+                returnTime += Time.deltaTime;
                 yield return null;
             }
 
-            //LeftArmAimTarget.transform.localPosition = _baseLeftFiringPosition;
+            LeftArmAimTarget.transform.localPosition = _baseLeftFiringPosition;
             RightArmAimTarget.transform.localPosition = _baseRightFiringPosition;
             
             _returnFiringPositionsRunning = false;
@@ -122,12 +119,11 @@ namespace Assets.Scripts.PlayerSystems
 
         private void ValidatePrerequisites()
         {
-            /*
             if(LeftArmAimTarget == null)
             {
 
             }
-            */
+
             if(RightArmAimTarget == null)
             {
 
