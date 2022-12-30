@@ -111,7 +111,6 @@ namespace Assets.Scripts.PlayerSystems
                     startPosition, _baseRightFiringPosition, returnTime / AimAnimationReturnTime);
                 returnTime += Time.deltaTime;
 
-                LogDebug($"Return Time: {returnTime} - AimAnimationReturnTime: {AimAnimationReturnTime}");
                 yield return null;
             }
 
