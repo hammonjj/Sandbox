@@ -1861,7 +1861,7 @@ MonoBehaviour:
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
       color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.55
+      size: 0.15
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
@@ -2360,7 +2360,7 @@ MonoBehaviour:
     m_Style:
       shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
       color: {r: 0, g: 1, b: 0.11449838, a: 0.5}
-      size: 0.15
+      size: 0.05
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
@@ -3711,7 +3711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538383984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.195, y: 1.059, z: 0}
+  m_LocalPosition: {x: -0.313, y: 1.059, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6651,6 +6651,8 @@ GameObject:
   - component: {fileID: 1762682285}
   - component: {fileID: 6982812147933622149}
   - component: {fileID: 6982812147933622148}
+  - component: {fileID: 6982812147933622150}
+  - component: {fileID: 6982812147933622151}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -6674,7 +6676,7 @@ MonoBehaviour:
   MoveSpeed: 5.33
   DashSpeed: 40
   DashTimeout: 1
-  DashTime: 0.06
+  DashTime: 0.1
   RotationSmoothTime: 0.015
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
@@ -7566,6 +7568,42 @@ MonoBehaviour:
   AimAnimationReturnTime: 0.33
   AttackSpawnPoints: []
   AttackProjectile: {fileID: 0}
+--- !u!114 &6982812147933622150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926083347132227}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca3f7965b3b5c941a0b983b4be67862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: 1
+  ActiveTime: 2
+  MeshRefreshRate: 0.1
+  ShaderMaterial: {fileID: 2100000, guid: e650c1841e779174bbb873ff9186ebd7, type: 2}
+  MeshDestroyDelay: 3
+  ShaderVariableRate: 0.1
+  ShaderVaraibleRefreshRate: 0.05
+--- !u!114 &6982812147933622151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926083347132227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda8199440b5bb248b9dae920084f2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: 1
+  DashSpeed: 40
+  DashTimeout: 1
+  DashTime: 0.1
+  IsDashing: 0
 --- !u!4 &6983258930626336602
 Transform:
   m_ObjectHideFlags: 0

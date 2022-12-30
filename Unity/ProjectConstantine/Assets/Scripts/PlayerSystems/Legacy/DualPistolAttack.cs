@@ -95,15 +95,17 @@ namespace Assets.Scripts.PlayerSystems
             var returnTime = 0f;
             while(returnTime < AimAnimationReturnTime)
             {
+                _leftArmMoverConstraint.weight = RunAnimationConstraintWeight;
+                _rightArmMoverConstraint.weight = RunAnimationConstraintWeight;
                 //Left Arm
-                _leftArmMoverConstraint.weight = Mathf.Lerp(
-                    ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
+                //_leftArmMoverConstraint.weight = Mathf.Lerp(
+                //    ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
                 LeftArmAimTarget.transform.localPosition = Vector3.Lerp(
                     startPosition, _baseLeftFiringPosition, returnTime / AimAnimationReturnTime);
 
                 //Right Arm
-                _rightArmMoverConstraint.weight = Mathf.Lerp(
-                    ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
+                //_rightArmMoverConstraint.weight = Mathf.Lerp(
+                //    ShootAnimationConstraintWeight, RunAnimationConstraintWeight, returnTime / AimAnimationReturnTime);
                 RightArmAimTarget.transform.localPosition = Vector3.Lerp(
                     startPosition, _baseRightFiringPosition, returnTime / AimAnimationReturnTime);
 

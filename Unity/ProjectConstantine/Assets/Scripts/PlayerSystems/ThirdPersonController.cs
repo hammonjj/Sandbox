@@ -11,16 +11,6 @@ namespace Constantine
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 5.335f;
 
-        [Tooltip("Dash speed of the character in m/s")]
-        public float DashSpeed = 15.335f;
-
-        [Space(10)]
-        [Tooltip("Time required to pass before being able to dash again. Set to 0f to instantly dash again")]
-        public float DashTimeout = 0.50f;
-
-        [Tooltip("The amount of time that the character will dash for")]
-        public float DashTime = 0.50f;
-
         [Space(10)]
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -60,17 +50,15 @@ namespace Constantine
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
-        //Dash
-        private bool _isDashing;
-        private bool _canDash = true;
-        private float _totaldashTime;
-        private float _dashTimeoutCurrent;
         private float _fallTimeoutDelta;
 
         private Animator _animator;
         private CharacterController _controller;
         private PlayerInputs _input;
         private GameObject _mainCamera;
+
+        //Abilities
+        private PlayerDash _playerDash;
 
         private void Awake()
         {
@@ -85,9 +73,9 @@ namespace Constantine
             _animator = GetComponent<Animator>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<PlayerInputs>();
+            _playerDash = GetComponent<PlayerDash>();
 
             //Reset timeouts on start
-            _dashTimeoutCurrent = DashTimeout;
             _fallTimeoutDelta = FallTimeout;
         }
 
@@ -95,7 +83,6 @@ namespace Constantine
         {
             JumpAndGravity();
             GroundedCheck();
-            Dash();
             Move();
         }
 
@@ -112,7 +99,7 @@ namespace Constantine
 
         private void Move()
         {
-            float targetSpeed = _isDashing ? DashSpeed : MoveSpeed;
+            var targetSpeed = _playerDash.IsDashing ? _playerDash.DashSpeed : MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -175,47 +162,6 @@ namespace Constantine
 
             _animator?.SetFloat(PlayerConstants.AnimID_Speed, _animationBlend);
             _animator?.SetFloat(PlayerConstants.AnimID_MotionSpeed, 1f);
-        }
-
-        private void Dash()
-        {
-            //Update Dash Timers
-            _dashTimeoutCurrent -= Time.deltaTime;
-
-            if(_isDashing)
-            {
-                _totaldashTime += Time.deltaTime;
-            }
-
-            //Update Dash Status
-            if(_dashTimeoutCurrent <= 0.0f)
-            {
-                _canDash = true;
-            }
-
-            if(_totaldashTime >= DashTime)
-            {
-                _isDashing = false;
-            }
-
-            /*
-            //I don't know if I want this or not
-            if (!Grounded)
-            {
-                _canDash = false;
-                return;
-            }
-            */
-
-            if (_input.Dash && _canDash)
-            {
-                _canDash = false;
-                _isDashing = true;
-                _totaldashTime = 0f;
-                _dashTimeoutCurrent = DashTimeout;
-
-                //_animator?.SetBool(PlayerConstants.AnimID_Jump, true);
-            }
         }
 
         private void JumpAndGravity()
