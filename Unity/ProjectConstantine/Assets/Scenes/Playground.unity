@@ -6651,7 +6651,6 @@ GameObject:
   - component: {fileID: 1762682285}
   - component: {fileID: 6982812147933622149}
   - component: {fileID: 6982812147933622148}
-  - component: {fileID: 6982812147933622150}
   - component: {fileID: 6982812147933622151}
   m_Layer: 8
   m_Name: PlayerArmature
@@ -6674,9 +6673,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: 1
   MoveSpeed: 5.33
-  DashSpeed: 40
-  DashTimeout: 1
-  DashTime: 0.1
   RotationSmoothTime: 0.015
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
@@ -7533,7 +7529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: 1
   AttackCooldown: 0.3
-  AttackRange: 5
+  AttackRange: 10
   SoftAimLockWidth: 0.5
   RunAnimationConstraintWeight: 0.115
   ShootAnimationConstraintWeight: 1
@@ -7541,7 +7537,7 @@ MonoBehaviour:
   AttackSpawnPoints:
   - {fileID: 603192920}
   - {fileID: 1139367345}
-  AttackProjectile: {fileID: 2551262679133917135, guid: 662afb948fdb6304ea94b6a955461085,
+  AttackProjectile: {fileID: 2264231896527433803, guid: 821ee1f4937939c4999d9c850963b6ea,
     type: 3}
   LeftArmAimMover: {fileID: 832771125}
   LeftArmAimTarget: {fileID: 661164317}
@@ -7568,25 +7564,6 @@ MonoBehaviour:
   AimAnimationReturnTime: 0.33
   AttackSpawnPoints: []
   AttackProjectile: {fileID: 0}
---- !u!114 &6982812147933622150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926083347132227}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca3f7965b3b5c941a0b983b4be67862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LoggingLevel: 1
-  ActiveTime: 2
-  MeshRefreshRate: 0.1
-  ShaderMaterial: {fileID: 2100000, guid: e650c1841e779174bbb873ff9186ebd7, type: 2}
-  MeshDestroyDelay: 3
-  ShaderVariableRate: 0.1
-  ShaderVaraibleRefreshRate: 0.05
 --- !u!114 &6982812147933622151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7604,6 +7581,11 @@ MonoBehaviour:
   DashTimeout: 1
   DashTime: 0.1
   IsDashing: 0
+  MeshRefreshRate: 0.005
+  ShaderMaterial: {fileID: 2100000, guid: e650c1841e779174bbb873ff9186ebd7, type: 2}
+  MeshDestroyDelay: 0.07
+  ShaderVariableRate: 0.1
+  ShaderVariableRefreshRate: 0.05
 --- !u!4 &6983258930626336602
 Transform:
   m_ObjectHideFlags: 0
@@ -8137,6 +8119,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 941785809587344800, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.17
+      objectReference: {fileID: 0}
     - target: {fileID: 1678179932331761816, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8182,6 +8169,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7ab977a21c92388468ee65ad1c0e5a78, type: 2}
+    - target: {fileID: 3514566724815061343, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.807753
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514566724815061343, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.6438937
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742884627347217635, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.17
+      objectReference: {fileID: 0}
     - target: {fileID: 3814548966972071594, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8247,6 +8249,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7ab977a21c92388468ee65ad1c0e5a78, type: 2}
+    - target: {fileID: 4888900691753681890, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888900691753681890, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.74
+      objectReference: {fileID: 0}
     - target: {fileID: 4918499915152233632, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
         type: 3}
       propertyPath: m_Name
