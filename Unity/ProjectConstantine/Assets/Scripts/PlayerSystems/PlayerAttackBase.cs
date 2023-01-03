@@ -79,7 +79,8 @@ public class PlayerAttackBase : MonoBehaviourBase
                 {
                     LogDebug("Enemy Detected in Range");
 
-                    retVector = colliderHit.transform.position;
+                    var attackTarget = colliderHit.gameObject.GetComponent<EnemyBase>().AttackTarget;
+                    retVector = attackTarget.transform.position;
                     projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
                     break;
                 }

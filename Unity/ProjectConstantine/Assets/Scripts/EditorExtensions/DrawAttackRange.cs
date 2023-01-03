@@ -4,12 +4,19 @@ namespace EditorExtensions
 {
     public class DrawAttackRange : MonoBehaviourBase
     {
+        public EnemyBaseObj EnemyObj;
+
         private void OnDrawGizmos()
         {
-            DrawWireArc(gameObject.transform.position, gameObject.transform.position, 90, 3);
+            var ArcPos = new Vector3(
+                gameObject.transform.position.x, 
+                gameObject.transform.position.y, 
+                gameObject.transform.position.z);
+
+            DrawAttackRangeArc(gameObject.transform.position, ArcPos, 90, 1);
         }
 
-        private void DrawWireArc(Vector3 position, Vector3 dir, float anglesRange, float radius, float maxSteps = 20)
+        private void DrawAttackRangeArc(Vector3 position, Vector3 dir, float anglesRange, float radius, float maxSteps = 20)
         {
             var srcAngles = GetAnglesFromDir(position, dir);
             var initialPos = position;
