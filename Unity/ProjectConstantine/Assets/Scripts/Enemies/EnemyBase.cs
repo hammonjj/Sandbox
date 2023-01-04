@@ -14,6 +14,7 @@ public class EnemyBase : MonoBehaviourBase
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
     private MeleeWeaponHit _meleeWeaponHit;
+    private Rigidbody _rigidBody;
 
     private int _currentHealth;
     private HealthBar _healthBar;
@@ -26,8 +27,6 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("AttackAnimationStarted");
 
         _isAttacking = true;
-        _animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
-        //_meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
     }
 
     public void AttackAnimationEnded()
@@ -35,20 +34,8 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("AttackAnimationEnded");
 
         _isAttacking = false;
-        _animator?.SetBool(PlayerConstants.AnimID_MutantAttack, false);
+        _animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
         _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
-    }
-
-    public void EnableWeaponHitbox()
-    {
-        //LogDebug("Enable Hitbox called");
-        
-    }
-
-    public void DisableWeaponHitbox()
-    {
-        //LogDebug("Disable Hitbox called");
-        
     }
 
     private void Awake()
@@ -76,27 +63,30 @@ public class EnemyBase : MonoBehaviourBase
             _foundPlayer = true;
         }
 
-        //Hang out if we haven't found the player
         if(!_foundPlayer)
         {
             //Idle or path around looking for player
             return;
         }
 
-        if(_foundPlayer)
+        if(_foundPlayer &&
+            Vector3.Distance(_player.transform.position, gameObject.transform.position) > EnemyObj.AttackRange)
         {
+            _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
+            _animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
             _navMeshAgent.SetDestination(_player.transform.position);
         }
 
         //Attack if close enough
-        if(!_isAttacking && Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
+        if(Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
         {
             Attack();
-            _isAttacking = true;
             return;
         }
 
-        _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
+        _animator?.SetFloat(
+            PlayerConstants.AnimID_Speed,
+            _rigidBody.velocity == Vector3.zero ? 0f : 2f);
     }
 
     public void TakeDamage(int damage)
@@ -120,21 +110,28 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("OnMeleeWeaponPlayerHit");
         _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
 
+        //Might get this earlier if there is a performance impact
         var playerHealth = other.gameObject.GetComponent<PlayerHealth>();
         playerHealth.TakeDamage(EnemyObj.AttackDamage);
     }
 
     private void Attack()
     {
+        if (_isAttacking)
+        {
+            return;
+        }
+
         LogDebug("Attacking Player");
-        _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
+        _isAttacking = true;
         _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
+        _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
     }
 
     private void SetupAi()
     {
         _navMeshAgent.speed = EnemyObj.MovementSpeed;
-        //_navMeshAgent.stoppingDistance = EnemyObj.AttackRange > 1 ? EnemyObj.AttackRange - 1 : 1;
+        _navMeshAgent.stoppingDistance = EnemyObj.AttackRange * .75f;
     }
 
     private void SetupComponents()
@@ -169,12 +166,25 @@ public class EnemyBase : MonoBehaviourBase
         {
             LogError($"Failed to get Melee Weapon Hit");
         }
+
+        _rigidBody = GetComponent<Rigidbody>();
+        if(_rigidBody == null)
+        {
+            LogError("Failed to get Rigid Body");
+        }
     }
 
     private void DebugLines()
     {
         var rotation = gameObject.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0);
+
+        //Attack Stop Range
+        Debug.DrawCircle(
+            gameObject.transform.position,
+            rotation,
+            EnemyObj.AttackRange * .75f,
+            Color.blue);
 
         //Attack Range
         Debug.DrawArc(

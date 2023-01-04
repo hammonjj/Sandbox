@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a18a5a1df77f249a175cdebfb26031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoggingLevel: 1
+  LoggingLevel: 0
   OnMeleeHit:
     m_PersistentCalls:
       m_Calls: []
@@ -4273,6 +4273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b61f56af1689fa4797b51ef795877e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   HealthBarImage: {fileID: 1499314145}
 --- !u!114 &1613704072
 MonoBehaviour:
@@ -4291,7 +4292,6 @@ MonoBehaviour:
   EnemyObj: {fileID: 11400000, guid: 50f09037603cf0d4a8ccd14611babb97, type: 2}
   Stop: 0
   DrawDebugLines: 1
-  _playerHealth: {fileID: 11400000, guid: bfb270dc4c5229248b3b87da43f632d2, type: 2}
 --- !u!1 &1620182395
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,7 +4509,6 @@ MonoBehaviour:
   EnemyObj: {fileID: 0}
   Stop: 1
   DrawDebugLines: 0
-  _playerHealth: {fileID: 0}
 --- !u!114 &1625047805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4558,6 +4557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b61f56af1689fa4797b51ef795877e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   HealthBarImage: {fileID: 1235314772}
 --- !u!1 &1629298606
 GameObject:
@@ -4647,7 +4647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff01b377c9714b9686d9f4127613f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 11400000, guid: bfb270dc4c5229248b3b87da43f632d2, type: 2}
+  LoggingLevel: 1
 --- !u!114 &1762682270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4660,6 +4660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b61f56af1689fa4797b51ef795877e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   HealthBarImage: {fileID: 531876467}
 --- !u!114 &1762682284
 MonoBehaviour:
@@ -5159,6 +5160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b61f56af1689fa4797b51ef795877e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   HealthBarImage: {fileID: 1609584328}
 --- !u!195 &1995945438
 NavMeshAgent:
@@ -5213,7 +5215,6 @@ MonoBehaviour:
   EnemyObj: {fileID: 0}
   Stop: 1
   DrawDebugLines: 0
-  _playerHealth: {fileID: 0}
 --- !u!136 &1995945441
 CapsuleCollider:
   m_ObjectHideFlags: 0

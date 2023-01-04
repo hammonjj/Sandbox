@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviourBase
 {
     public Action onPlayerDeath;
 
@@ -20,23 +20,10 @@ public class PlayerHealth : MonoBehaviour
         _currentHealth = _maxHealth;
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
-
-    private void Update()
-    {
-        /*
-        if(_playerHealth.CurrentHealth <= 0)
-        {
-            //Invoke Death Animation
-            onPlayerDeath?.Invoke();
-        }
-
-        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth); 
-        */
-    }
-
     
     public void TakeDamage(int incomingDamage)
     {
+        LogDebug("Updating Health");
         _currentHealth -= incomingDamage;
 
         if(_currentHealth <= 0)
