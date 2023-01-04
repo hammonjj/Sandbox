@@ -10,9 +10,6 @@ public class EnemyBase : MonoBehaviourBase
     public bool Stop;
     public bool DrawDebugLines;
 
-    [SerializeField]
-    private PlayerHealthObj _playerHealth;
-
     private GameObject _player;
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
@@ -30,7 +27,7 @@ public class EnemyBase : MonoBehaviourBase
 
         _isAttacking = true;
         _animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
-        _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
+        //_meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
     }
 
     public void AttackAnimationEnded()
@@ -123,12 +120,14 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("OnMeleeWeaponPlayerHit");
         _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
 
-        _playerHealth.CurrentHealth -= EnemyObj.AttackDamage;
+        var playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+        playerHealth.TakeDamage(EnemyObj.AttackDamage);
     }
 
     private void Attack()
     {
         LogDebug("Attacking Player");
+        _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
         _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
     }
 

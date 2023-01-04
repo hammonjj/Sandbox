@@ -5,8 +5,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public Action onPlayerDeath;
 
-    [SerializeField]
-    private PlayerHealthObj _playerHealth;
+    private int _currentHealth;
+    private int _maxHealth = 100;
 
     private GameStateManager _gameStateManager;
     private HealthBar _healthBar;
@@ -16,31 +16,36 @@ public class PlayerHealth : MonoBehaviour
         _healthBar = GetComponent<HealthBar>();
         _gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         onPlayerDeath += _gameStateManager.OnPlayerDeath;
+
+        _currentHealth = _maxHealth;
+        _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
 
     private void Update()
     {
+        /*
         if(_playerHealth.CurrentHealth <= 0)
         {
             //Invoke Death Animation
             onPlayerDeath?.Invoke();
         }
 
-        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth);   
+        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth); 
+        */
     }
 
     
     public void TakeDamage(int incomingDamage)
     {
-        _playerHealth.CurrentHealth -= incomingDamage;
+        _currentHealth -= incomingDamage;
 
-        if(_playerHealth.CurrentHealth <= 0)
+        if(_currentHealth <= 0)
         {
             //Invoke Death Animation
             onPlayerDeath?.Invoke();
         }
 
-        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth);
+        _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
     
 }
