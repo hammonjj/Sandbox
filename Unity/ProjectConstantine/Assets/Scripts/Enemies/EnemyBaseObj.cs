@@ -16,7 +16,7 @@ public class EnemyBaseObj : ScriptableObject
     public float AttackWidth;
     public float AttackRange;
     public float AttackSpeed;
-    public float AttackDamage;
+    public int AttackDamage;
 
     public virtual void OnAttack() { }
     public virtual int GetAttackAnimationID() { return 0; }

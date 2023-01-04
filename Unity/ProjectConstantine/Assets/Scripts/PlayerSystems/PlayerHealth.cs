@@ -1,36 +1,46 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int MaxHealth = 100;
     public Action onPlayerDeath;
 
-    private int _currentHealth;
+    [SerializeField]
+    private PlayerHealthObj _playerHealth;
+
     private GameStateManager _gameStateManager;
     private HealthBar _healthBar;
 
     private void Awake()
     {
-        _currentHealth = MaxHealth;
-
         _healthBar = GetComponent<HealthBar>();
         _gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         onPlayerDeath += _gameStateManager.OnPlayerDeath;
     }
 
-    public void TakeDamage(int incomingDamage)
+    private void Update()
     {
-        _currentHealth -= incomingDamage;
-
-        if(_currentHealth <= 0)
+        if(_playerHealth.CurrentHealth <= 0)
         {
             //Invoke Death Animation
             onPlayerDeath?.Invoke();
         }
 
-        _healthBar.UpdateHealth((float)_currentHealth / MaxHealth);
+        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth);   
     }
+
+    
+    public void TakeDamage(int incomingDamage)
+    {
+        _playerHealth.CurrentHealth -= incomingDamage;
+
+        if(_playerHealth.CurrentHealth <= 0)
+        {
+            //Invoke Death Animation
+            onPlayerDeath?.Invoke();
+        }
+
+        _healthBar.UpdateHealth((float)_playerHealth.CurrentHealth / _playerHealth.MaxHealth);
+    }
+    
 }

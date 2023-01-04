@@ -10,19 +10,136 @@ public class EnemyBase : MonoBehaviourBase
     public bool Stop;
     public bool DrawDebugLines;
 
+    [SerializeField]
+    private PlayerHealthObj _playerHealth;
+
     private GameObject _player;
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
+    private MeleeWeaponHit _meleeWeaponHit;
 
     private int _currentHealth;
     private HealthBar _healthBar;
 
     private bool _foundPlayer = false;
+    private bool _isAttacking = false;
+    
+    public void AttackAnimationStarted()
+    {
+        LogDebug("AttackAnimationStarted");
+
+        _isAttacking = true;
+        _animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
+        _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
+    }
+
+    public void AttackAnimationEnded()
+    {
+        LogDebug("AttackAnimationEnded");
+
+        _isAttacking = false;
+        _animator?.SetBool(PlayerConstants.AnimID_MutantAttack, false);
+        _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
+    }
+
+    public void EnableWeaponHitbox()
+    {
+        //LogDebug("Enable Hitbox called");
+        
+    }
+
+    public void DisableWeaponHitbox()
+    {
+        //LogDebug("Disable Hitbox called");
+        
+    }
 
     private void Awake()
     {
         MessageEnding = $"EnemyObj: {EnemyObj.name} - Name: {name}";
+        SetupComponents();
+        SetupAi();
+    }
 
+    private void Update()
+    {
+        if(DrawDebugLines)
+        {
+            DebugLines();
+        }
+
+        if(Stop)
+        {
+            return;
+        }
+
+        if(!_foundPlayer && 
+            Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.DetectionRange)
+        {
+            _foundPlayer = true;
+        }
+
+        //Hang out if we haven't found the player
+        if(!_foundPlayer)
+        {
+            //Idle or path around looking for player
+            return;
+        }
+
+        if(_foundPlayer)
+        {
+            _navMeshAgent.SetDestination(_player.transform.position);
+        }
+
+        //Attack if close enough
+        if(!_isAttacking && Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
+        {
+            Attack();
+            _isAttacking = true;
+            return;
+        }
+
+        _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        LogDebug($"I got hit - Current Health: {_currentHealth}");
+
+        _currentHealth -= damage;
+        if(_currentHealth <= 0)
+        {
+            LogDebug("I Died");
+            //Play death animation and despawn
+            Destroy(gameObject);
+            return;
+        }
+
+        _healthBar.UpdateHealth((float)_currentHealth / EnemyObj.MaxHealth);
+    }
+
+    private void OnMeleeWeaponPlayerHit(Collider other)
+    {
+        LogDebug("OnMeleeWeaponPlayerHit");
+        _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
+
+        _playerHealth.CurrentHealth -= EnemyObj.AttackDamage;
+    }
+
+    private void Attack()
+    {
+        LogDebug("Attacking Player");
+        _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
+    }
+
+    private void SetupAi()
+    {
+        _navMeshAgent.speed = EnemyObj.MovementSpeed;
+        //_navMeshAgent.stoppingDistance = EnemyObj.AttackRange > 1 ? EnemyObj.AttackRange - 1 : 1;
+    }
+
+    private void SetupComponents()
+    {
         _player = GameObject.FindGameObjectWithTag(PlayerConstants.Player);
         if(_player == null)
         {
@@ -48,84 +165,11 @@ public class EnemyBase : MonoBehaviourBase
             LogError($"Failed to get Animator");
         }
 
-        SetupAi();
-    }
-
-    private void Update()
-    {
-        if(DrawDebugLines)
+        _meleeWeaponHit = GetComponentInChildren<MeleeWeaponHit>();
+        if(_meleeWeaponHit == null)
         {
-            DebugLines();
+            LogError($"Failed to get Melee Weapon Hit");
         }
-
-        if(Stop)
-        {
-            return;
-        }
-
-        if(!_foundPlayer && 
-            Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.DetectionRange)
-        {
-            _foundPlayer = true;
-        }
-
-        //Hang out if we haven't found the player
-        if(!_foundPlayer)
-        {
-            return;
-        }
-
-        if(_foundPlayer)
-        {
-            _navMeshAgent.SetDestination(_player.transform.position);
-        }
-
-        //Attack if close enough
-        if(Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
-        {
-            Attack();
-            _animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
-            return;
-        }
-        else
-        {
-            _animator?.SetBool(PlayerConstants.AnimID_MutantAttack, false);
-        }
-
-        _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
-    }
-
-    public void TakeDamage(int damage)
-    {
-        LogDebug($"I got hit - Current Health: {_currentHealth}");
-
-        _currentHealth -= damage;
-        if(_currentHealth <= 0)
-        {
-            LogDebug("I Died");
-            //Play death animation and despawn
-            Destroy(gameObject);
-            return;
-        }
-
-        _healthBar.UpdateHealth((float)_currentHealth / EnemyObj.MaxHealth);
-    }
-
-    private void Attack()
-    {
-        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            return;
-        }
-
-        LogDebug("Attacking Player");
-        _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
-    }
-
-    private void SetupAi()
-    {
-        _navMeshAgent.speed = EnemyObj.MovementSpeed;
-        //_navMeshAgent.stoppingDistance = EnemyObj.AttackRange > 1 ? EnemyObj.AttackRange - 1 : 1;
     }
 
     private void DebugLines()
