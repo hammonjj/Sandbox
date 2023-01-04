@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviourBase
 {
-    public GameObject AttackTarget;
+    public GameObject AttackTarget; //Where the player will shoot the enemy
     public EnemyBaseObj EnemyObj;
     
     [Header("Debugging")]
@@ -21,12 +21,12 @@ public class EnemyBase : MonoBehaviourBase
 
     private bool _foundPlayer = false;
     private bool _isAttacking = false;
-    
+    private bool _canAttack = true;
+    private float _attackCooldownCurrent;
+
     public void AttackAnimationStarted()
     {
         LogDebug("AttackAnimationStarted");
-
-        _isAttacking = true;
     }
 
     public void AttackAnimationEnded()
@@ -42,12 +42,15 @@ public class EnemyBase : MonoBehaviourBase
     {
         MessageEnding = $"EnemyObj: {EnemyObj.name} - Name: {name}";
         SetupComponents();
-        SetupAi();
     }
 
     private void Update()
     {
-        if(DrawDebugLines)
+        _attackCooldownCurrent -= Time.deltaTime;
+        _canAttack = _attackCooldownCurrent <= 0.0f;
+
+        //Debugging
+        if (DrawDebugLines)
         {
             DebugLines();
         }
@@ -57,6 +60,7 @@ public class EnemyBase : MonoBehaviourBase
             return;
         }
 
+        //Before the player has been found
         if(!_foundPlayer && 
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.DetectionRange)
         {
@@ -69,24 +73,24 @@ public class EnemyBase : MonoBehaviourBase
             return;
         }
 
+        //After the player has been found
         if(_foundPlayer &&
+            !_isAttacking &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) > EnemyObj.AttackRange)
         {
             _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
-            _animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
+            //_animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
             _navMeshAgent.SetDestination(_player.transform.position);
         }
 
-        //Attack if close enough
-        if(Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
+        if(!_isAttacking &&
+            _canAttack &&
+            Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
         {
             Attack();
-            return;
+            _attackCooldownCurrent = EnemyObj.AttackCooldown;
+            //_navMeshAgent.ResetPath();
         }
-
-        _animator?.SetFloat(
-            PlayerConstants.AnimID_Speed,
-            _rigidBody.velocity == Vector3.zero ? 0f : 2f);
     }
 
     public void TakeDamage(int damage)
@@ -117,21 +121,12 @@ public class EnemyBase : MonoBehaviourBase
 
     private void Attack()
     {
-        if (_isAttacking)
-        {
-            return;
-        }
-
         LogDebug("Attacking Player");
+
         _isAttacking = true;
+        //_animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
         _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
         _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
-    }
-
-    private void SetupAi()
-    {
-        _navMeshAgent.speed = EnemyObj.MovementSpeed;
-        _navMeshAgent.stoppingDistance = EnemyObj.AttackRange * .75f;
     }
 
     private void SetupComponents()
@@ -146,6 +141,11 @@ public class EnemyBase : MonoBehaviourBase
         if(_navMeshAgent == null)
         {
             LogError($"Failed to get NavMeshAgent");
+        }
+        else
+        {
+            _navMeshAgent.speed = EnemyObj.MovementSpeed;
+            _navMeshAgent.stoppingDistance = EnemyObj.AttackRange * .75f;
         }
 
         _currentHealth = EnemyObj.MaxHealth;

@@ -19,4 +19,5 @@ MonoBehaviour:
   AttackWidth: 90
   AttackRange: 2
   AttackSpeed: 2
+  AttackCooldown: 0.1
   AttackDamage: 10
