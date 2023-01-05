@@ -3,7 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviourBase
 {
-    public GameObject AttackTarget; //Where the player will shoot the enemy
+    [Tooltip("Where on the mesh the player will shoot the enemy")]
+    public GameObject AttackTarget;
     public EnemyBaseObj EnemyObj;
     
     [Header("Debugging")]
@@ -34,6 +35,7 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("AttackAnimationEnded");
 
         _isAttacking = false;
+        _attackCooldownCurrent = EnemyObj.AttackCooldown;
         _animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
         _meleeWeaponHit.OnMeleeHit.RemoveListener(OnMeleeWeaponPlayerHit);
     }
@@ -79,7 +81,6 @@ public class EnemyBase : MonoBehaviourBase
             Vector3.Distance(_player.transform.position, gameObject.transform.position) > EnemyObj.AttackRange)
         {
             _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
-            //_animator?.SetBool(EnemyObj.GetAttackAnimationID(), false);
             _navMeshAgent.SetDestination(_player.transform.position);
         }
 
@@ -88,7 +89,6 @@ public class EnemyBase : MonoBehaviourBase
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyObj.AttackRange)
         {
             Attack();
-            _attackCooldownCurrent = EnemyObj.AttackCooldown;
             //_navMeshAgent.ResetPath();
         }
     }
@@ -124,8 +124,8 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug("Attacking Player");
 
         _isAttacking = true;
-        //_animator?.SetFloat(PlayerConstants.AnimID_Speed, 0f);
         _animator?.SetBool(EnemyObj.GetAttackAnimationID(), true);
+        
         _meleeWeaponHit.OnMeleeHit.AddListener(OnMeleeWeaponPlayerHit);
     }
 
