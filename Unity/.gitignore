@@ -36,3 +36,5 @@ sysinfo.txt
 
 # Unigore Meta files
 !*.meta
+
+![Pp]ackages/*
