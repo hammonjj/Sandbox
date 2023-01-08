@@ -2,30 +2,32 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject ObjectToFollow;
-
-    private Transform _transform;
-
     private float offset_x;
     private float offset_y;
     private float offset_z;
+    private Transform _transform;
+    private GameObject _playerToFollow;
 
-    void Start()
+    private void Awake()
+    {
+        _playerToFollow = GameObject.FindGameObjectWithTag("Player");
+    }
+    private void Start()
     {
         _transform = gameObject.transform;
 
         //Need to distance
         offset_z = _transform.position.z;
-        offset_x = ObjectToFollow.transform.position.x - _transform.position.x;
-        offset_y = ObjectToFollow.transform.position.y + _transform.position.y;
+        offset_x = _playerToFollow.transform.position.x - _transform.position.x;
+        offset_y = _playerToFollow.transform.position.y + _transform.position.y;
     }
 
-    void Update()
+    private void Update()
     {
         var newPos = new Vector3(
-            ObjectToFollow.transform.position.x - offset_x,
-            ObjectToFollow.transform.position.y + offset_y,
-            ObjectToFollow.transform.position.z + offset_z);
+            _playerToFollow.transform.position.x - offset_x,
+            _playerToFollow.transform.position.y + offset_y,
+            _playerToFollow.transform.position.z + offset_z);
 
         _transform.position = newPos;
     }

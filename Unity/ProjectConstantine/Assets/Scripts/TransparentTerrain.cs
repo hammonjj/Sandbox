@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class TransparentTerrain : MonoBehaviourBase
 {
-    public Transform PlayerTransform;
     public float TransparentAlpha = 0.5f;
 
+    private GameObject _playerTransform;
     private List<GameObject> _currentlytransparentTerrain = new List<GameObject>();
+
+    private void Awake()
+    {
+        _playerTransform = GameObject.FindGameObjectWithTag("Player");
+    }
 
     //Thoughts:
     //  - Use coroutines to fade out the objects over a half a second
     //  - Understand how the shader code works
     //      - Watch: https://www.youtube.com/watch?v=vmLIy62Gsnk
-    
-    void Update()
+    private void Update()
     {
         //Calculate GameObjects in between the player and camera
-        var distCalculate = Vector3.Distance(PlayerTransform.position, Camera.main.transform.position);
-        var castRay = new Ray(Camera.main.transform.position, PlayerTransform.position - Camera.main.transform.position);
+        var distCalculate = Vector3.Distance(_playerTransform.transform.position, Camera.main.transform.position);
+        var castRay = new Ray(Camera.main.transform.position, _playerTransform.transform.position - Camera.main.transform.position);
 
         var rayCastHits = Physics.RaycastAll(castRay, distCalculate);
         if(rayCastHits.Length == 0)

@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviourBase
 {
     public GameObject PauseMenu;
 
     public bool IsGamePaused { get; private set; }
+    public bool AdvanceScenePressed;
 
-    public void Awake()
+    private void Awake()
     {
         
     }
@@ -25,5 +27,12 @@ public class GameStateManager : MonoBehaviourBase
     public void OnPlayerDeath()
     {
         LogDebug("Player has died");
+    }
+
+    public void AdvanceToScene(string sceneName)
+    {
+        
+        LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - Loading Scene: {sceneName}");
+        //SceneManager.LoadScene(sceneName);
     }
 }

@@ -14,7 +14,7 @@ namespace Constantine
 		public bool Dash;
 
 		//Player Action Events
-        public Action onPlayerPrimaryAttack;
+		public Action onPlayerPrimaryAttack;
         public Action onPlayerSecondaryAttack;
 
 		public Action OnPlayerDash;
@@ -53,6 +53,11 @@ namespace Constantine
 			OnPlayerDash?.Invoke();
 		}
 
+		public void OnAdvanceScene(InputValue value)
+        {
+			_gameStateManager.AdvanceScenePressed = value.isPressed;
+
+		}
         public void OnPause(InputValue value)
         {
             LogDebug("Paused Pressed");

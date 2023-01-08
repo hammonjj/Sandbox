@@ -80,7 +80,7 @@ public class EnemyBase : MonoBehaviourBase
             !_isAttacking &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) > EnemyObj.AttackRange)
         {
-            _animator?.SetFloat(PlayerConstants.AnimID_Speed, 2f);
+            _animator?.SetFloat(Constants.AnimID_Speed, 2f);
             _navMeshAgent.SetDestination(_player.transform.position);
         }
 
@@ -131,7 +131,7 @@ public class EnemyBase : MonoBehaviourBase
 
     private void SetupComponents()
     {
-        _player = GameObject.FindGameObjectWithTag(PlayerConstants.Player);
+        _player = GameObject.FindGameObjectWithTag(Constants.Player);
         if(_player == null)
         {
             LogError($"Unable to find player");

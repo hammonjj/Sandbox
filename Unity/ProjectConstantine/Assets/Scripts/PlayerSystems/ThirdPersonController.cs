@@ -94,7 +94,7 @@ namespace Constantine
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
-            _animator?.SetBool(PlayerConstants.AnimID_Grounded, Grounded);
+            _animator?.SetBool(Constants.AnimID_Grounded, Grounded);
         }
 
         private void Move()
@@ -160,8 +160,8 @@ namespace Constantine
                                  new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             }
 
-            _animator?.SetFloat(PlayerConstants.AnimID_Speed, _animationBlend);
-            _animator?.SetFloat(PlayerConstants.AnimID_MotionSpeed, 1f);
+            _animator?.SetFloat(Constants.AnimID_Speed, _animationBlend);
+            _animator?.SetFloat(Constants.AnimID_MotionSpeed, 1f);
         }
 
         private void JumpAndGravity()
@@ -170,8 +170,8 @@ namespace Constantine
             {
                 _fallTimeoutDelta = FallTimeout;
 
-                _animator?.SetBool(PlayerConstants.AnimID_Jump, false);
-                _animator?.SetBool(PlayerConstants.AnimID_FreeFall, false);
+                _animator?.SetBool(Constants.AnimID_Jump, false);
+                _animator?.SetBool(Constants.AnimID_FreeFall, false);
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -188,7 +188,7 @@ namespace Constantine
                 }
                 else
                 {
-                    _animator?.SetBool(PlayerConstants.AnimID_FreeFall, true);
+                    _animator?.SetBool(Constants.AnimID_FreeFall, true);
                 }
             }
 

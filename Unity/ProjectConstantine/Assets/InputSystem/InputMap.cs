@@ -80,6 +80,15 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AdvanceScene"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""bf08174f-4568-4551-bae8-a497709665c7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -280,6 +289,28 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d27bfa74-415f-43df-b8a7-86687f2b6142"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AdvanceScene"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edf57047-881c-4ad2-8629-0fd41efda9bf"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AdvanceScene"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -342,6 +373,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
+        m_Player_AdvanceScene = m_Player.FindAction("AdvanceScene", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -407,6 +439,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_UseItem;
+    private readonly InputAction m_Player_AdvanceScene;
     public struct PlayerActions
     {
         private @InputMap m_Wrapper;
@@ -417,6 +450,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
+        public InputAction @AdvanceScene => m_Wrapper.m_Player_AdvanceScene;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -444,6 +478,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @UseItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseItem;
+                @AdvanceScene.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAdvanceScene;
+                @AdvanceScene.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAdvanceScene;
+                @AdvanceScene.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAdvanceScene;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -466,6 +503,9 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
+                @AdvanceScene.started += instance.OnAdvanceScene;
+                @AdvanceScene.performed += instance.OnAdvanceScene;
+                @AdvanceScene.canceled += instance.OnAdvanceScene;
             }
         }
     }
@@ -514,5 +554,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnAdvanceScene(InputAction.CallbackContext context);
     }
 }

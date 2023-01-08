@@ -8,6 +8,7 @@ TagManager:
   - TransparentTerrain
   - Enemy
   - PlayerAttack
+  - GameManager
   layers:
   - Default
   - TransparentFX
