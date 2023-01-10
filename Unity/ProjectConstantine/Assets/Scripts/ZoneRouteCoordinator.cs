@@ -56,6 +56,8 @@ public class ZoneRouteCoordinator
 
         var ret = new List<Constants.SceneType>();
 
+        /* Turn this in to a lottery instead of calculating odds */
+
         //First decide on fight or not
         var chanceOfFight = ChanceOfFight + ChanceOfElite;
 
