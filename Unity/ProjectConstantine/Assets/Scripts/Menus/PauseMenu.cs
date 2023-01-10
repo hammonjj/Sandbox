@@ -5,7 +5,7 @@ public class PauseMenu : MonoBehaviourBase
 {
     public string MainMenu;
     public GameObject OptionsScreen;
-    public GameStateManager GameStateManager;
+    public SceneStateManager GameStateManager;
 
     public void ResumeGame()
     {

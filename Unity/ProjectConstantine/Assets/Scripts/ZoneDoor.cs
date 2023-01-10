@@ -4,48 +4,61 @@ using UnityEngine.SceneManagement;
 
 public class ZoneDoor : MonoBehaviourBase
 {
-    public string SceneNameToGoTo;
-    public GameObject NextSceneUITextObj;
+    public Constants.Scenes SceneToGoTo;
+    
 
     private bool _isPlayerCloseEnough;
-    private GameStateManager _gameStateManager;
+    private GameObject _nextSceneUITextObj;
+    private SceneStateManager _sceneStateManager;
+
+    private TextMeshProUGUI _nextSceneUIText;
 
     private void Awake()
     {
-        NextSceneUITextObj.SetActive(false);
-        var text = NextSceneUITextObj.GetComponent<TextMeshProUGUI>();
-        text.text = $"Press R1 or F to Advance to {SceneNameToGoTo}";
+        _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.NextZoneText);
+        if(_nextSceneUITextObj == null)
+        {
+            LogError("Couldn't located NextZoneText game object");
+        }
+        else
+        {
+            _nextSceneUITextObj.SetActive(false);
+            _nextSceneUIText = _nextSceneUITextObj.GetComponent<TextMeshProUGUI>();
+        }
 
-        _gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager).GetComponent<SceneStateManager>();
+        var doorManager = GameObject.FindGameObjectWithTag(Constants.DoorManager).GetComponent<DoorManager>();
+        doorManager.AddDoor(this);
     }
 
     private void Update()
     {
-        if(_isPlayerCloseEnough && _gameStateManager.AdvanceScenePressed)
+        if(_isPlayerCloseEnough && _sceneStateManager.AdvanceScenePressed)
         {
-            SceneManager.LoadScene(SceneNameToGoTo);
+            _sceneStateManager.AdvanceToScene(SceneToGoTo);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == Constants.Player)
         {
             LogDebug("Player Entered Exit Zone");
             _isPlayerCloseEnough = true;
 
-            NextSceneUITextObj.SetActive(true);
+            _nextSceneUIText.text = $"Press R1 or F to Advance to {SceneToGoTo}";
+            _nextSceneUITextObj.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == Constants.Player)
         {
             _isPlayerCloseEnough = false;
             LogDebug("Player Left Exit Zone");
 
-            NextSceneUITextObj.SetActive(false);
+            _nextSceneUITextObj.SetActive(false);
         }
     }
 }

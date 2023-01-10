@@ -20,12 +20,13 @@ namespace Constantine
 		public Action OnPlayerDash;
 		public Action onUseItem;
 
-        private GameStateManager _gameStateManager;
+        private SceneStateManager _gameStateManager;
 
         void Awake()
         {
-            _gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
-        }
+            //_gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
+			_gameStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager).GetComponent<SceneStateManager>();
+		}
 
         public void OnMove(InputValue value)
 		{

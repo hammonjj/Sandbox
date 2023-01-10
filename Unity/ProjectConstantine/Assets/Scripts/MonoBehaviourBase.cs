@@ -33,7 +33,8 @@ public class MonoBehaviourBase : MonoBehaviour
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
-        if((LoggingLevel & LoggingMask.Warning) != 0)
+        if((LoggingLevel & LoggingMask.Warning) != 0 ||
+            (LoggingLevel & LoggingMask.Error) != 0)
         {
             Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }
@@ -43,7 +44,9 @@ public class MonoBehaviourBase : MonoBehaviour
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
-        if((LoggingLevel & LoggingMask.Error) != 0)
+        if((LoggingLevel & LoggingMask.Debug) != 0 ||
+            (LoggingLevel & LoggingMask.Warning) != 0 ||
+            (LoggingLevel & LoggingMask.Error) != 0)
         {
             Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
         }

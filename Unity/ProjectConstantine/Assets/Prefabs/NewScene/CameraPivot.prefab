@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1512362194405938312}
   m_Layer: 0
   m_Name: NextZoneText
-  m_TagString: Untagged
+  m_TagString: NextZoneText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -673,4 +673,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e009aee5e8ab4d5384af1a4c5a89497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToFollow: {fileID: 0}

@@ -3,7 +3,16 @@
 public static class Constants
 {
     //GameObject Tags
-    public const string Player = "Player";
+    public static string Enemy = "Enemy";
+    public static string Player = "Player";
+    public static string GameManager = "GameManager";
+    public static string SceneStateManager = "SceneStateManager";
+    public static string PlayerAttack = "PlayerAttack";
+    public static string NextZoneText = "NextZoneText";
+    public static string TransparentTerrain = "TransparentTerrain";
+    public static string PauseMenu = "PauseMenu";
+    public static string DoorManager = "DoorManager";
+    public static string GameStateManager = "GameStateManager";
 
     //Animation IDs
     public static int AnimID_Speed = Animator.StringToHash("Speed");
@@ -15,7 +24,40 @@ public static class Constants
     //Mutant
     public static int AnimID_MutantAttack = Animator.StringToHash("MutantAttack");
 
-    //Scenes
-    public static string TrainingGround = "Training Ground";
+    public enum Scenes
+    {
+        None,
+        TrainingGround,
+        
+        Zone1_Any,
+        Zone1_Shop,
+        Zone1_Rest,
+        Zone1_Boss,
+        Zone1_Story,
+        Zone1_OneExit,
+        Zone1_TwoExits,
+        Zone1_ThreeExits
+    }
+
+    public enum SceneType
+    {
+        None,
+
+        Shop,
+        Rest,
+        Boss,
+        Story,
+        OneExit,
+        TwoExits,
+        ThreeExits
+    }
+
+    public enum Zones
+    {
+        None,
+        Zone1,
+        Zone2,
+        Zone3
+    }
 }
 
