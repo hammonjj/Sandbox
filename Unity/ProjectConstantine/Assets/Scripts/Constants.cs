@@ -52,6 +52,14 @@ public static class Constants
         ThreeExits
     }
 
+    public enum RoomReward
+    {
+        None,
+        Combat,
+        Cosmetic,
+        Currency
+    }
+
     public enum Zones
     {
         None,
