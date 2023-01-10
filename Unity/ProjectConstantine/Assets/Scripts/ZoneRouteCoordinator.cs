@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZoneRouteCoordinator
 {
-    private bool _hasHadShop;
-    private bool _hasHadRest;
-    private bool _hasHadStory;
-
-    //Room Type
+    //Room Type -> Convert all of these to a single scriptable data object
     private readonly int ChanceOfShop;
     private readonly int ChanceOfRest;
     private readonly int ChanceOfFight;
@@ -47,7 +44,7 @@ public class ZoneRouteCoordinator
         };
 
         _availableSceneTypes = new List<Constants.SceneType>();
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Boss, chanceOfElite));
+        //_availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Boss, chanceOfElite));
         _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.OneExit, chanceOfFight));
         
         if(!_previousSceneTypes.Contains(Constants.SceneType.Rest))
@@ -77,7 +74,14 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    public List<NextZone> CalculateNextSceneOptions()
+    public List<NextRoom> CalculateNextRoomOptions()
+    {
+        var ret = new List<NextRoom>();
+
+        return ret;
+    }
+
+    public List<NextRoom> CalculateNextSceneOptions()
     {
         //Check that we aren't in a static situation
         var ret = CheckAgainstStaticRules();
@@ -97,24 +101,24 @@ public class ZoneRouteCoordinator
                 ret = CalculateEliteFight();
                 break;
             case Constants.SceneType.Shop:
-                ret.Add(new NextZone()
+                ret.Add(new NextRoom()
                 {
                     SceneType = Constants.SceneType.Shop,
-                    RoomReward = Constants.RoomReward.None
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
                 });
                 break;
             case Constants.SceneType.Rest:
-                ret.Add(new NextZone()
+                ret.Add(new NextRoom()
                 {
                     SceneType = Constants.SceneType.Rest,
-                    RoomReward = Constants.RoomReward.Combat
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
                 });
                 break;
             case Constants.SceneType.Story:
-                ret.Add(new NextZone()
+                ret.Add(new NextRoom()
                 {
                     SceneType = Constants.SceneType.Story,
-                    RoomReward = Constants.RoomReward.None
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Story)
                 });
                 break;
         }
@@ -122,44 +126,67 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    private List<NextZone> CalculateFight()
+    private List<NextRoom> CalculateFight()
     {
-        //Need to get number of exits and reward
-        var ret = new List<NextZone>();
+        //Get Number of exits for current scene
+        //Create "NextZone" for each exit
+        //  - Iterate through each "NextZone" and assign a reward
+        var ret = new List<NextRoom>();
+
+        var currentSceneExits = GetCurrentSceneExits();
+        for(int i = 0; i < currentSceneExits; i++)
+        {
+            var nextSceneType = GetRandomNumberOfRoomExits();
+            ret.Add(new NextRoom()
+            {
+                SceneType = nextSceneType,
+                RoomReward = GetRandomRoomReward(nextSceneType)
+            });
+        }
 
         return ret;
     }
 
-    private List<NextZone> CalculateEliteFight()
+    private List<NextRoom> CalculateEliteFight()
     {
-        //Need to get number of exits and reward
-        var ret = new List<NextZone>();
+        //Get Number of exits for current scene
+        //Create "NextZone" for each exit
+        //  - Iterate through each "NextZone" and assign a reward
+        var ret = new List<NextRoom>();
 
         return ret;
     }
 
-    private List<NextZone> CheckAgainstStaticRules()
+    private List<NextRoom> CheckAgainstStaticRules()
     {
-        //Check if in these rooms:
-        //  - First => Next is always a fight
-        //  - Third to Last => Always Shop OR Shop || Rest
-        var ret = new List<NextZone>();
+        var ret = new List<NextRoom>();
 
         //We're currently in the first room
         if(_previousSceneTypes.Count == 1)
         {
-            //Get Number of exits for next scene
-            //Create "NextZone" for each exit
-            //  - Iterate through each "NextZone" and assign a reward
-            ret.Add(new NextZone()
+            var exits = GetRandomNumberOfRoomExits();
+            ret.Add(new NextRoom()
             {
-                SceneType = GeRandomNumberOfRoomExits(),
-                RoomReward = GetRandomRoomReward()
+                SceneType = exits,
+                RoomReward = GetRandomRoomReward(exits)
+            });
+        }
+        else if (_previousSceneTypes.Count == ZoneLength - 2) //Close to boss -> Rest or Shop
+        {
+            ret.Add(new NextRoom()
+            {
+                SceneType = Constants.SceneType.Shop,
+                RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+            });
+            ret.Add(new NextRoom()
+            {
+                SceneType = Constants.SceneType.Rest,
+                RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
             });
         }
         else if(_previousSceneTypes.Count == ZoneLength -1) //Boss Room Next
         {
-            ret.Add(new NextZone()
+            ret.Add(new NextRoom()
             {
                 SceneType = Constants.SceneType.Boss,
                 RoomReward = GetBossRoomReward()
@@ -167,20 +194,25 @@ public class ZoneRouteCoordinator
         }
         else if(_previousSceneTypes.Count == ZoneLength) //In Boss Room
         {
-            ret.Add(new NextZone()
+            ret.Add(new NextRoom()
             {
                 SceneType = Constants.SceneType.None,
-                RoomReward = Constants.RoomReward.None
+                RoomReward = GetRandomRoomReward(Constants.SceneType.Boss)
             });
         }
 
         return ret;
     }
 
-    private Constants.SceneType GeRandomNumberOfRoomExits()
+    private int GetRandomNumberOfExits()
+    {
+        return Random.Range(1, 4);
+    }
+
+    private Constants.SceneType GetRandomNumberOfRoomExits()
     {
         Constants.SceneType ret;
-        var rand = Random.Range(1, 3);
+        var rand = Random.Range(1, 4);
         switch(rand)
         {
             case 1:
@@ -193,19 +225,96 @@ public class ZoneRouteCoordinator
                 ret = Constants.SceneType.ThreeExits;
                 break;
             default:
-                throw new System.Exception($"GeRandomtNumberOfRoomExits returned invalid range: {rand}");
+                throw new System.Exception($"GetRandomtNumberOfRoomExits returned invalid range: {rand}");
         }
 
         return ret;
     }
 
-    private Constants.RoomReward GetRandomRoomReward()
+    private Constants.RoomReward GetRandomRoomReward(Constants.SceneType sceneType)
     {
-        return Constants.RoomReward.Combat;
+        var reward = Constants.RoomReward.None;
+
+        if(sceneType == Constants.SceneType.Shop)
+        {
+            reward = Constants.RoomReward.Shop;
+        }
+        else if(sceneType == Constants.SceneType.Story)
+        {
+            reward = Constants.RoomReward.Story;
+        }
+        else
+        {
+            reward = Constants.RoomReward.Combat;
+        }
+
+        return reward;
+    }
+
+    private List<Constants.RoomReward> GetRandomRoomRewards(Constants.SceneType sceneType)
+    {
+        var rewardsCount = 0;
+        switch (sceneType)
+        {
+            case Constants.SceneType.Shop:
+            case Constants.SceneType.Rest:
+            case Constants.SceneType.Story:
+            case Constants.SceneType.OneExit:
+                rewardsCount = 1;
+                break;
+            case Constants.SceneType.TwoExits:
+                rewardsCount = 2;
+                break;
+            case Constants.SceneType.ThreeExits:
+                rewardsCount = 3;
+                break;
+            default:
+                rewardsCount = 0;
+                break;
+        }
+
+        var ret = new List<Constants.RoomReward>();
+        if(rewardsCount == 0)
+        {
+            ret.Add(Constants.RoomReward.None);
+        }
+
+        for(int i = 0; i < rewardsCount; i++)
+        {
+            ret.Add(Constants.RoomReward.Combat);
+        }
+
+        return ret;
     }
 
     private Constants.RoomReward GetBossRoomReward()
     {
-        return Constants.RoomReward.Combat;
+        var ret = Constants.RoomReward.Combat;
+
+        return ret;
+    }
+
+    private int GetCurrentSceneExits()
+    {
+        var ret = 1;
+
+        var currentSceneType = _previousSceneTypes.Last();
+        switch(currentSceneType)
+        {
+            case Constants.SceneType.Shop:
+            case Constants.SceneType.Rest:
+            case Constants.SceneType.Story:
+            case Constants.SceneType.OneExit:
+                ret = 1;
+                break;
+            case Constants.SceneType.TwoExits:
+                ret = 2;
+                break;
+            case Constants.SceneType.ThreeExits:
+                ret = 3;
+                break;
+        }
+
+        return ret;
     }
 }

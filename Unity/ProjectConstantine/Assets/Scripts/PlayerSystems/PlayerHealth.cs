@@ -8,20 +8,30 @@ public class PlayerHealth : MonoBehaviourBase
     private int _currentHealth;
     private int _maxHealth = 100;
 
-    private SceneStateManager _gameStateManager;
+    private SceneStateManager _sceneStateManager;
     private HealthBar _healthBar;
 
     private void Awake()
     {
-        _healthBar = GetComponent<HealthBar>();
-        _gameStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager).GetComponent<SceneStateManager>();
-        //_gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
-        onPlayerDeath += _gameStateManager.OnPlayerDeath;
-
         _currentHealth = _maxHealth;
+        _healthBar = GetComponent<HealthBar>();
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
-    
+
+    private void Update()
+    {
+        if(_sceneStateManager == null)
+        {
+            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+            if(_sceneStateManager == null)
+            {
+                return;
+            }
+
+            LogDebug("Acquired Scene Manager");
+            onPlayerDeath += _sceneStateManager.OnPlayerDeath;
+        }
+    }
     public void TakeDamage(int incomingDamage)
     {
         LogDebug("Updating Health");

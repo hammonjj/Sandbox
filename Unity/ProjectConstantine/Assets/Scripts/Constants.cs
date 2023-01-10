@@ -57,7 +57,9 @@ public static class Constants
         None,
         Combat,
         Cosmetic,
-        Currency
+        Currency,
+        Shop,
+        Story
     }
 
     public enum Zones

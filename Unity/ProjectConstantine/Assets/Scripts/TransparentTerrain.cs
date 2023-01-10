@@ -11,7 +11,7 @@ public class TransparentTerrain : MonoBehaviourBase
 
     private void Awake()
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player");
+        _playerTransform = GameObject.FindGameObjectWithTag(Constants.Player);
     }
 
     //Thoughts:
@@ -20,6 +20,13 @@ public class TransparentTerrain : MonoBehaviourBase
     //      - Watch: https://www.youtube.com/watch?v=vmLIy62Gsnk
     private void Update()
     {
+        if(_playerTransform == null)
+        {
+            LogDebug("Reaquiring Player Object");
+            _playerTransform = GameObject.FindGameObjectWithTag(Constants.Player);
+            return;
+        }
+
         //Calculate GameObjects in between the player and camera
         var distCalculate = Vector3.Distance(_playerTransform.transform.position, Camera.main.transform.position);
         var castRay = new Ray(Camera.main.transform.position, _playerTransform.transform.position - Camera.main.transform.position);

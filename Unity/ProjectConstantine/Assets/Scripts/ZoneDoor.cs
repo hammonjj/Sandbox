@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class ZoneDoor : MonoBehaviourBase
 {
     public Constants.Scenes SceneToGoTo;
-    
+    public Constants.RoomReward NextRoomReward;
 
     private bool _isPlayerCloseEnough;
     private GameObject _nextSceneUITextObj;
     private SceneStateManager _sceneStateManager;
-
+    private DoorManager _doorManager;
     private TextMeshProUGUI _nextSceneUIText;
 
     private void Awake()
@@ -25,17 +26,40 @@ public class ZoneDoor : MonoBehaviourBase
             _nextSceneUITextObj.SetActive(false);
             _nextSceneUIText = _nextSceneUITextObj.GetComponent<TextMeshProUGUI>();
         }
-
-        _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager).GetComponent<SceneStateManager>();
-        var doorManager = GameObject.FindGameObjectWithTag(Constants.DoorManager).GetComponent<DoorManager>();
-        doorManager.AddDoor(this);
     }
 
     private void Update()
     {
-        if(_isPlayerCloseEnough && _sceneStateManager.AdvanceScenePressed)
+        if(_sceneStateManager == null)
         {
-            _sceneStateManager.AdvanceToScene(SceneToGoTo);
+            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+
+            if(_sceneStateManager != null)
+            {
+                LogDebug("Acquired SceneManager");
+                //_sceneStateManager = sceneManagerObj.GetComponent<SceneStateManager>();
+            }
+        }
+
+        if(_doorManager == null)
+        {
+            _doorManager = GameObject.FindGameObjectWithTag(Constants.DoorManager)?.GetComponent<DoorManager>();
+            
+            if(_doorManager != null)
+            {
+                _doorManager.AddDoor(this);
+                LogDebug("Acquired DoorManager");
+            }
+        }
+
+        if(_sceneStateManager == null)
+        {
+            return;
+        }
+
+        if (_isPlayerCloseEnough && _sceneStateManager.AdvanceScenePressed)
+        {
+            _sceneStateManager.AdvanceToScene(SceneToGoTo, NextRoomReward);
         }
     }
 

@@ -20,13 +20,22 @@ namespace Constantine
 		public Action OnPlayerDash;
 		public Action onUseItem;
 
-        private SceneStateManager _gameStateManager;
+        private SceneStateManager _sceneStateManager;
 
-        void Awake()
+        private void Update()
         {
-            //_gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
-			_gameStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager).GetComponent<SceneStateManager>();
-		}
+            if(_sceneStateManager == null)
+			{
+                _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+
+				if(_sceneStateManager == null)
+				{
+                    return;
+				}
+
+				LogDebug("Acquired Scene Manager");
+            }
+        }
 
         public void OnMove(InputValue value)
 		{
@@ -56,13 +65,13 @@ namespace Constantine
 
 		public void OnAdvanceScene(InputValue value)
         {
-			_gameStateManager.AdvanceScenePressed = value.isPressed;
+			_sceneStateManager.AdvanceScenePressed = value.isPressed;
 
 		}
         public void OnPause(InputValue value)
         {
             LogDebug("Paused Pressed");
-			_gameStateManager.PauseOrUnpauseGame();
+			_sceneStateManager.PauseOrUnpauseGame();
         }
 
 		private void OnApplicationFocus(bool hasFocus)
