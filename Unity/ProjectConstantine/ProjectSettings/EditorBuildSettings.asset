@@ -30,6 +30,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Zone1_ThreeExits.unity
     guid: 5e8febf8ba831ff4ea81ee93061b7e7e
   - enabled: 1
+    path: Assets/Scenes/Zone1_Boss.unity
+    guid: 2fab7070fe6c91548bb5e219aaeb6dc6
+  - enabled: 1
+    path: Assets/Scenes/Zone1_Rest.unity
+    guid: 77c079af885588145bb787ebbe2edf57
+  - enabled: 1
     path: Assets/Scenes/Zone1_TwoExits.unity
     guid: d38e249d1a1250d4787739695f4285d6
   m_configObjects:
