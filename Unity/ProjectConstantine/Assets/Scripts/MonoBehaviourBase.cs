@@ -36,7 +36,7 @@ public class MonoBehaviourBase : MonoBehaviour
         if((LoggingLevel & LoggingMask.Warning) != 0 ||
             (LoggingLevel & LoggingMask.Error) != 0)
         {
-            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
+            Debug.Log("<color=yellow>" + ComposeLogMessage(message, lineNumber, sourceFilePath) + "</color>");
         }
     }
 
@@ -48,7 +48,7 @@ public class MonoBehaviourBase : MonoBehaviour
             (LoggingLevel & LoggingMask.Warning) != 0 ||
             (LoggingLevel & LoggingMask.Error) != 0)
         {
-            Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
+            Debug.Log("<color=red>" + ComposeLogMessage(message, lineNumber, sourceFilePath) + "</color>");
         }
     }
 
