@@ -111,4 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: 1
-  SceneToGoTo: 1
+  SceneToGoTo: 0
+  NextRoomReward: 0

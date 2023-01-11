@@ -1,18 +1,36 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class DoorManager : MonoBehaviourBase
 {
-    private List<ZoneDoor> _zoneDoors = new List<ZoneDoor>();
-
-    public void AddDoor(ZoneDoor door)
+    public List<ZoneDoor> ZoneDoors 
     {
-        _zoneDoors.Add(door);
-        LogDebug($"Adding Door - Door Count: {_zoneDoors.Count}");
+        get
+        {
+            return _zoneDoors;
+        }
     }
+
+    private List<ZoneDoor> _zoneDoors = new List<ZoneDoor>();
 
     public void AssignOptionsToDoors(List<(Constants.Scenes, Constants.RoomReward)> sceneOptions)
     {
-        
+        if(_zoneDoors.Count == 0)
+        {
+            var doors = GameObject.FindGameObjectsWithTag(Constants.ZoneDoor);
+
+            LogDebug($"Found {doors.Length} doors");
+            foreach(var door in doors)
+            {
+                _zoneDoors.Add(door.GetComponent<ZoneDoor>());
+            }
+        }
+
+        if(_zoneDoors.Count == 0)
+        {
+            LogError("No Doors Detected");
+        }
+
         if(_zoneDoors.Count != sceneOptions.Count)
         {
             LogError($"Doors to Options Mismatch - " +

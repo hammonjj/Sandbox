@@ -6,11 +6,12 @@ public class SceneStateManager : MonoBehaviourBase
 {
     public bool IsGamePaused { get; private set; }
     public bool AdvanceScenePressed;
-    public Constants.Zones CurrentZone;
+    private Constants.Zones CurrentZone;
     public Constants.SceneType CurrentSceneType;
     public Constants.RoomReward CurrentRoomReward;
 
     private GameObject _pauseMenu;
+    private GameStateManager _gameStateManager;
 
     public Constants.Zones GetCurrentZone()
     {
@@ -33,9 +34,18 @@ public class SceneStateManager : MonoBehaviourBase
         }
 
         var scene = SceneManager.GetActiveScene().name;
+        LogDebug("===============================================================================");
         LogDebug($"New Scene Loaded: {scene}");
         DetermineZone(scene);
         DetermineSceneType(scene);
+
+        _gameStateManager = GameObject.FindGameObjectWithTag(Constants.GameStateManager).GetComponent<GameStateManager>();
+        if(_gameStateManager == null)
+        {
+            LogError("Failed to acquire Game State Manager");
+        }
+
+        CurrentRoomReward = _gameStateManager.NextRoomReward;
     }
 
     private void DetermineZone(string name)
@@ -86,7 +96,10 @@ public class SceneStateManager : MonoBehaviourBase
 
     public void AdvanceToScene(Constants.Scenes sceneName, Constants.RoomReward nextRoomReward)
     {
-        LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - Loading Scene: {sceneName}");
+        LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - " +
+            $"Loading Scene: {sceneName} - Next Scene Reward: {nextRoomReward}");
+
+        _gameStateManager.NextRoomReward = nextRoomReward;
         SceneManager.LoadScene(sceneName.ToString());
     }
 }

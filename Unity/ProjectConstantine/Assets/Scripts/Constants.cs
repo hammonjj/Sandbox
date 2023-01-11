@@ -13,6 +13,7 @@ public static class Constants
     public static string PauseMenu = "PauseMenu";
     public static string DoorManager = "DoorManager";
     public static string GameStateManager = "GameStateManager";
+    public static string ZoneDoor = "ZoneDoor";
 
     //Animation IDs
     public static int AnimID_Speed = Animator.StringToHash("Speed");
@@ -50,6 +51,13 @@ public static class Constants
         OneExit,
         TwoExits,
         ThreeExits
+    }
+
+    public enum FightType
+    {
+        None,
+        Normal,
+        Elite
     }
 
     public enum RoomReward

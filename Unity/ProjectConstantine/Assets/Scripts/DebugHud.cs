@@ -5,18 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class DebugHud : MonoBehaviourBase
 {
-    //Scene Name
-    //Door List
-    //  - Next Scene
-    //  - Room Reward
+    private float _leftBorder = 310;
+    private float _verticalPadding = 20;
+
     private DoorManager _doorManager;
     private GameStateManager _gameStateManager;
     private SceneStateManager _sceneStateManager;
-    
-    private void Start()
-    {
-        
-    }
 
     private void Update()
     {
@@ -60,13 +54,33 @@ public class DebugHud : MonoBehaviourBase
             _sceneStateManager == null ||
             _gameStateManager == null)
         {
-            LogDebug("One or more managers are null - waiting");
+            LogDebug("One or more managers are null");
             return;
         }
 
-        //LogDebug($"SceneManager.GetActiveScene().name: {SceneManager.GetActiveScene().name}");
-        var currentScene = "Scene: " + SceneManager.GetActiveScene().name;
-        LogDebug(currentScene);
-        GUI.Label(new Rect(10, 10, 100, 20), currentScene);
+        GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 0, 300, 20), $"Scene: {SceneManager.GetActiveScene().name}");
+        GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 1, 300, 20), $"Scene Type: {_sceneStateManager.CurrentSceneType}");
+        GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 2, 300, 20), $"Room Reward: {_sceneStateManager.CurrentRoomReward}");
+        GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 3, 300, 20), $"Current Chamber: {_gameStateManager.CurrentChamber}");
+        GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 4, 300, 20), $"Chamber Limit: {_gameStateManager.ZoneMaximumChambers}");
+
+        //Get All Doors and display RoomReward and SceneName
+        var labelNumber = 6;
+        var zoneDoors = _doorManager.ZoneDoors;
+
+        if(zoneDoors.Count > 0)
+        {
+            GUI.Label(new Rect(_leftBorder, 275 + _verticalPadding * 5, 300, 20), $"Zone Doors:");
+        }
+        
+        for(int i = 0; i < _doorManager.ZoneDoors.Count; i++)
+        {
+            GUI.Label(
+                new Rect(_leftBorder, 275 + _verticalPadding * labelNumber, 350, 20), 
+                $"    - Door #{i+1} -> Scene: {_doorManager.ZoneDoors[i].SceneToGoTo} - " +
+                    $"Reward: {_doorManager.ZoneDoors[i].NextRoomReward}");
+
+            labelNumber += 1;
+        }
     }
 }

@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class ZoneRouteCoordinator
 {
+    public int ZoneLength 
+    { 
+        get 
+        { 
+            return GetCurrentZoneMaxChambers();  //Includes Boss Fight
+        } 
+    }
+
+    public int CurrentChamber
+    {
+        get { return _previousSceneTypes.Count(); }
+    }
+
+    private readonly int Zone1Length;
+    private readonly int Zone2Length;
+    private readonly int Zone3Length;
+
     //Room Type -> Convert all of these to a single scriptable data object
     private readonly int ChanceOfShop;
     private readonly int ChanceOfRest;
@@ -11,55 +28,45 @@ public class ZoneRouteCoordinator
     private readonly int ChanceOfStory;
     private readonly int ChanceOfElite;
 
-    private readonly int ZoneLength; //Includes Boss Fight
-
     //Room Rewards
     private readonly int ChanceOfBuff = 34;
     private readonly int ChanceOfCosmetic = 33;
     private readonly int ChanceOfCurrency = 33;
 
     //Includes the current scene type
-    private List<Constants.SceneType> _previousSceneTypes;
+    private Constants.Zones _currentZone;
     private List<Constants.SceneType> _availableSceneTypes;
+    private List<Constants.SceneType> _previousSceneTypes = new();
 
-    public ZoneRouteCoordinator(
-        int chanceOfShop, 
-        int chanceOfRest, 
-        int chanceOfFight, 
-        int chanceOfStory, 
-        int chanceOfElite,
-        int zoneLength,
-        Constants.SceneType currentSceneType)
+    public ZoneRouteCoordinator(GameDesignSettings gameDesignSettings)
     {
-        ChanceOfShop = chanceOfShop;
-        ChanceOfRest = chanceOfRest;
-        ChanceOfFight = chanceOfFight;
-        ChanceOfStory = chanceOfStory;
-        ChanceOfElite = chanceOfElite;
-        ZoneLength = zoneLength;
+        Zone1Length = gameDesignSettings.Zone1Chambers;
+        Zone2Length = gameDesignSettings.Zone2Chambers;
+        Zone3Length = gameDesignSettings.Zone3Chambers;
 
-        _previousSceneTypes = new List<Constants.SceneType>
-        {
-            currentSceneType
-        };
+        ChanceOfShop = gameDesignSettings.ChanceOfShop;
+        ChanceOfRest = gameDesignSettings.ChanceOfRest;
+        ChanceOfFight = gameDesignSettings.ChanceOfFight;
+        ChanceOfStory = gameDesignSettings.ChanceOfStory;
+        ChanceOfElite = gameDesignSettings.ChanceOfElite;
 
         _availableSceneTypes = new List<Constants.SceneType>();
         //_availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Boss, chanceOfElite));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.OneExit, chanceOfFight));
-        
+        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.OneExit, ChanceOfFight));
+
         if(!_previousSceneTypes.Contains(Constants.SceneType.Rest))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Rest, chanceOfRest));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Rest, ChanceOfRest));
         }
 
         if(!_previousSceneTypes.Contains(Constants.SceneType.Story))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Rest, chanceOfStory));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Story, ChanceOfStory));
         }
 
         if(!_previousSceneTypes.Contains(Constants.SceneType.Shop))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Rest, chanceOfShop));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Shop, ChanceOfShop));
         }
     }
 
@@ -74,15 +81,12 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    public List<NextRoom> CalculateNextRoomOptions()
+    public List<NextRoom> CalculateNextRoomOptions(Constants.SceneType currentSceneType, Constants.Zones currentZone)
     {
-        var ret = new List<NextRoom>();
+        _currentZone = currentZone;
+        _previousSceneTypes.Add(currentSceneType);
+        RemoveInvalidSceneTypes();
 
-        return ret;
-    }
-
-    public List<NextRoom> CalculateNextSceneOptions()
-    {
         //Check that we aren't in a static situation
         var ret = CheckAgainstStaticRules();
         if(ret.Count != 0)
@@ -92,6 +96,7 @@ public class ZoneRouteCoordinator
 
         //Calculate next scenes
         var sceneType = _availableSceneTypes[Random.Range(0, _availableSceneTypes.Count - 1)];
+        Helper.LogDebug($"Calculating Next Room Options - {sceneType}");
         switch(sceneType)
         {
             case Constants.SceneType.OneExit: //Standard Fight
@@ -101,29 +106,60 @@ public class ZoneRouteCoordinator
                 ret = CalculateEliteFight();
                 break;
             case Constants.SceneType.Shop:
-                ret.Add(new NextRoom()
+                var currentSceneExits = GetCurrentSceneExits();
+                for(int i = 0; i < currentSceneExits; i++)
                 {
-                    SceneType = Constants.SceneType.Shop,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
-                });
+                    ret.Add(new NextRoom()
+                    {
+                        SceneType = Constants.SceneType.Shop,
+                        RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                    });
+                }
+                
                 break;
             case Constants.SceneType.Rest:
-                ret.Add(new NextRoom()
+                currentSceneExits = GetCurrentSceneExits();
+                for(int i = 0; i < currentSceneExits; i++)
                 {
-                    SceneType = Constants.SceneType.Rest,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
-                });
+                    ret.Add(new NextRoom()
+                    {
+                        SceneType = Constants.SceneType.Rest,
+                        RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                    });
+                }
                 break;
             case Constants.SceneType.Story:
-                ret.Add(new NextRoom()
+                currentSceneExits = GetCurrentSceneExits();
+                for(int i = 0; i < currentSceneExits; i++)
                 {
-                    SceneType = Constants.SceneType.Story,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Story)
-                });
+                    ret.Add(new NextRoom()
+                    {
+                        SceneType = Constants.SceneType.Story,
+                        RoomReward = GetRandomRoomReward(Constants.SceneType.Story)
+                    });
+                }
                 break;
         }
 
         return ret;
+    }
+
+    private void RemoveInvalidSceneTypes()
+    {
+        if(_previousSceneTypes.Contains(Constants.SceneType.Rest))
+        {
+            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Rest);
+        }
+
+        if(_previousSceneTypes.Contains(Constants.SceneType.Story))
+        {
+            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Story);
+        }
+
+        if(!_previousSceneTypes.Contains(Constants.SceneType.Shop))
+        {
+            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Shop);
+        }
     }
 
     private List<NextRoom> CalculateFight()
@@ -170,43 +206,81 @@ public class ZoneRouteCoordinator
                 SceneType = exits,
                 RoomReward = GetRandomRoomReward(exits)
             });
+
+            Helper.LogDebug("First room of the zone");
         }
-        else if (_previousSceneTypes.Count == ZoneLength - 2) //Close to boss -> Rest or Shop
+        else if (_previousSceneTypes.Count == GetCurrentZoneMaxChambers() - 2) //Close to boss -> Rest or Shop
         {
-            ret.Add(new NextRoom()
+            //Need to check current room to know how many exits to prepare
+            var exits = GetCurrentSceneExits();
+            if(exits == 1)
             {
-                SceneType = Constants.SceneType.Shop,
-                RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
-            });
-            ret.Add(new NextRoom()
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                });
+            }
+            else if(exits == 2)
             {
-                SceneType = Constants.SceneType.Rest,
-                RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
-            });
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                });
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.Rest,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                });
+            }
+            else if(exits == 3)
+            {
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                });
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.Rest,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                });
+                ret.Add(new NextRoom()
+                {
+                    SceneType = Constants.SceneType.OneExit,
+                    RoomReward = GetRandomRoomReward(Constants.SceneType.OneExit)
+                });
+            }
+            else
+            {
+                Helper.LogDebug($"Invalid number of exits: {exits}");
+            }
+
+            Helper.LogDebug("Two doors from the boss");
         }
-        else if(_previousSceneTypes.Count == ZoneLength -1) //Boss Room Next
+        else if(_previousSceneTypes.Count == GetCurrentZoneMaxChambers() - 1) //Boss Room Next
         {
             ret.Add(new NextRoom()
             {
                 SceneType = Constants.SceneType.Boss,
                 RoomReward = GetBossRoomReward()
             });
+
+            Helper.LogDebug("Boss is next");
         }
-        else if(_previousSceneTypes.Count == ZoneLength) //In Boss Room
+        else if(_previousSceneTypes.Count == GetCurrentZoneMaxChambers()) //In Boss Room
         {
             ret.Add(new NextRoom()
             {
                 SceneType = Constants.SceneType.None,
                 RoomReward = GetRandomRoomReward(Constants.SceneType.Boss)
             });
+
+            Helper.LogDebug("Boss Room");
         }
 
         return ret;
-    }
-
-    private int GetRandomNumberOfExits()
-    {
-        return Random.Range(1, 4);
     }
 
     private Constants.SceneType GetRandomNumberOfRoomExits()
@@ -233,8 +307,7 @@ public class ZoneRouteCoordinator
 
     private Constants.RoomReward GetRandomRoomReward(Constants.SceneType sceneType)
     {
-        var reward = Constants.RoomReward.None;
-
+        Constants.RoomReward reward;
         if(sceneType == Constants.SceneType.Shop)
         {
             reward = Constants.RoomReward.Shop;
@@ -296,8 +369,7 @@ public class ZoneRouteCoordinator
 
     private int GetCurrentSceneExits()
     {
-        var ret = 1;
-
+        var ret = 0;
         var currentSceneType = _previousSceneTypes.Last();
         switch(currentSceneType)
         {
@@ -312,6 +384,28 @@ public class ZoneRouteCoordinator
                 break;
             case Constants.SceneType.ThreeExits:
                 ret = 3;
+                break;
+        }
+
+        return ret;
+    }
+
+    private int GetCurrentZoneMaxChambers()
+    {
+        int ret = 0;
+        switch(_currentZone)
+        {
+            case Constants.Zones.None:
+                ret = 0;
+                break;
+            case Constants.Zones.Zone1:
+                ret = Zone1Length;
+                break;
+            case Constants.Zones.Zone2:
+                ret = Zone2Length;
+                break;
+            case Constants.Zones.Zone3:
+                ret = Zone3Length;
                 break;
         }
 
