@@ -5,11 +5,7 @@ public class DualPistolProjectile : AttackProjectile
 {
     public override void OnProjectileHit(GameObject objectHit, GameObject parent) 
     {
-        if(objectHit.tag != "Enemy")
-        {
-            Destroy(parent);
-        }
-        else if(objectHit.tag == "Enemy")
+        if(objectHit.tag == "Enemy")
         {
             //Do damage to enemy
             var enemyBase = objectHit.GetComponent<EnemyBase>();
@@ -20,6 +16,10 @@ public class DualPistolProjectile : AttackProjectile
             }
 
             enemyBase.TakeDamage(AttackDamage);
+        }
+
+        if(parent != null)
+        {
             Destroy(parent);
         }
     }

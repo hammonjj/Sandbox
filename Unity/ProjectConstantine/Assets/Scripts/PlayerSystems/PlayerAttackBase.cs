@@ -60,6 +60,11 @@ public class PlayerAttackBase : MonoBehaviourBase
 
         Vector3 retVector = Vector3.zero;
 
+        if(this == null)
+        {
+            return (new Vector3(0, 0, 0), Quaternion.identity);
+        }
+
         //Watch for performance issues - might need to put enemies on their own layer
         var collidersHit = Physics.OverlapSphere(gameObject.transform.position, AttackRange);
         if(collidersHit.Length > 0)

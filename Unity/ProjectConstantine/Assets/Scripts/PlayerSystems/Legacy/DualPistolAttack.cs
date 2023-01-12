@@ -25,8 +25,7 @@ namespace Assets.Scripts.PlayerSystems
         {
             _attackCooldownCurrent = AttackCooldown;
 
-            var playerInputs = GetComponent<PlayerInputs>();
-            playerInputs.onPlayerPrimaryAttack += OnAttack;
+            EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
             
             _baseLeftFiringPosition = new Vector3(
                 LeftArmAimTarget.transform.localPosition.x,
@@ -57,7 +56,10 @@ namespace Assets.Scripts.PlayerSystems
             LogDebug("OnAttack Called");
             if(_returnFiringPositionsRunning)
             {
-                StopAllCoroutines();
+                if(this == null)
+                {
+                    StopAllCoroutines();
+                }
             }
 
             _canAttack = false;
@@ -83,7 +85,11 @@ namespace Assets.Scripts.PlayerSystems
             }
 
             Instantiate(AttackProjectile, AttackSpawnPoints[0].position, projectileRotation);
-            StartCoroutine(ReturnFiringPositions(enemyPos));
+
+            if(this != null)
+            {
+                StartCoroutine(ReturnFiringPositions(enemyPos));
+            }
         }
 
         private IEnumerator ReturnFiringPositions(Vector3 startPosition)

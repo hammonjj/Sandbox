@@ -15,6 +15,7 @@ TagManager:
   - DoorManager
   - GameStateManager
   - ZoneDoor
+  - EventManager
   layers:
   - Default
   - TransparentFX

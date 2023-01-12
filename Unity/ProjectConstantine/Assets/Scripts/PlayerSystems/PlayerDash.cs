@@ -36,8 +36,7 @@ public class PlayerDash : MonoBehaviourBase
 
     private void Awake()
     {
-        var playerInputs = GetComponent<PlayerInputs>();
-        playerInputs.OnPlayerDash += OnDash;
+        EventManager.GetInstance().onPlayerDash += OnDash;
     }
 
     private void Update()

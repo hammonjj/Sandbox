@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +7,7 @@ public class EnemyBase : MonoBehaviourBase
 {
     [Tooltip("Where on the mesh the player will shoot the enemy")]
     public GameObject AttackTarget;
+    public GameObject FloatingCombatText;
     public EnemyBaseObj EnemyObj;
     
     [Header("Debugging")]
@@ -98,15 +101,23 @@ public class EnemyBase : MonoBehaviourBase
         LogDebug($"I got hit - Current Health: {_currentHealth}");
 
         _currentHealth -= damage;
+        LoadFloatingCombatText(damage);
         if(_currentHealth <= 0)
         {
             LogDebug("I Died");
-            //Play death animation and despawn
+            EventManager.GetInstance().OnEnemyDeath();
             Destroy(gameObject);
             return;
         }
 
         _healthBar.UpdateHealth((float)_currentHealth / EnemyObj.MaxHealth);
+    }
+
+    private void LoadFloatingCombatText(int damage)
+    {
+        var gObj = Instantiate(FloatingCombatText, transform.position, Quaternion.identity, transform);
+        var combatTextObj = gObj.GetComponent<TextMeshPro>();
+        combatTextObj.text = damage.ToString();
     }
 
     private void OnMeleeWeaponPlayerHit(Collider other)

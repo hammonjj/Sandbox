@@ -13,6 +13,8 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void Awake()
     {
+        EventManager.GetInstance().onAdvanceScenePressed += OnAdvanceScenePressed;
+
         _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.NextZoneText);
         if(_nextSceneUITextObj == null)
         {
@@ -36,13 +38,11 @@ public class ZoneDoor : MonoBehaviourBase
                 LogDebug("Acquired SceneManager");
             }
         }
+    }
 
-        if(_sceneStateManager == null)
-        {
-            return;
-        }
-
-        if (_isPlayerCloseEnough && _sceneStateManager.AdvanceScenePressed)
+    public void OnAdvanceScenePressed(bool value)
+    {
+        if(_isPlayerCloseEnough && value)
         {
             _sceneStateManager.AdvanceToScene(SceneToGoTo, NextRoomReward);
         }

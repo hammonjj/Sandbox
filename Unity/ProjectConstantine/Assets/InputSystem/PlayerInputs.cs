@@ -1,4 +1,3 @@
-using System;
 using EditorExtensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,32 +9,13 @@ namespace Constantine
 		[Header("Character Input Values")]
 		[DisplayWithoutEdit()]
 		public Vector2 Move;
-		[DisplayWithoutEdit()]
-		public bool Dash;
 
-		//Player Action Events
-		public Action onPlayerPrimaryAttack;
-        public Action onPlayerSecondaryAttack;
+		private EventManager _eventManager;
 
-		public Action OnPlayerDash;
-		public Action onUseItem;
-
-        private SceneStateManager _sceneStateManager;
-
-        private void Update()
+        private void Awake()
         {
-            if(_sceneStateManager == null)
-			{
-                _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
-
-				if(_sceneStateManager == null)
-				{
-                    return;
-				}
-
-				LogDebug("Acquired Scene Manager");
-            }
-        }
+			_eventManager = EventManager.GetInstance();
+		}
 
         public void OnMove(InputValue value)
 		{
@@ -44,34 +24,31 @@ namespace Constantine
 
 		public void OnPrimaryAttack(InputValue value)
 		{
-            onPlayerPrimaryAttack?.Invoke();
-        }
+			_eventManager.OnPlayerPrimaryAttack();
+		}
 
         public void OnSecondaryAttack(InputValue value)
         {
-			onPlayerSecondaryAttack?.Invoke();
-        }
+			_eventManager.OnPlayerSecondaryAttack();
+		}
 
 		public void OnUseItem(InputValue value)
         {
-			onUseItem?.Invoke();
+			_eventManager.OnUseItem();
 		}
 
         public void OnDash(InputValue value)
 		{
-			Dash = value.isPressed;
-			OnPlayerDash?.Invoke();
+			_eventManager.OnPlayerDash();
 		}
 
 		public void OnAdvanceScene(InputValue value)
         {
-			_sceneStateManager.AdvanceScenePressed = value.isPressed;
-
+			_eventManager.OnAdvanceScenePressed(value.isPressed);
 		}
         public void OnPause(InputValue value)
         {
-            LogDebug("Paused Pressed");
-			_sceneStateManager.PauseOrUnpauseGame();
+			_eventManager.OnPause();
         }
 
 		private void OnApplicationFocus(bool hasFocus)

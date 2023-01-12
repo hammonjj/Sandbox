@@ -51,9 +51,9 @@ public class PlayerAttack : MonoBehaviourBase
     private void Awake()
     {
         //Setup Input Events
-        var playerInputs = GetComponent<PlayerInputs>();
-        playerInputs.onPlayerPrimaryAttack += OnPrimaryAttack;
-        playerInputs.onPlayerSecondaryAttack += OnSecondaryAttack;
+        //var playerInputs = GetComponent<PlayerInputs>();
+        //playerInputs.onPlayerPrimaryAttack += OnPrimaryAttack;
+        //playerInputs.onPlayerSecondaryAttack += OnSecondaryAttack;
 
         _rightArmMoverConstraint = RightArmAimMover.GetComponent<IRigConstraint>();
 

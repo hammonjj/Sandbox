@@ -11,6 +11,7 @@ public class SceneStateManager : MonoBehaviourBase
     public Constants.RoomReward CurrentRoomReward;
 
     private GameObject _pauseMenu;
+    private EventManager _eventManager;
     private GameStateManager _gameStateManager;
 
     public Constants.Zones GetCurrentZone()
@@ -23,6 +24,11 @@ public class SceneStateManager : MonoBehaviourBase
 
     private void Awake()
     {
+        _eventManager = EventManager.GetInstance();
+        _eventManager.onPause += PauseOrUnpauseGame;
+        _eventManager.onPlayerDeath += OnPlayerDeath;
+        _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
+
         _pauseMenu = Extensions.FindGameObjectWithTag(Constants.PauseMenu);
         if(_pauseMenu == null)
         {
@@ -46,6 +52,12 @@ public class SceneStateManager : MonoBehaviourBase
         }
 
         CurrentRoomReward = _gameStateManager.NextRoomReward;
+    }
+
+    public void OnAdvanceScenePressed(bool value)
+    {
+        LogDebug($"OnAdvanceScenePressed: {value}");
+        AdvanceScenePressed = value;
     }
 
     private void DetermineZone(string name)
