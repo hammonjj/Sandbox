@@ -9404,6 +9404,11 @@ PrefabInstance:
       propertyPath: ObjectToFollow
       value: 
       objectReference: {fileID: 4416926083347132227}
+    - target: {fileID: 1512362195413443340, guid: 0808e9782a4ff214b8e6eb397e2c1fc5,
+        type: 3}
+      propertyPath: MovementSmoothing
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1512362195655369910, guid: 0808e9782a4ff214b8e6eb397e2c1fc5,
         type: 3}
       propertyPath: m_RootOrder

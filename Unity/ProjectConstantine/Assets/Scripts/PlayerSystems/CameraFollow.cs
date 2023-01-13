@@ -1,34 +1,23 @@
 using UnityEngine;
+//using static UnityEngine.GraphicsBuffer;
+using UnityEngine.ProBuilder;
 
 public class CameraFollow : MonoBehaviour
 {
-    private float offset_x;
-    private float offset_y;
-    private float offset_z;
-    private Transform _transform;
+    public float MovementSmoothing = 3f;
+
+    private Vector3 _offset;
     private GameObject _playerToFollow;
 
-    private void Awake()
-    {
-        _playerToFollow = GameObject.FindGameObjectWithTag("Player");
-    }
     private void Start()
     {
-        _transform = gameObject.transform;
-
-        //Need to distance
-        offset_z = _transform.position.z;
-        offset_x = _playerToFollow.transform.position.x - _transform.position.x;
-        offset_y = _playerToFollow.transform.position.y + _transform.position.y;
+        _playerToFollow = GameObject.FindGameObjectWithTag(Constants.Player);
+        _offset = transform.position - _playerToFollow.transform.position;
     }
 
-    private void Update()
+    void LateUpdate()
     {
-        var newPos = new Vector3(
-            _playerToFollow.transform.position.x - offset_x,
-            _playerToFollow.transform.position.y + offset_y,
-            _playerToFollow.transform.position.z + offset_z);
-
-        _transform.position = newPos;
+        Vector3 targetCamPos = _playerToFollow.transform.position + _offset;
+        transform.position = Vector3.Lerp(transform.position, targetCamPos, 5f * Time.deltaTime);
     }
 }

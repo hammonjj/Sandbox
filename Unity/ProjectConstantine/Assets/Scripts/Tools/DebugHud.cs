@@ -60,29 +60,7 @@ public class DebugHud : MonoBehaviourBase
             return;
         }
 
-        GenerateDebugButtons();
         GenerateSceneInformation();
-    }
-
-    private void GenerateDebugButtons()
-    {
-        if(GUI.Button(new Rect(_rightBorder, 275 + _rightVerticalPadding * 0, 50, 50), "Hurt Player (10)"))
-        {
-            LogDebug("Hurting player for 10 damage");
-        }
-
-        if(GUI.Button(new Rect(_rightBorder, 275 + _rightVerticalPadding * 1, 200, 50), "Kill Player"))
-        {
-            LogDebug("Killing player");
-            EventManager.GetInstance().OnPlayerDeath();
-        }
-
-        if(GUI.Button(new Rect(_rightBorder, 275 + _rightVerticalPadding * 2, 50, 50), "Kill All Enemies"))
-        {
-            LogDebug("Killing all enemies");
-        }
-
-        //Kill All Enemies
     }
 
     private void GenerateSceneInformation()
