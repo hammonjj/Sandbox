@@ -14,6 +14,7 @@ public static class Constants
     public static string DoorManager = "DoorManager";
     public static string GameStateManager = "GameStateManager";
     public static string ZoneDoor = "ZoneDoor";
+    public static string SpawnPoint = "SpawnPoint";
 
     //Animation IDs
     public static int AnimID_Speed = Animator.StringToHash("Speed");
@@ -35,6 +36,7 @@ public static class Constants
         Zone1_Rest,
         Zone1_Boss,
         Zone1_Story,
+        Zone1_Start,
         Zone1_OneExit,
         Zone1_TwoExits,
         Zone1_ThreeExits

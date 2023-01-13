@@ -16,6 +16,7 @@ TagManager:
   - GameStateManager
   - ZoneDoor
   - EventManager
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

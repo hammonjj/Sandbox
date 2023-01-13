@@ -5,6 +5,7 @@ public class EventManager
     //Game Events
     public Action onEnemyDeath;
     public Action onPlayerDeath;
+    public Action onEncounterEnded;
 
     //Player Inputs
     public Action onUseItem;
@@ -67,5 +68,10 @@ public class EventManager
     public void OnPause()
     {
         onPause?.Invoke();
+    }
+
+    public void OnEncounterEnded()
+    {
+        onEncounterEnded?.Invoke();
     }
 }

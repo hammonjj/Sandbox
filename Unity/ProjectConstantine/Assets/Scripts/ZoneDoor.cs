@@ -27,8 +27,23 @@ public class ZoneDoor : MonoBehaviourBase
         }
     }
 
+    private void Start()
+    {
+        _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+
+        if(_sceneStateManager)
+        {
+            LogDebug("Acquired Scene Manager");
+        }
+        else
+        {
+            LogDebug("Failed to Acquire Scene Manager");
+        }
+    }
+
     private void Update()
     {
+        /*
         if(_sceneStateManager == null)
         {
             _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
@@ -38,6 +53,7 @@ public class ZoneDoor : MonoBehaviourBase
                 LogDebug("Acquired SceneManager");
             }
         }
+        */
     }
 
     public void OnAdvanceScenePressed(bool value)

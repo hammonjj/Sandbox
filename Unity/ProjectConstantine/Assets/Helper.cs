@@ -16,4 +16,10 @@ public class Helper
     {
         return $"{Path.GetFileName(sourceFilePath)}({lineNumber}) - {message}";
     }
+
+    public int RandomInclusiveRange(int minVal, int maxVal)
+    {
+        var random = new System.Random();
+        return random.Next(minVal, maxVal + 1);
+    }
 }

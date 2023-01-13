@@ -7,6 +7,7 @@ public class SceneStateManager : MonoBehaviourBase
     public bool IsGamePaused { get; private set; }
     public bool AdvanceScenePressed;
     private Constants.Zones CurrentZone;
+    public Constants.FightType CurrentFightType = Constants.FightType.Normal;
     public Constants.SceneType CurrentSceneType;
     public Constants.RoomReward CurrentRoomReward;
 
