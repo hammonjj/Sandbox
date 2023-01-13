@@ -17,6 +17,9 @@ TagManager:
   - ZoneDoor
   - EventManager
   - SpawnPoint
+  - OneDoor
+  - TwoDoors
+  - ThreeDoors
   layers:
   - Default
   - TransparentFX
