@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviourBase
 {
-    public Constants.RoomReward NextRoomReward;
+    public Constants.Enums.RoomReward NextRoomReward;
     public GameDesignSettings GameDesignSettings;
 
     //For Debug UI
@@ -48,7 +48,7 @@ public class GameStateManager : MonoBehaviourBase
         {
             if(_sceneStateManager == null)
             {
-                _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+                _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
 
                 if(_sceneStateManager == null)
                 {
@@ -60,7 +60,7 @@ public class GameStateManager : MonoBehaviourBase
 
             if(_doorManager == null)
             {
-                _doorManager = GameObject.FindGameObjectWithTag(Constants.DoorManager)?.GetComponent<DoorManager>();
+                _doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
 
                 if(_doorManager == null)
                 {
@@ -80,9 +80,9 @@ public class GameStateManager : MonoBehaviourBase
 
         _recalculateRoomOptions = false;
         var currentZone = _sceneStateManager.GetCurrentZone();
-        if(currentZone != Constants.Zones.Zone1 &&
-            currentZone != Constants.Zones.Zone2 &&
-            currentZone != Constants.Zones.Zone3)
+        if(currentZone != Constants.Enums.Zones.Zone1 &&
+            currentZone != Constants.Enums.Zones.Zone2 &&
+            currentZone != Constants.Enums.Zones.Zone3)
         {
             LogDebug($"Not in a zone (current zone: {currentZone}). Skipping next room calculation");
             return;
@@ -99,7 +99,7 @@ public class GameStateManager : MonoBehaviourBase
             _sceneStateManager.CurrentSceneType, _sceneStateManager.GetCurrentZone());
 
         //Convert roomOptions to Scenes
-        var sceneOptions = new List<(Constants.Scenes, Constants.RoomReward)>();
+        var sceneOptions = new List<(Constants.Enums.Scenes, Constants.Enums.RoomReward)>();
         foreach(var roomOption in roomOptions)
         {
             var roomReward = roomOption.RoomReward;
@@ -121,97 +121,97 @@ public class GameStateManager : MonoBehaviourBase
         _recalculateRoomOptions = true;
     }
 
-    private Constants.Scenes MapSceneTypeAndZoneToScene(Constants.SceneType sceneType, Constants.Zones zone)
+    private Constants.Enums.Scenes MapSceneTypeAndZoneToScene(Constants.Enums.SceneType sceneType, Constants.Enums.Zones zone)
     {
-        var ret = Constants.Scenes.None;
-        if(sceneType == Constants.SceneType.Shop)
+        var ret = Constants.Enums.Scenes.None;
+        if(sceneType == Constants.Enums.SceneType.Shop)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_Shop;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_Shop;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if(sceneType == Constants.SceneType.Rest)
+        else if(sceneType == Constants.Enums.SceneType.Rest)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_Rest;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_Rest;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if (sceneType == Constants.SceneType.Story)
+        else if (sceneType == Constants.Enums.SceneType.Story)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_Story;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_Story;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if(sceneType == Constants.SceneType.OneExit)
+        else if(sceneType == Constants.Enums.SceneType.OneExit)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_OneExit;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_OneExit;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if(sceneType == Constants.SceneType.TwoExits)
+        else if(sceneType == Constants.Enums.SceneType.TwoExits)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_TwoExits;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_TwoExits;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if(sceneType == Constants.SceneType.ThreeExits)
+        else if(sceneType == Constants.Enums.SceneType.ThreeExits)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_ThreeExits;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_ThreeExits;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }
-        else if(sceneType == Constants.SceneType.Boss)
+        else if(sceneType == Constants.Enums.SceneType.Boss)
         {
             switch(zone)
             {
-                case Constants.Zones.Zone1:
-                    ret = Constants.Scenes.Zone1_Boss;
+                case Constants.Enums.Zones.Zone1:
+                    ret = Constants.Enums.Scenes.Zone1_Boss;
                     break;
-                case Constants.Zones.Zone2:
+                case Constants.Enums.Zones.Zone2:
                     break;
-                case Constants.Zones.Zone3:
+                case Constants.Enums.Zones.Zone3:
                     break;
             }
         }

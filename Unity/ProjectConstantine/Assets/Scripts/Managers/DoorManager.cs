@@ -13,11 +13,11 @@ public class DoorManager : MonoBehaviourBase
 
     private List<ZoneDoor> _zoneDoors = new List<ZoneDoor>();
 
-    public void AssignOptionsToDoors(List<(Constants.Scenes, Constants.RoomReward)> sceneOptions)
+    public void AssignOptionsToDoors(List<(Constants.Enums.Scenes, Constants.Enums.RoomReward)> sceneOptions)
     {
         if(_zoneDoors.Count == 0)
         {
-            var doors = GameObject.FindGameObjectsWithTag(Constants.ZoneDoor);
+            var doors = GameObject.FindGameObjectsWithTag(Constants.Tags.ZoneDoor);
 
             LogDebug($"Found {doors.Length} doors");
             foreach(var door in doors)

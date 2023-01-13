@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: -1
   AdvanceScenePressed: 0
-  CurrentZone: 0
+  CurrentFightType: 0
   CurrentSceneType: 0
   CurrentRoomReward: 0
 --- !u!1 &3100015152237487059
@@ -125,6 +125,7 @@ Transform:
   - {fileID: 3100015151856859728}
   - {fileID: 3100015152237487056}
   - {fileID: 3100015152861059727}
+  - {fileID: 2647232773876771909}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -174,3 +175,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: 0
   TransparentAlpha: 0.5
+--- !u!1 &3352880234954370173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2647232773876771909}
+  - component: {fileID: 3761565300631371913}
+  m_Layer: 0
+  m_Name: ZoneEncounterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2647232773876771909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352880234954370173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3100015152666338632}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3761565300631371913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352880234954370173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be801b0d904954d628cbee25374c5b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: -1
+  WavesToSpawn: 3
+  EnemiesToSpawn: 5
+  TimeBetweenWaves: 3
+  BossEnemyPrefabs: []
+  EliteEnemyPrefabs: []
+  NormalEnemyPrefabs:
+  - {fileID: 1826494983894848088, guid: ae42ff9e8464f48f584f288a552c7312, type: 3}
+  - {fileID: 1826494983894848088, guid: bccbdbeb87666485280b826e4fcf5b13, type: 3}
+  SpawnPoints: []

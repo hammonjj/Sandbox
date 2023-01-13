@@ -6,16 +6,16 @@ public class SceneStateManager : MonoBehaviourBase
 {
     public bool IsGamePaused { get; private set; }
     public bool AdvanceScenePressed;
-    private Constants.Zones CurrentZone;
-    public Constants.FightType CurrentFightType = Constants.FightType.Normal;
-    public Constants.SceneType CurrentSceneType;
-    public Constants.RoomReward CurrentRoomReward;
+    private Constants.Enums.Zones CurrentZone;
+    public Constants.Enums.FightType CurrentFightType = Constants.Enums.FightType.Normal;
+    public Constants.Enums.SceneType CurrentSceneType;
+    public Constants.Enums.RoomReward CurrentRoomReward;
 
     private GameObject _pauseMenu;
     private EventManager _eventManager;
     private GameStateManager _gameStateManager;
 
-    public Constants.Zones GetCurrentZone()
+    public Constants.Enums.Zones GetCurrentZone()
     {
         DetermineZone(SceneManager.GetActiveScene().name);
         LogDebug($"SceneName: {SceneManager.GetActiveScene().name} - " +
@@ -28,9 +28,10 @@ public class SceneStateManager : MonoBehaviourBase
         _eventManager = EventManager.GetInstance();
         _eventManager.onPause += PauseOrUnpauseGame;
         _eventManager.onPlayerDeath += OnPlayerDeath;
+        _eventManager.onEncounterEnded += OnEncounterEnded;
         _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
 
-        _pauseMenu = Extensions.FindGameObjectWithTag(Constants.PauseMenu);
+        _pauseMenu = Extensions.FindGameObjectWithTag(Constants.Tags.PauseMenu);
         if(_pauseMenu == null)
         {
             LogError("Pause Menu is null");
@@ -46,13 +47,21 @@ public class SceneStateManager : MonoBehaviourBase
         DetermineZone(scene);
         DetermineSceneType(scene);
 
-        _gameStateManager = GameObject.FindGameObjectWithTag(Constants.GameStateManager).GetComponent<GameStateManager>();
+        _gameStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.GameStateManager).GetComponent<GameStateManager>();
         if(_gameStateManager == null)
         {
             LogError("Failed to acquire Game State Manager");
         }
 
         CurrentRoomReward = _gameStateManager.NextRoomReward;
+    }
+
+    public void OnEncounterEnded()
+    {
+        LogDebug("Encounter Ended");
+        //Next:
+        //  - Spawn chamber reward
+        //  - Enable zone doors
     }
 
     public void OnAdvanceScenePressed(bool value)
@@ -66,12 +75,12 @@ public class SceneStateManager : MonoBehaviourBase
         var index = name.IndexOf("_");
         if(index == -1)
         {
-            CurrentZone = Constants.Zones.None;
+            CurrentZone = Constants.Enums.Zones.None;
         }
         else
         {
             var zoneName = name.Substring(0, index);
-            CurrentZone = (Constants.Zones)Enum.Parse(typeof(Constants.Zones), zoneName);
+            CurrentZone = (Constants.Enums.Zones)Enum.Parse(typeof(Constants.Enums.Zones), zoneName);
             LogDebug($"zoneName: {zoneName} - CurrentZone: {CurrentZone}");
         }
     }
@@ -81,12 +90,12 @@ public class SceneStateManager : MonoBehaviourBase
         var index = scene.IndexOf('_');
         if(index == -1)
         {
-            CurrentSceneType = Constants.SceneType.None;
+            CurrentSceneType = Constants.Enums.SceneType.None;
         }
         else
         {
             var sceneName = scene.Substring(index + 1);
-            CurrentSceneType = (Constants.SceneType)Enum.Parse(typeof(Constants.SceneType), sceneName);
+            CurrentSceneType = (Constants.Enums.SceneType)Enum.Parse(typeof(Constants.Enums.SceneType), sceneName);
             LogDebug($"sceneName: {sceneName} - Scene Type: {CurrentSceneType}");
         }
     }
@@ -107,7 +116,7 @@ public class SceneStateManager : MonoBehaviourBase
         LogDebug("Player has died");
     }
 
-    public void AdvanceToScene(Constants.Scenes sceneName, Constants.RoomReward nextRoomReward)
+    public void AdvanceToScene(Constants.Enums.Scenes sceneName, Constants.Enums.RoomReward nextRoomReward)
     {
         LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - " +
             $"Loading Scene: {sceneName} - Next Scene Reward: {nextRoomReward}");

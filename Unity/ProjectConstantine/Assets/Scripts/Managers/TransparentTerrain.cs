@@ -11,7 +11,7 @@ public class TransparentTerrain : MonoBehaviourBase
 
     private void Awake()
     {
-        _playerTransform = GameObject.FindGameObjectWithTag(Constants.Player);
+        _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
     }
 
     //Thoughts:
@@ -23,7 +23,7 @@ public class TransparentTerrain : MonoBehaviourBase
         if(_playerTransform == null)
         {
             LogDebug("Reaquiring Player Object");
-            _playerTransform = GameObject.FindGameObjectWithTag(Constants.Player);
+            _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
             return;
         }
 

@@ -9,6 +9,6 @@ public class Mutant : EnemyBaseObj
 
     public override int GetAttackAnimationID()
     {
-        return Constants.AnimID_MutantAttack;
+        return Constants.Animations.AnimID_MutantAttack;
     }
 }

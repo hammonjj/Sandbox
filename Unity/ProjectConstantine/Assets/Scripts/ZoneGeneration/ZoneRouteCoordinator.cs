@@ -34,9 +34,9 @@ public class ZoneRouteCoordinator
     private readonly int ChanceOfCurrency = 33;
 
     //Includes the current scene type
-    private Constants.Zones _currentZone;
-    private List<Constants.SceneType> _availableSceneTypes;
-    private List<Constants.SceneType> _previousSceneTypes = new();
+    private Constants.Enums.Zones _currentZone;
+    private List<Constants.Enums.SceneType> _availableSceneTypes;
+    private List<Constants.Enums.SceneType> _previousSceneTypes = new();
 
     public ZoneRouteCoordinator(GameDesignSettings gameDesignSettings)
     {
@@ -50,29 +50,29 @@ public class ZoneRouteCoordinator
         ChanceOfStory = gameDesignSettings.ChanceOfStory;
         ChanceOfElite = gameDesignSettings.ChanceOfElite;
 
-        _availableSceneTypes = new List<Constants.SceneType>();
+        _availableSceneTypes = new List<Constants.Enums.SceneType>();
         //_availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Boss, chanceOfElite));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.OneExit, ChanceOfFight));
+        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.SceneType.OneExit, ChanceOfFight));
 
-        if(!_previousSceneTypes.Contains(Constants.SceneType.Rest))
+        if(!_previousSceneTypes.Contains(Constants.Enums.SceneType.Rest))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Rest, ChanceOfRest));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.SceneType.Rest, ChanceOfRest));
         }
 
-        if(!_previousSceneTypes.Contains(Constants.SceneType.Story))
+        if(!_previousSceneTypes.Contains(Constants.Enums.SceneType.Story))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Story, ChanceOfStory));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.SceneType.Story, ChanceOfStory));
         }
 
-        if(!_previousSceneTypes.Contains(Constants.SceneType.Shop))
+        if(!_previousSceneTypes.Contains(Constants.Enums.SceneType.Shop))
         {
-            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.SceneType.Shop, ChanceOfShop));
+            _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.SceneType.Shop, ChanceOfShop));
         }
     }
 
-    private List<Constants.SceneType> CreateSceneTypeVotes(Constants.SceneType sceneType, int chanceOfEvent)
+    private List<Constants.Enums.SceneType> CreateSceneTypeVotes(Constants.Enums.SceneType sceneType, int chanceOfEvent)
     {
-        var ret = new List<Constants.SceneType>();
+        var ret = new List<Constants.Enums.SceneType>();
         for(var i = 0; i < chanceOfEvent; i++)
         {
             ret.Add(sceneType);
@@ -81,7 +81,7 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    public List<NextRoom> CalculateNextRoomOptions(Constants.SceneType currentSceneType, Constants.Zones currentZone)
+    public List<NextRoom> CalculateNextRoomOptions(Constants.Enums.SceneType currentSceneType, Constants.Enums.Zones currentZone)
     {
         _currentZone = currentZone;
         _previousSceneTypes.Add(currentSceneType);
@@ -99,43 +99,43 @@ public class ZoneRouteCoordinator
         Helper.LogDebug($"Calculating Next Room Options - {sceneType}");
         switch(sceneType)
         {
-            case Constants.SceneType.OneExit: //Standard Fight
+            case Constants.Enums.SceneType.OneExit: //Standard Fight
                 ret = CalculateFight();
                 break;
-            case Constants.SceneType.Boss: //Elite Fight
+            case Constants.Enums.SceneType.Boss: //Elite Fight
                 ret = CalculateEliteFight();
                 break;
-            case Constants.SceneType.Shop:
+            case Constants.Enums.SceneType.Shop:
                 var currentSceneExits = GetCurrentSceneExits();
                 for(int i = 0; i < currentSceneExits; i++)
                 {
                     ret.Add(new NextRoom()
                     {
-                        SceneType = Constants.SceneType.Shop,
-                        RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                        SceneType = Constants.Enums.SceneType.Shop,
+                        RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Shop)
                     });
                 }
                 
                 break;
-            case Constants.SceneType.Rest:
+            case Constants.Enums.SceneType.Rest:
                 currentSceneExits = GetCurrentSceneExits();
                 for(int i = 0; i < currentSceneExits; i++)
                 {
                     ret.Add(new NextRoom()
                     {
-                        SceneType = Constants.SceneType.Rest,
-                        RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                        SceneType = Constants.Enums.SceneType.Rest,
+                        RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Rest)
                     });
                 }
                 break;
-            case Constants.SceneType.Story:
+            case Constants.Enums.SceneType.Story:
                 currentSceneExits = GetCurrentSceneExits();
                 for(int i = 0; i < currentSceneExits; i++)
                 {
                     ret.Add(new NextRoom()
                     {
-                        SceneType = Constants.SceneType.Story,
-                        RoomReward = GetRandomRoomReward(Constants.SceneType.Story)
+                        SceneType = Constants.Enums.SceneType.Story,
+                        RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Story)
                     });
                 }
                 break;
@@ -146,19 +146,19 @@ public class ZoneRouteCoordinator
 
     private void RemoveInvalidSceneTypes()
     {
-        if(_previousSceneTypes.Contains(Constants.SceneType.Rest))
+        if(_previousSceneTypes.Contains(Constants.Enums.SceneType.Rest))
         {
-            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Rest);
+            _availableSceneTypes.RemoveAll(x => x == Constants.Enums.SceneType.Rest);
         }
 
-        if(_previousSceneTypes.Contains(Constants.SceneType.Story))
+        if(_previousSceneTypes.Contains(Constants.Enums.SceneType.Story))
         {
-            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Story);
+            _availableSceneTypes.RemoveAll(x => x == Constants.Enums.SceneType.Story);
         }
 
-        if(!_previousSceneTypes.Contains(Constants.SceneType.Shop))
+        if(!_previousSceneTypes.Contains(Constants.Enums.SceneType.Shop))
         {
-            _availableSceneTypes.RemoveAll(x => x == Constants.SceneType.Shop);
+            _availableSceneTypes.RemoveAll(x => x == Constants.Enums.SceneType.Shop);
         }
     }
 
@@ -217,39 +217,39 @@ public class ZoneRouteCoordinator
             {
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.Shop,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                    SceneType = Constants.Enums.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Shop)
                 });
             }
             else if(exits == 2)
             {
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.Shop,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                    SceneType = Constants.Enums.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Shop)
                 });
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.Rest,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                    SceneType = Constants.Enums.SceneType.Rest,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Rest)
                 });
             }
             else if(exits == 3)
             {
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.Shop,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Shop)
+                    SceneType = Constants.Enums.SceneType.Shop,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Shop)
                 });
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.Rest,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.Rest)
+                    SceneType = Constants.Enums.SceneType.Rest,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Rest)
                 });
                 ret.Add(new NextRoom()
                 {
-                    SceneType = Constants.SceneType.OneExit,
-                    RoomReward = GetRandomRoomReward(Constants.SceneType.OneExit)
+                    SceneType = Constants.Enums.SceneType.OneExit,
+                    RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.OneExit)
                 });
             }
             else
@@ -263,7 +263,7 @@ public class ZoneRouteCoordinator
         {
             ret.Add(new NextRoom()
             {
-                SceneType = Constants.SceneType.Boss,
+                SceneType = Constants.Enums.SceneType.Boss,
                 RoomReward = GetBossRoomReward()
             });
 
@@ -273,8 +273,8 @@ public class ZoneRouteCoordinator
         {
             ret.Add(new NextRoom()
             {
-                SceneType = Constants.SceneType.None,
-                RoomReward = GetRandomRoomReward(Constants.SceneType.Boss)
+                SceneType = Constants.Enums.SceneType.None,
+                RoomReward = GetRandomRoomReward(Constants.Enums.SceneType.Boss)
             });
 
             Helper.LogDebug("Boss Room");
@@ -283,20 +283,20 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    private Constants.SceneType GetRandomNumberOfRoomExits()
+    private Constants.Enums.SceneType GetRandomNumberOfRoomExits()
     {
-        Constants.SceneType ret;
+        Constants.Enums.SceneType ret;
         var rand = Random.Range(1, 4);
         switch(rand)
         {
             case 1:
-                ret = Constants.SceneType.OneExit;
+                ret = Constants.Enums.SceneType.OneExit;
                 break;
             case 2:
-                ret = Constants.SceneType.TwoExits;
+                ret = Constants.Enums.SceneType.TwoExits;
                 break;
             case 3:
-                ret = Constants.SceneType.ThreeExits;
+                ret = Constants.Enums.SceneType.ThreeExits;
                 break;
             default:
                 throw new System.Exception($"GetRandomtNumberOfRoomExits returned invalid range: {rand}");
@@ -305,40 +305,40 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    private Constants.RoomReward GetRandomRoomReward(Constants.SceneType sceneType)
+    private Constants.Enums.RoomReward GetRandomRoomReward(Constants.Enums.SceneType sceneType)
     {
-        Constants.RoomReward reward;
-        if(sceneType == Constants.SceneType.Shop)
+        Constants.Enums.RoomReward reward;
+        if(sceneType == Constants.Enums.SceneType.Shop)
         {
-            reward = Constants.RoomReward.Shop;
+            reward = Constants.Enums.RoomReward.Shop;
         }
-        else if(sceneType == Constants.SceneType.Story)
+        else if(sceneType == Constants.Enums.SceneType.Story)
         {
-            reward = Constants.RoomReward.Story;
+            reward = Constants.Enums.RoomReward.Story;
         }
         else
         {
-            reward = Constants.RoomReward.Combat;
+            reward = Constants.Enums.RoomReward.Combat;
         }
 
         return reward;
     }
 
-    private List<Constants.RoomReward> GetRandomRoomRewards(Constants.SceneType sceneType)
+    private List<Constants.Enums.RoomReward> GetRandomRoomRewards(Constants.Enums.SceneType sceneType)
     {
         var rewardsCount = 0;
         switch (sceneType)
         {
-            case Constants.SceneType.Shop:
-            case Constants.SceneType.Rest:
-            case Constants.SceneType.Story:
-            case Constants.SceneType.OneExit:
+            case Constants.Enums.SceneType.Shop:
+            case Constants.Enums.SceneType.Rest:
+            case Constants.Enums.SceneType.Story:
+            case Constants.Enums.SceneType.OneExit:
                 rewardsCount = 1;
                 break;
-            case Constants.SceneType.TwoExits:
+            case Constants.Enums.SceneType.TwoExits:
                 rewardsCount = 2;
                 break;
-            case Constants.SceneType.ThreeExits:
+            case Constants.Enums.SceneType.ThreeExits:
                 rewardsCount = 3;
                 break;
             default:
@@ -346,23 +346,23 @@ public class ZoneRouteCoordinator
                 break;
         }
 
-        var ret = new List<Constants.RoomReward>();
+        var ret = new List<Constants.Enums.RoomReward>();
         if(rewardsCount == 0)
         {
-            ret.Add(Constants.RoomReward.None);
+            ret.Add(Constants.Enums.RoomReward.None);
         }
 
         for(int i = 0; i < rewardsCount; i++)
         {
-            ret.Add(Constants.RoomReward.Combat);
+            ret.Add(Constants.Enums.RoomReward.Combat);
         }
 
         return ret;
     }
 
-    private Constants.RoomReward GetBossRoomReward()
+    private Constants.Enums.RoomReward GetBossRoomReward()
     {
-        var ret = Constants.RoomReward.Combat;
+        var ret = Constants.Enums.RoomReward.Combat;
 
         return ret;
     }
@@ -373,16 +373,16 @@ public class ZoneRouteCoordinator
         var currentSceneType = _previousSceneTypes.Last();
         switch(currentSceneType)
         {
-            case Constants.SceneType.Shop:
-            case Constants.SceneType.Rest:
-            case Constants.SceneType.Story:
-            case Constants.SceneType.OneExit:
+            case Constants.Enums.SceneType.Shop:
+            case Constants.Enums.SceneType.Rest:
+            case Constants.Enums.SceneType.Story:
+            case Constants.Enums.SceneType.OneExit:
                 ret = 1;
                 break;
-            case Constants.SceneType.TwoExits:
+            case Constants.Enums.SceneType.TwoExits:
                 ret = 2;
                 break;
-            case Constants.SceneType.ThreeExits:
+            case Constants.Enums.SceneType.ThreeExits:
                 ret = 3;
                 break;
         }
@@ -395,16 +395,16 @@ public class ZoneRouteCoordinator
         int ret = 0;
         switch(_currentZone)
         {
-            case Constants.Zones.None:
+            case Constants.Enums.Zones.None:
                 ret = 0;
                 break;
-            case Constants.Zones.Zone1:
+            case Constants.Enums.Zones.Zone1:
                 ret = Zone1Length;
                 break;
-            case Constants.Zones.Zone2:
+            case Constants.Enums.Zones.Zone2:
                 ret = Zone2Length;
                 break;
-            case Constants.Zones.Zone3:
+            case Constants.Enums.Zones.Zone3:
                 ret = Zone3Length;
                 break;
         }

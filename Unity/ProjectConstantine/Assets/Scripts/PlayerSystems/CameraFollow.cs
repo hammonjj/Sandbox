@@ -1,6 +1,4 @@
 using UnityEngine;
-//using static UnityEngine.GraphicsBuffer;
-using UnityEngine.ProBuilder;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        _playerToFollow = GameObject.FindGameObjectWithTag(Constants.Player);
+        _playerToFollow = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
         _offset = transform.position - _playerToFollow.transform.position;
     }
 

@@ -3,9 +3,10 @@ using TMPro;
 
 public class ZoneDoor : MonoBehaviourBase
 {
-    public Constants.Scenes SceneToGoTo;
-    public Constants.RoomReward NextRoomReward;
+    public Constants.Enums.Scenes SceneToGoTo;
+    public Constants.Enums.RoomReward NextRoomReward;
 
+    private bool _enableRoomDoor;
     private bool _isPlayerCloseEnough;
     private GameObject _nextSceneUITextObj;
     private SceneStateManager _sceneStateManager;
@@ -15,7 +16,7 @@ public class ZoneDoor : MonoBehaviourBase
     {
         EventManager.GetInstance().onAdvanceScenePressed += OnAdvanceScenePressed;
 
-        _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.NextZoneText);
+        _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.Tags.NextZoneText);
         if(_nextSceneUITextObj == null)
         {
             LogError("Couldn't located NextZoneText game object");
@@ -29,7 +30,8 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void Start()
     {
-        _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+        EventManager.GetInstance().onEncounterEnded += OnEncounterEnded;
+        _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
 
         if(_sceneStateManager)
         {
@@ -41,24 +43,15 @@ public class ZoneDoor : MonoBehaviourBase
         }
     }
 
-    private void Update()
+    public void OnEncounterEnded()
     {
-        /*
-        if(_sceneStateManager == null)
-        {
-            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
-
-            if(_sceneStateManager != null)
-            {
-                LogDebug("Acquired SceneManager");
-            }
-        }
-        */
+        _enableRoomDoor = true;
+        LogDebug("Encounter Ended - Enabling Door");
     }
 
     public void OnAdvanceScenePressed(bool value)
     {
-        if(_isPlayerCloseEnough && value)
+        if(_isPlayerCloseEnough && value && _enableRoomDoor)
         {
             _sceneStateManager.AdvanceToScene(SceneToGoTo, NextRoomReward);
         }
@@ -66,7 +59,7 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == Constants.Player)
+        if(other.gameObject.tag == Constants.Tags.Player && _enableRoomDoor)
         {
             LogDebug($"Player Entered Exit Zone - Scene to Go To: {SceneToGoTo} - Scene Reward: {NextRoomReward}");
             _isPlayerCloseEnough = true;
@@ -78,7 +71,7 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == Constants.Player)
+        if(other.gameObject.tag == Constants.Tags.Player && _enableRoomDoor)
         {
             _isPlayerCloseEnough = false;
             LogDebug("Player Left Exit Zone");

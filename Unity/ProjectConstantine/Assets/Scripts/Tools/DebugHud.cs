@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +16,7 @@ public class DebugHud : MonoBehaviourBase
     {
         if(_doorManager == null)
         {
-            _doorManager = GameObject.FindGameObjectWithTag(Constants.DoorManager)?.GetComponent<DoorManager>();
+            _doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
             if(_doorManager == null)
             {
                 return;
@@ -29,7 +27,7 @@ public class DebugHud : MonoBehaviourBase
 
         if(_sceneStateManager == null)
         {
-            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.SceneStateManager)?.GetComponent<SceneStateManager>();
+            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
             if(_sceneStateManager == null)
             {
                 return;
@@ -40,7 +38,7 @@ public class DebugHud : MonoBehaviourBase
 
         if(_gameStateManager == null)
         {
-            _gameStateManager = GameObject.FindGameObjectWithTag(Constants.GameStateManager)?.GetComponent<GameStateManager>();
+            _gameStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.GameStateManager)?.GetComponent<GameStateManager>();
             if(_gameStateManager == null)
             {
                 return;

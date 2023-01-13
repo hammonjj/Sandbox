@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZoneEncounterManager : MonoBehaviourBase
@@ -37,7 +35,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         var sceneType = _sceneManager.CurrentFightType;
         LogDebug($"Current Scene Type: {sceneType}");
-        if(sceneType == Constants.FightType.None)
+        if(sceneType == Constants.Enums.FightType.None)
         {
             Destroy(gameObject);
             return;
@@ -46,7 +44,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
         _eventManager = EventManager.GetInstance();
         _eventManager.onEnemyDeath += OnEnemyDeath;
 
-        SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.SpawnPoint);
+        SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.Tags.SpawnPoint);
         if(SpawnPoints == null || SpawnPoints.Length == 0)
         {
             LogError("Unable to Locate Spawn Points");
@@ -79,15 +77,8 @@ public class ZoneEncounterManager : MonoBehaviourBase
         }
         else
         {
-            //Stop Sending Waves by keeping _currentlyDeadEnemies = 0;
-            //Either
-            //  - Send event notifying someone the last wave has ended
             _eventManager.OnEncounterEnded();
             Destroy(gameObject);
-
-            //Next:
-            //  - Generate chamber reward
-            //  - Enable zone doors
         }
     }
 
@@ -101,12 +92,22 @@ public class ZoneEncounterManager : MonoBehaviourBase
     {
         LogDebug($"Instantiating wave {_currentWave} of {WavesToSpawn}");
 
+        var unusedSpawns = SpawnPoints.ToList();
         for(int i = 0; i < EnemiesToSpawn; i++)
         {
-            var random = new System.Random();
-            int spawnPoint = random.Next(0, SpawnPoints.Length);
-            int randomPrefab = random.Next(0, NormalEnemyPrefabs.Length);
-            Instantiate(NormalEnemyPrefabs[randomPrefab], SpawnPoints[spawnPoint].transform);
+            var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, NormalEnemyPrefabs.Length - 1);
+
+            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
+            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
+
+            Instantiate(
+                NormalEnemyPrefabs[randomPrefab],
+                unusedSpawns[spawnPoint].transform.localPosition, //Need to add height (Y) to prevent from spawning in floor
+                unusedSpawns[spawnPoint].transform.rotation);
+
+            //Prevent enemies from spawning on top of each other
+            unusedSpawns.RemoveAt(spawnPoint);
         }
 
         LogDebug($"Finished instantiating wave {_currentWave} of {WavesToSpawn}");

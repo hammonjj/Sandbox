@@ -25,6 +25,12 @@ public class DebugGameWindow : EditorWindow
         if(GUI.Button(new Rect(0, 60, 200, 25), "Kill All Enemies"))
         {
             Helper.LogDebug("Killing all enemies");
+            var enemies = GameObject.FindGameObjectsWithTag(Constants.Tags.Enemy);
+            foreach(var enemy in enemies)
+            {
+                EventManager.GetInstance().OnEnemyDeath();
+                Destroy(enemy);
+            }
         }
     }
 }

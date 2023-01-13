@@ -2,6 +2,6 @@
 
 public class NextRoom
 {
-    public Constants.SceneType SceneType;
-    public Constants.RoomReward RoomReward;
+    public Constants.Enums.SceneType SceneType;
+    public Constants.Enums.RoomReward RoomReward;
 }
