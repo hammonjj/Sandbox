@@ -42,5 +42,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Zone1_Start.unity
     guid: 39f3e82386ee34da197acc018b9391d6
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 8b8c6daa4d956bb43a68ea02107e4ee1,
+      type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}
