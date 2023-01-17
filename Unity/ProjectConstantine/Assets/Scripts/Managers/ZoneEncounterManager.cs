@@ -20,11 +20,6 @@ public class ZoneEncounterManager : MonoBehaviourBase
     private EventManager _eventManager;
     private SceneStateManager _sceneManager;
 
-    private void Awake()
-    {
-        LogDebug("ZoneEncounterManager Awake");
-    }
-
     private void Start()
     {
         _sceneManager = GameObject.FindGameObjectWithTag("SceneStateManager").GetComponent<SceneStateManager>();

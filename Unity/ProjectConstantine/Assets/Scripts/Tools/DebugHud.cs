@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class DebugHud : MonoBehaviourBase
 {
+    public float LeftBorder = 310;
+    public float VerticalBorder = 275;
+
     private float _rightBorder = 1500;
-    private float _leftBorder = 310;
     private float _leftVerticalPadding = 20;
     private float _rightVerticalPadding = 75;
 
@@ -63,11 +65,11 @@ public class DebugHud : MonoBehaviourBase
 
     private void GenerateSceneInformation()
     {
-        GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 0, 300, 20), $"Scene: {SceneManager.GetActiveScene().name}");
-        GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 1, 300, 20), $"Scene Type: {_sceneStateManager.CurrentSceneType}");
-        GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 2, 300, 20), $"Room Reward: {_sceneStateManager.CurrentRoomReward}");
-        GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 3, 300, 20), $"Current Chamber: {_gameStateManager.CurrentChamber}");
-        GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 4, 300, 20), $"Chamber Limit: {_gameStateManager.ZoneMaximumChambers}");
+        GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 0, 300, 20), $"Scene: {SceneManager.GetActiveScene().name}");
+        GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 1, 300, 20), $"Scene Type: {_sceneStateManager.CurrentSceneType}");
+        GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 2, 300, 20), $"Room Reward: {_sceneStateManager.CurrentRoomReward}");
+        GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 3, 300, 20), $"Current Chamber: {_gameStateManager.CurrentChamber}");
+        GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 4, 300, 20), $"Chamber Limit: {_gameStateManager.ZoneMaximumChambers}");
 
         //Get All Doors and display RoomReward and SceneName
         var labelNumber = 6;
@@ -75,13 +77,13 @@ public class DebugHud : MonoBehaviourBase
 
         if(zoneDoors.Count > 0)
         {
-            GUI.Label(new Rect(_leftBorder, 275 + _leftVerticalPadding * 5, 300, 20), $"Zone Doors:");
+            GUI.Label(new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * 5, 300, 20), $"Zone Doors:");
         }
 
         for(int i = 0; i < _doorManager.ZoneDoors.Count; i++)
         {
             GUI.Label(
-                new Rect(_leftBorder, 275 + _leftVerticalPadding * labelNumber, 350, 20),
+                new Rect(LeftBorder, VerticalBorder + _leftVerticalPadding * labelNumber, 350, 20),
                 $"    - Door #{i + 1} -> Scene: {_doorManager.ZoneDoors[i].SceneToGoTo} - " +
                     $"Reward: {_doorManager.ZoneDoors[i].NextRoomReward}");
 
