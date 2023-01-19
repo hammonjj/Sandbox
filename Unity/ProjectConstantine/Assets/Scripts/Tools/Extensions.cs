@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Extensions : MonoBehaviourBase
 {
+    //Gets a tagged object in a scene regardless of whether it is active or not
     public static GameObject FindGameObjectWithTag(string tag)
     {
         var gameObjects = FindAllObjectsInScene();
@@ -19,6 +20,43 @@ public class Extensions : MonoBehaviourBase
         return null;
     }
 
+    //Gets a tagged object in a scene regardless of whether it is active or not
+    public static List<GameObject> FindGameObjectsWithTags(List<string> tags)
+    {
+        var ret = new List<GameObject>();
+        var gameObjects = FindAllObjectsInScene();
+        foreach(var gameObject in gameObjects)
+        {
+            if(!tags.Contains(gameObject.tag))
+            {
+                continue;
+            }
+
+            ret.Add(gameObject);
+        }
+
+        return ret;
+    }
+
+    //Gets all tagged objects in a scene regardless of whether they are active or not
+    public static List<GameObject> FindGameObjectsWithTag(string tag)
+    {
+        var ret = new List<GameObject>();
+        var gameObjects = FindAllObjectsInScene();
+        foreach(var gameObject in gameObjects)
+        {
+            if(gameObject.tag != tag)
+            {
+                continue;
+            }
+
+            ret.Add(gameObject);
+        }
+
+        return ret;
+    }
+
+    
     public static List<GameObject> FindAllObjectsInScene()
     {
         UnityEngine.SceneManagement.Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();

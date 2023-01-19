@@ -10,6 +10,12 @@ public class GameDesignSettings : ScriptableObject
     public int ChanceOfStory;
     public int ChanceOfElite;
 
+    [Header("Room Rewards")]
+    public int ChanceOfBuff;
+    public int ChanceOfCosmetic;
+    public int ChanceOfCurrency;
+
+    [Header("Zone Length")]
     public int Zone1Chambers;
     public int Zone2Chambers;
     public int Zone3Chambers;

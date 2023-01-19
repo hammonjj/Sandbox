@@ -6,9 +6,9 @@ public class DebugHud : MonoBehaviourBase
     public float LeftBorder = 310;
     public float VerticalBorder = 275;
 
-    private float _rightBorder = 1500;
+    //private float _rightBorder = 1500;
     private float _leftVerticalPadding = 20;
-    private float _rightVerticalPadding = 75;
+    //private float _rightVerticalPadding = 75;
 
     private DoorManager _doorManager;
     private GameStateManager _gameStateManager;

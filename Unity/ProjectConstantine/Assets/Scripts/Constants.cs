@@ -28,28 +28,35 @@ public static class Constants
             None,
             TrainingGround,
 
+            //Zone 1
             Zone1_Any,
-            Zone1_Shop,
+            Zone1_Shop_2,
             Zone1_Rest,
+            //Zone1_Rest_2,
             Zone1_Boss,
-            Zone1_Story,
+            Zone1_Story_2,
             Zone1_Start,
-            Zone1_OneExit,
-            Zone1_TwoExits,
-            Zone1_ThreeExits
+            //Zone1_OneExit,
+            //Zone1_TwoExits,
+            //Zone1_ThreeExits
+            Zone1_Chair,
+            Zone1_Large,
+            Zone1_Square
+
+            //Zone 2
+
+            //Zone 3
         }
 
         public enum SceneType
         {
             None,
-
             Shop,
             Rest,
             Boss,
             Story,
-            OneExit,
-            TwoExits,
-            ThreeExits
+            Fight,
+            Elite,
         }
 
         public enum FightType
@@ -59,14 +66,23 @@ public static class Constants
             Elite
         }
 
+        public enum RoomType
+        {
+            None,
+            Normal,
+            Elite,
+            Rest,
+            Shop,
+            Story
+        }
+
+        //NOTE: Do not change the order of these as they are used for random generation
         public enum RoomReward
         {
             None,
             Combat,
             Cosmetic,
             Currency,
-            Shop,
-            Story
         }
 
         public enum Zones

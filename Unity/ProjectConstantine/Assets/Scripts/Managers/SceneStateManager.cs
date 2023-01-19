@@ -6,11 +6,10 @@ public class SceneStateManager : MonoBehaviourBase
 {
     public bool IsGamePaused { get; private set; }
     public bool AdvanceScenePressed;
-    private Constants.Enums.Zones CurrentZone;
-    public Constants.Enums.FightType CurrentFightType = Constants.Enums.FightType.Normal;
     public Constants.Enums.SceneType CurrentSceneType;
     public Constants.Enums.RoomReward CurrentRoomReward;
 
+    private Constants.Enums.Zones CurrentZone;
     private GameObject _pauseMenu;
     private EventManager _eventManager;
     private GameStateManager _gameStateManager;
@@ -25,6 +24,8 @@ public class SceneStateManager : MonoBehaviourBase
 
     private void Awake()
     {
+        PickDoorConfiguration();
+
         _eventManager = EventManager.GetInstance();
         _eventManager.onPause += PauseOrUnpauseGame;
         _eventManager.onPlayerDeath += OnPlayerDeath;
@@ -61,13 +62,22 @@ public class SceneStateManager : MonoBehaviourBase
         LogDebug("Encounter Ended");
         //Next:
         //  - Spawn chamber reward
-        //  - Enable zone doors
+        //  - Enable zone doors -> Doors already listen for OnEncounterEnded
     }
 
     public void OnAdvanceScenePressed(bool value)
     {
         LogDebug($"OnAdvanceScenePressed: {value}");
         AdvanceScenePressed = value;
+    }
+
+    private void PickDoorConfiguration()
+    {
+        //Decide how many doors this room will have
+        //  - Check to see if OneDoor, TwoDoors or ThreeDoors exist in scene
+        //  - Pick a number and enable that game object
+        LogDebug("Setting room doors");
+        //One door is a given unless it's a boss fight
     }
 
     private void DetermineZone(string name)

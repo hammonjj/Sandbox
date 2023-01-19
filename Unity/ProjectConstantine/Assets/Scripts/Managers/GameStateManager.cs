@@ -46,31 +46,8 @@ public class GameStateManager : MonoBehaviourBase
     {
         if(!_isInitialized)
         {
-            if(_sceneStateManager == null)
-            {
-                _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
-
-                if(_sceneStateManager == null)
-                {
-                    return;
-                }
-
-                LogDebug("Acquired SceneStateManager");
-            }
-
-            if(_doorManager == null)
-            {
-                _doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
-
-                if(_doorManager == null)
-                {
-                    return;
-                }
-
-                LogDebug("Acquired DoorManager");
-            }
-
-            _isInitialized = true;
+            AcquireManagers();
+            return;
         }
 
         if(!_recalculateRoomOptions)
@@ -96,19 +73,38 @@ public class GameStateManager : MonoBehaviourBase
 
         //Calculate the next room(s)
         var roomOptions = _zoneRouteCoordinator.CalculateNextRoomOptions(
-            _sceneStateManager.CurrentSceneType, _sceneStateManager.GetCurrentZone());
+            _sceneStateManager.CurrentSceneType, currentZone);
 
-        //Convert roomOptions to Scenes
-        var sceneOptions = new List<(Constants.Enums.Scenes, Constants.Enums.RoomReward)>();
-        foreach(var roomOption in roomOptions)
+        _doorManager.AssignOptionsToDoors(roomOptions);
+    }
+
+    private void AcquireManagers()
+    {
+        if(_sceneStateManager == null)
         {
-            var roomReward = roomOption.RoomReward;
-            var sceneName = MapSceneTypeAndZoneToScene(roomOption.SceneType, currentZone);
+            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
 
-            sceneOptions.Add((sceneName, roomReward));
+            if(_sceneStateManager == null)
+            {
+                return;
+            }
+
+            LogDebug("Acquired SceneStateManager");
         }
 
-        _doorManager.AssignOptionsToDoors(sceneOptions);
+        if(_doorManager == null)
+        {
+            _doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
+
+            if(_doorManager == null)
+            {
+                return;
+            }
+
+            LogDebug("Acquired DoorManager");
+        }
+
+        _isInitialized = true;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -119,103 +115,5 @@ public class GameStateManager : MonoBehaviourBase
         _sceneStateManager = null;
         _isInitialized = false;
         _recalculateRoomOptions = true;
-    }
-
-    private Constants.Enums.Scenes MapSceneTypeAndZoneToScene(Constants.Enums.SceneType sceneType, Constants.Enums.Zones zone)
-    {
-        var ret = Constants.Enums.Scenes.None;
-        if(sceneType == Constants.Enums.SceneType.Shop)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_Shop;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if(sceneType == Constants.Enums.SceneType.Rest)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_Rest;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if (sceneType == Constants.Enums.SceneType.Story)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_Story;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if(sceneType == Constants.Enums.SceneType.OneExit)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_OneExit;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if(sceneType == Constants.Enums.SceneType.TwoExits)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_TwoExits;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if(sceneType == Constants.Enums.SceneType.ThreeExits)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_ThreeExits;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-        else if(sceneType == Constants.Enums.SceneType.Boss)
-        {
-            switch(zone)
-            {
-                case Constants.Enums.Zones.Zone1:
-                    ret = Constants.Enums.Scenes.Zone1_Boss;
-                    break;
-                case Constants.Enums.Zones.Zone2:
-                    break;
-                case Constants.Enums.Zones.Zone3:
-                    break;
-            }
-        }
-
-        return ret;
     }
 }

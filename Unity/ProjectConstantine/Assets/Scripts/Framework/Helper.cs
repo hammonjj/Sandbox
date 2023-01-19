@@ -10,6 +10,13 @@ public class Helper
         Debug.Log(ComposeLogMessage(message, lineNumber, sourceFilePath));
     }
 
+    public static void LogError(string message,
+        [CallerLineNumber] int lineNumber = 0,
+        [CallerFilePath] string sourceFilePath = "")
+    {
+        Debug.Log("<color=red>" + ComposeLogMessage(message, lineNumber, sourceFilePath) + "</color>");
+    }
+
     private static string ComposeLogMessage(string message,
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")

@@ -28,16 +28,25 @@ public class ZoneEncounterManager : MonoBehaviourBase
             LogError("Failed to Acquire Scene State Manager");
         }
 
-        var sceneType = _sceneManager.CurrentFightType;
+        _eventManager = EventManager.GetInstance();
+        _eventManager.onEnemyDeath += OnEnemyDeath;
+
+        var sceneType = _sceneManager.CurrentSceneType;
         LogDebug($"Current Scene Type: {sceneType}");
-        if(sceneType == Constants.Enums.FightType.None)
+        if(sceneType == Constants.Enums.SceneType.None ||
+            sceneType == Constants.Enums.SceneType.Rest ||
+            sceneType == Constants.Enums.SceneType.Shop ||
+            sceneType == Constants.Enums.SceneType.Story)
         {
+            _eventManager.OnEncounterEnded();
             Destroy(gameObject);
             return;
         }
 
-        _eventManager = EventManager.GetInstance();
-        _eventManager.onEnemyDeath += OnEnemyDeath;
+        if(sceneType == Constants.Enums.SceneType.Boss)
+        {
+            //If we're in a boss fight, need to do something different
+        }
 
         SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.Tags.SpawnPoint);
         if(SpawnPoints == null || SpawnPoints.Length == 0)

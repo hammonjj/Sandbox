@@ -18,29 +18,38 @@ EditorBuildSettings:
     path: Assets/Scenes/TutorialZone.unity
     guid: 5c4dd83def67e2f4199941d8315b3f0e
   - enabled: 1
-    path: Assets/Scenes/Zone1_OneExit.unity
-    guid: 394f73ffc6a9d3f468a920d6c6f40184
-  - enabled: 1
     path: Assets/Scenes/Zone1_Shop.unity
     guid: e55126ba94bccd248a14e7ba455c2bb1
   - enabled: 1
     path: Assets/Scenes/Zone1_Story.unity
     guid: 32786665b7faefa40826a0eec0f9f0de
   - enabled: 1
-    path: Assets/Scenes/Zone1_ThreeExits.unity
-    guid: 5e8febf8ba831ff4ea81ee93061b7e7e
-  - enabled: 1
-    path: Assets/Scenes/Zone1_Boss.unity
-    guid: 2fab7070fe6c91548bb5e219aaeb6dc6
-  - enabled: 1
     path: Assets/Scenes/Zone1_Rest.unity
     guid: 77c079af885588145bb787ebbe2edf57
   - enabled: 1
-    path: Assets/Scenes/Zone1_TwoExits.unity
-    guid: d38e249d1a1250d4787739695f4285d6
-  - enabled: 1
     path: Assets/Scenes/Zone1_Start.unity
     guid: 39f3e82386ee34da197acc018b9391d6
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Boss.unity
+    guid: bf2989ad9a7644578b333a142dc0a365
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Chair.unity
+    guid: 2e029ebd0a17fcb41b70506c72d0e4b0
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_HourGlass.unity
+    guid: 512853fa2b2594381823e92816f604a3
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Large.unity
+    guid: 4906e0727845f1a4f885dc407cbf80ae
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Shop_2.unity
+    guid: 2353a87e8ed164cc4830ad5a7cf02db4
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Square.unity
+    guid: c47dd0cc5e565405d862a99f59d13a44
+  - enabled: 1
+    path: Assets/Scenes/ZoneOne/Zone1_Story_2.unity
+    guid: 79d1013073829d347aabe66256431db4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8b8c6daa4d956bb43a68ea02107e4ee1,
       type: 2}
