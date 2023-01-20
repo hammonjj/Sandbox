@@ -42,7 +42,16 @@ public class ZoneDoor : MonoBehaviourBase
             LogDebug("Failed to Acquire Scene Manager");
         }
 
-        _enableRoomDoor = _sceneStateManager.CurrentSceneType == Constants.Enums.SceneType.None;
+        if(_sceneStateManager.GetCurrentZone() == Constants.Enums.Zones.Zone1 &&
+            _sceneStateManager.CurrentSceneType == Constants.Enums.SceneType.None)
+        {
+            //This is to ensure the door locks when we enter the first chamber of the first zone
+            _enableRoomDoor = false;
+        }
+        else
+        {
+            _enableRoomDoor = _sceneStateManager.CurrentSceneType == Constants.Enums.SceneType.None;
+        }
     }
 
     public void OnEncounterEnded()

@@ -20,6 +20,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
     private EventManager _eventManager;
     private SceneStateManager _sceneManager;
 
+    private bool _inZone1Start = false;
     private void Start()
     {
         _sceneManager = GameObject.FindGameObjectWithTag("SceneStateManager").GetComponent<SceneStateManager>();
@@ -33,7 +34,15 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         var sceneType = _sceneManager.CurrentSceneType;
         LogDebug($"Current Scene Type: {sceneType}");
-        if(sceneType == Constants.Enums.SceneType.None ||
+        if(sceneType == Constants.Enums.SceneType.None && 
+            _sceneManager.GetCurrentZone() == Constants.Enums.Zones.Zone1)
+        {
+            //If we are here it's because we are in Zone 1 start
+            //Player needs to kill the first enemy to unlock the door
+            _inZone1Start = true;
+            return;
+        }
+        else if(sceneType == Constants.Enums.SceneType.None ||
             sceneType == Constants.Enums.SceneType.Rest ||
             sceneType == Constants.Enums.SceneType.Shop ||
             sceneType == Constants.Enums.SceneType.Story)
@@ -61,6 +70,14 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
     private void Update()
     {
+        if(_inZone1Start && _currentlyDeadEnemies == 1)
+        {
+            _inZone1Start = false;
+            _eventManager.OnEncounterEnded();
+            Destroy(gameObject);
+            return;
+        }
+
         if(_currentlyDeadEnemies < EnemiesToSpawn)
         {
             return;

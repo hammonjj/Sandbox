@@ -77,6 +77,18 @@ public class NextRoom
                 //Use the same rooms for Elites and Normal Fights for the time being
                 SceneName = GetRandomFightRoom(currentZone);
                 break;
+            case Constants.Enums.SceneType.Boss:
+                switch(currentZone)
+                {
+                    case Constants.Enums.Zones.Zone1:
+                        SceneName = Constants.Enums.Scenes.Zone1_Boss;
+                        break;
+                    case Constants.Enums.Zones.Zone2:
+                        break;
+                    case Constants.Enums.Zones.Zone3:
+                        break;
+                }
+                break;
             case Constants.Enums.SceneType.None:
                 //Do nothing
                 break;
