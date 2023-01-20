@@ -87,7 +87,7 @@ public class ZoneRouteCoordinator
         return ret;
     }
 
-    int GetCurrentSceneExits_V2()
+    private int GetCurrentSceneExits()
     {
         var doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager).GetComponent<DoorManager>();
         if(doorManager == null)
@@ -116,57 +116,47 @@ public class ZoneRouteCoordinator
         //Iterate over each door to determine what room it leads to
         //  - Get a reward for each room if it's of type rest, fight, or elite
         //  - Determine how many exits should be in the next room so we know what to load
-        var currentSceneExits = GetCurrentSceneExits_V2();
+        var currentSceneExits = GetCurrentSceneExits();
         for(int i = 0; i < currentSceneExits; i++)
         {
             var nextRoomType = _availableSceneTypes[Random.Range(0, _availableSceneTypes.Count - 1)];
             switch(nextRoomType)
             {
                 case Constants.Enums.RoomType.Normal:
-                    ret.Add(new NextRoom()
-                    {
-                        NumOfExits = GetRandomNumberOfRoomExits(),
-                        SceneType = Constants.Enums.SceneType.Fight,
-                        RoomReward = GetRoomReward(Constants.Enums.SceneType.Fight)
-                    });
+                    ret.Add(
+                        new NextRoom(
+                            Constants.Enums.SceneType.Fight, 
+                            GetRoomReward(Constants.Enums.SceneType.Fight)));
 
                     break;
                 case Constants.Enums.RoomType.Elite:
-                    ret.Add(new NextRoom()
-                    {
-                        NumOfExits = GetRandomNumberOfRoomExits(),
-                        SceneType = Constants.Enums.SceneType.Elite,
-                        RoomReward = GetRoomReward(Constants.Enums.SceneType.Fight)
-                    });
+                    ret.Add(
+                        new NextRoom(
+                            Constants.Enums.SceneType.Elite,
+                            GetRoomReward(Constants.Enums.SceneType.Fight)));
 
                     break;
                 case Constants.Enums.RoomType.Shop:
-                    ret.Add(new NextRoom()
-                    {
-                        NumOfExits = 1,
-                        SceneType = Constants.Enums.SceneType.Shop,
-                        RoomReward = GetRoomReward(Constants.Enums.SceneType.Shop)
-                    });
+                    ret.Add(
+                        new NextRoom(
+                            Constants.Enums.SceneType.Shop,
+                            GetRoomReward(Constants.Enums.SceneType.Shop)));
 
                     _availableSceneTypes.RemoveAll(x => x == Constants.Enums.RoomType.Shop);
                     break;
                 case Constants.Enums.RoomType.Rest:
-                    ret.Add(new NextRoom()
-                    {
-                        NumOfExits = 1,
-                        SceneType = Constants.Enums.SceneType.Rest,
-                        RoomReward = GetRoomReward(Constants.Enums.SceneType.Rest)
-                    });
+                    ret.Add(
+                        new NextRoom(
+                            Constants.Enums.SceneType.Rest,
+                            GetRoomReward(Constants.Enums.SceneType.Rest)));
 
                     _availableSceneTypes.RemoveAll(x => x == Constants.Enums.RoomType.Rest);
                     break;
                 case Constants.Enums.RoomType.Story:
-                    ret.Add(new NextRoom()
-                    {
-                        NumOfExits = 1,
-                        SceneType = Constants.Enums.SceneType.Story,
-                        RoomReward = GetRoomReward(Constants.Enums.SceneType.Story)
-                    });
+                    ret.Add(
+                        new NextRoom(
+                            Constants.Enums.SceneType.Story,
+                            GetRoomReward(Constants.Enums.SceneType.Story)));
 
                     _availableSceneTypes.RemoveAll(x => x == Constants.Enums.RoomType.Story);
                     break;
@@ -183,66 +173,52 @@ public class ZoneRouteCoordinator
         //We're currently in the first room
         if(_previousSceneTypes.Count == 1)
         {
-            ret.Add(new NextRoom()
-            {
-                NumOfExits = GetRandomNumberOfRoomExits(),
-                SceneType = Constants.Enums.SceneType.Fight,
-                RoomReward = GetRoomReward(Constants.Enums.SceneType.Fight)
-            });
+            ret.Add(
+                new NextRoom(
+                    Constants.Enums.SceneType.Fight,
+                    GetRoomReward(Constants.Enums.SceneType.Fight)));
 
             Helper.LogDebug("First room of the zone");
         }
-        else if (_previousSceneTypes.Count == GetCurrentZoneMaxChambers() - 2) //Close to boss -> Rest or Shop
+        else if(_previousSceneTypes.Count == GetCurrentZoneMaxChambers() - 2) //Close to boss -> Rest or Shop
         {
             //Need to check current room to know how many exits to prepare
-            var exits = GetCurrentSceneExits_V2();
+            var exits = GetCurrentSceneExits();
             if(exits == 1)
             {
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Shop,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Shop)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Shop,
+                        GetRoomReward(Constants.Enums.SceneType.Shop)));
             }
             else if(exits == 2)
             {
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Shop,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Shop)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Shop,
+                        GetRoomReward(Constants.Enums.SceneType.Shop)));
 
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Rest,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Rest)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Rest,
+                        GetRoomReward(Constants.Enums.SceneType.Rest)));
             }
             else if(exits == 3)
             {
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Shop,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Shop)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Shop,
+                        GetRoomReward(Constants.Enums.SceneType.Shop)));
 
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Rest,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Rest)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Rest,
+                        GetRoomReward(Constants.Enums.SceneType.Rest)));
 
-                ret.Add(new NextRoom()
-                {
-                    NumOfExits = 1,
-                    SceneType = Constants.Enums.SceneType.Fight,
-                    RoomReward = GetRoomReward(Constants.Enums.SceneType.Fight)
-                });
+                ret.Add(
+                    new NextRoom(
+                        Constants.Enums.SceneType.Fight,
+                        GetRoomReward(Constants.Enums.SceneType.Fight)));
             }
             else
             {
@@ -253,33 +229,24 @@ public class ZoneRouteCoordinator
         }
         else if(_previousSceneTypes.Count == GetCurrentZoneMaxChambers() - 1) //Boss Room Next
         {
-            ret.Add(new NextRoom()
-            {
-                NumOfExits = 0,
-                SceneType = Constants.Enums.SceneType.Boss,
-                RoomReward = GetRoomReward(Constants.Enums.SceneType.Boss)
-            });
+            ret.Add(
+                new NextRoom(
+                    Constants.Enums.SceneType.Boss,
+                    GetRoomReward(Constants.Enums.SceneType.Boss)));
 
             Helper.LogDebug("Boss is next");
         }
         else if(_previousSceneTypes.Count == GetCurrentZoneMaxChambers()) //In Boss Room
         {
-            ret.Add(new NextRoom()
-            {
-                NumOfExits = 0,
-                SceneType = Constants.Enums.SceneType.None,
-                RoomReward = GetRoomReward(Constants.Enums.SceneType.None)
-            });
+            ret.Add(
+                new NextRoom(
+                    Constants.Enums.SceneType.None,
+                    GetRoomReward(Constants.Enums.SceneType.None)));
 
             Helper.LogDebug("Boss Room");
         }
 
         return ret;
-    }
-
-    private int GetRandomNumberOfRoomExits()
-    {
-        return Helper.RandomInclusiveRange(1, 3);
     }
 
     private Constants.Enums.RoomReward GetRoomReward(Constants.Enums.SceneType sceneType)

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class DoorManager : MonoBehaviourBase
@@ -8,18 +7,47 @@ public class DoorManager : MonoBehaviourBase
     {
         get
         {
+            if(!_initializaed)
+            {
+                _initializaed = true;
+                SetRoomDoors();
+                GetRoomDoorObjects();
+            }
+
             return _zoneDoors;
         }
     }
 
-    private List<ZoneDoor> _zoneDoors = new List<ZoneDoor>();
+    private bool _initializaed = false;
+    private List<ZoneDoor> _zoneDoors = new();
 
-    private void Awake()
+    private void Start()
+    {
+        if(_initializaed)
+        {
+            LogDebug("Already initialized");
+            return;
+        }
+
+        _initializaed = true;
+        SetRoomDoors();
+        GetRoomDoorObjects();
+    }
+
+    private void SetRoomDoors()
     {
         //Decide how many doors this room will have
         //  - Check to see if OneDoor, TwoDoors or ThreeDoors exist in scene
         //  - Pick a number and enable that game object
         LogDebug("Setting room doors");
+
+        var sceneManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager).GetComponent<SceneStateManager>();
+        if(sceneManager.CurrentSceneType == Constants.Enums.SceneType.None)
+        {
+            LogDebug("Not in a Zone");
+            return;
+        }
+
         var tags = new List<string>()
         {
             Constants.Tags.OneDoor,
@@ -46,18 +74,25 @@ public class DoorManager : MonoBehaviourBase
         LogDebug($"Door Configuration Chosen: {doorNumber.name}");
     }
 
+    private void GetRoomDoorObjects()
+    {
+        var doors = GameObject.FindGameObjectsWithTag(Constants.Tags.ZoneDoor);
+
+        LogDebug($"Found {doors.Length} doors");
+        foreach(var door in doors)
+        {
+            _zoneDoors.Add(door.GetComponent<ZoneDoor>());
+        }
+    }
+
     public void AssignOptionsToDoors(List<NextRoom> roomOptions)
     {
         LogDebug("Assigning options to room doors");
-        if(_zoneDoors.Count == 0)
+        if(!_initializaed)
         {
-            var doors = GameObject.FindGameObjectsWithTag(Constants.Tags.ZoneDoor);
-
-            LogDebug($"Found {doors.Length} doors");
-            foreach(var door in doors)
-            {
-                _zoneDoors.Add(door.GetComponent<ZoneDoor>());
-            }
+            _initializaed = true;
+            SetRoomDoors();
+            GetRoomDoorObjects();
         }
 
         if(_zoneDoors.Count == 0)
@@ -75,6 +110,7 @@ public class DoorManager : MonoBehaviourBase
         {
             _zoneDoors[i].SceneToGoTo = roomOptions[i].SceneName;
             _zoneDoors[i].NextRoomReward = roomOptions[i].RoomReward;
+            _zoneDoors[i].SceneType = roomOptions[i].SceneType;
 
             LogDebug($"Door Assigned - Name: {_zoneDoors[i].name} - " +
                 $"SceneToGoTo: {roomOptions[i].SceneName} - NextRoomReward: {roomOptions[i].RoomReward}");

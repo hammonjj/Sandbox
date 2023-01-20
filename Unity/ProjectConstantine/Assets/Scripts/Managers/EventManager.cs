@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.SceneManagement;
 
 public class EventManager
 {
@@ -25,9 +26,25 @@ public class EventManager
         if(_instance == null)
         {
             _instance = new EventManager();
+            SceneManager.activeSceneChanged += _instance.OnSceneLoaded;
         }
 
         return _instance;
+    }
+
+    public void OnSceneLoaded(Scene scene, Scene mode)
+    {
+        Helper.LogDebug("EventManager Reloading");
+
+        onEnemyDeath = null;
+        onPlayerDeath = null;
+        onEncounterEnded = null;
+        onUseItem = null;
+        onPlayerDash = null;
+        onPlayerPrimaryAttack = null;
+        onPlayerSecondaryAttack = null;
+        onPause = null;
+        onAdvanceScenePressed = null;
     }
 
     public void OnPlayerDeath()

@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviourBase
 {
-    public Constants.Enums.RoomReward NextRoomReward;
     public GameDesignSettings GameDesignSettings;
+    public Constants.Enums.SceneType NextSceneType;
+    public Constants.Enums.RoomReward NextRoomReward;
 
     //For Debug UI
     public int CurrentChamber
@@ -29,12 +29,12 @@ public class GameStateManager : MonoBehaviourBase
     private void Awake()
     {
         _recalculateRoomOptions = true;
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
         if(_instance == null)
         {
             _instance = this;
             DontDestroyOnLoad(this);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {

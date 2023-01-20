@@ -922,7 +922,7 @@ PrefabInstance:
     - target: {fileID: 1877439600606820847, guid: 07c32d511f5e5434bbd4b4b721f988e4,
         type: 3}
       propertyPath: SceneToGoTo
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1877439600606820847, guid: 07c32d511f5e5434bbd4b4b721f988e4,
         type: 3}
@@ -1095,6 +1095,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
+  LeftBorder: 310
+  VerticalBorder: 275
 --- !u!1001 &3100015153120537554
 PrefabInstance:
   m_ObjectHideFlags: 0

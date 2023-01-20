@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class NextRoom
 {
-    //Convert to Private
-    public int NumOfExits; //-> This can be deleted. Will be handled by SceneStateManager
     public Constants.Enums.SceneType SceneType;
     public Constants.Enums.RoomReward RoomReward;
 
@@ -18,16 +16,14 @@ public class NextRoom
         Constants.Enums.Scenes.Zone1_Square,
     };
 
-    public NextRoom() { }
-
     public NextRoom(
-        int numOfExits,
         Constants.Enums.SceneType sceneType,
         Constants.Enums.RoomReward roomReward)
     {
-        NumOfExits = numOfExits;
         SceneType = sceneType;
         RoomReward = roomReward;
+
+        MapSceneTypeToSceneName();
     }
 
     private void MapSceneTypeToSceneName()
@@ -56,8 +52,7 @@ public class NextRoom
                 switch(currentZone)
                 {
                     case Constants.Enums.Zones.Zone1:
-                        SceneName = Constants.Enums.Scenes.Zone1_Rest;
-                        //SceneName = Constants.Enums.Scenes.Zone1_Rest_2;
+                        SceneName = Constants.Enums.Scenes.Zone1_Rest_2;
                         break;
                     case Constants.Enums.Zones.Zone2:
                         break;

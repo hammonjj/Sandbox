@@ -24,13 +24,7 @@ public class SceneStateManager : MonoBehaviourBase
 
     private void Awake()
     {
-        PickDoorConfiguration();
-
-        _eventManager = EventManager.GetInstance();
-        _eventManager.onPause += PauseOrUnpauseGame;
-        _eventManager.onPlayerDeath += OnPlayerDeath;
-        _eventManager.onEncounterEnded += OnEncounterEnded;
-        _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
+        PickSceneConfiguration();
 
         _pauseMenu = Extensions.FindGameObjectWithTag(Constants.Tags.PauseMenu);
         if(_pauseMenu == null)
@@ -46,7 +40,6 @@ public class SceneStateManager : MonoBehaviourBase
         LogDebug("===============================================================================");
         LogDebug($"New Scene Loaded: {scene}");
         DetermineZone(scene);
-        DetermineSceneType(scene);
 
         _gameStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.GameStateManager).GetComponent<GameStateManager>();
         if(_gameStateManager == null)
@@ -54,7 +47,17 @@ public class SceneStateManager : MonoBehaviourBase
             LogError("Failed to acquire Game State Manager");
         }
 
+        CurrentSceneType = _gameStateManager.NextSceneType;
         CurrentRoomReward = _gameStateManager.NextRoomReward;
+    }
+
+    private void Start()
+    {
+        _eventManager = EventManager.GetInstance();
+        _eventManager.onPause += PauseOrUnpauseGame;
+        _eventManager.onPlayerDeath += OnPlayerDeath;
+        _eventManager.onEncounterEnded += OnEncounterEnded;
+        _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
     }
 
     public void OnEncounterEnded()
@@ -71,12 +74,12 @@ public class SceneStateManager : MonoBehaviourBase
         AdvanceScenePressed = value;
     }
 
-    private void PickDoorConfiguration()
+    private void PickSceneConfiguration()
     {
         //Decide how many doors this room will have
         //  - Check to see if OneDoor, TwoDoors or ThreeDoors exist in scene
         //  - Pick a number and enable that game object
-        LogDebug("Setting room doors");
+        //LogDebug("Setting room doors");
         //One door is a given unless it's a boss fight
     }
 
@@ -126,12 +129,17 @@ public class SceneStateManager : MonoBehaviourBase
         LogDebug("Player has died");
     }
 
-    public void AdvanceToScene(Constants.Enums.Scenes sceneName, Constants.Enums.RoomReward nextRoomReward)
+    public void AdvanceToScene(
+        Constants.Enums.Scenes sceneName, 
+        Constants.Enums.RoomReward nextRoomReward, 
+        Constants.Enums.SceneType sceneType)
     {
         LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - " +
             $"Loading Scene: {sceneName} - Next Scene Reward: {nextRoomReward}");
 
+        _gameStateManager.NextSceneType = sceneType;
         _gameStateManager.NextRoomReward = nextRoomReward;
+        
         SceneManager.LoadScene(sceneName.ToString());
     }
 }

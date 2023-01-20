@@ -5,6 +5,7 @@ public class ZoneDoor : MonoBehaviourBase
 {
     public Constants.Enums.Scenes SceneToGoTo;
     public Constants.Enums.RoomReward NextRoomReward;
+    public Constants.Enums.SceneType SceneType;
 
     private bool _enableRoomDoor;
     private bool _isPlayerCloseEnough;
@@ -14,8 +15,6 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void Awake()
     {
-        EventManager.GetInstance().onAdvanceScenePressed += OnAdvanceScenePressed;
-
         _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.Tags.NextZoneText);
         if(_nextSceneUITextObj == null)
         {
@@ -31,6 +30,7 @@ public class ZoneDoor : MonoBehaviourBase
     private void Start()
     {
         EventManager.GetInstance().onEncounterEnded += OnEncounterEnded;
+        EventManager.GetInstance().onAdvanceScenePressed += OnAdvanceScenePressed;
         _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
 
         if(_sceneStateManager)
@@ -41,6 +41,8 @@ public class ZoneDoor : MonoBehaviourBase
         {
             LogDebug("Failed to Acquire Scene Manager");
         }
+
+        _enableRoomDoor = _sceneStateManager.CurrentSceneType == Constants.Enums.SceneType.None;
     }
 
     public void OnEncounterEnded()
@@ -53,7 +55,7 @@ public class ZoneDoor : MonoBehaviourBase
     {
         if(_isPlayerCloseEnough && value && _enableRoomDoor)
         {
-            _sceneStateManager.AdvanceToScene(SceneToGoTo, NextRoomReward);
+            _sceneStateManager.AdvanceToScene(SceneToGoTo, NextRoomReward, SceneType);
         }
     }
 

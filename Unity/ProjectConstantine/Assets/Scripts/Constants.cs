@@ -32,13 +32,10 @@ public static class Constants
             Zone1_Any,
             Zone1_Shop_2,
             Zone1_Rest,
-            //Zone1_Rest_2,
+            Zone1_Rest_2,
             Zone1_Boss,
             Zone1_Story_2,
             Zone1_Start,
-            //Zone1_OneExit,
-            //Zone1_TwoExits,
-            //Zone1_ThreeExits
             Zone1_Chair,
             Zone1_Large,
             Zone1_Square
