@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2486,7 +2486,7 @@ GameObject:
   - component: {fileID: 652958316}
   m_Layer: 0
   m_Name: OneDoor
-  m_TagString: Untagged
+  m_TagString: OneDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5171,6 +5171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
+  LeftBorder: 310
+  VerticalBorder: 275
 --- !u!1 &1040055797
 GameObject:
   m_ObjectHideFlags: 0
@@ -5639,7 +5641,7 @@ GameObject:
   - component: {fileID: 1331526684}
   m_Layer: 0
   m_Name: ThreeDoors
-  m_TagString: Untagged
+  m_TagString: ThreeDoors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6497,7 +6499,7 @@ GameObject:
   - component: {fileID: 1748258934}
   m_Layer: 0
   m_Name: TwoDoors
-  m_TagString: Untagged
+  m_TagString: TwoDoors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

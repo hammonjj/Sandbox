@@ -3127,7 +3127,7 @@ GameObject:
   - component: {fileID: 652958316}
   m_Layer: 0
   m_Name: OneDoor
-  m_TagString: Untagged
+  m_TagString: OneDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5378,7 +5378,7 @@ GameObject:
   - component: {fileID: 1331526684}
   m_Layer: 0
   m_Name: ThreeDoors
-  m_TagString: Untagged
+  m_TagString: ThreeDoors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5994,7 +5994,7 @@ GameObject:
   - component: {fileID: 1748258934}
   m_Layer: 0
   m_Name: TwoDoors
-  m_TagString: Untagged
+  m_TagString: TwoDoors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

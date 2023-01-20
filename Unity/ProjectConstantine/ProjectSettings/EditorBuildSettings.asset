@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Zone1_Rest.unity
     guid: 77c079af885588145bb787ebbe2edf57
   - enabled: 1
-    path: Assets/Scenes/Zone1_Start.unity
+    path: Assets/Scenes/ZoneOne/Zone1_Start.unity
     guid: 39f3e82386ee34da197acc018b9391d6
   - enabled: 1
     path: Assets/Scenes/ZoneOne/Zone1_Boss.unity
