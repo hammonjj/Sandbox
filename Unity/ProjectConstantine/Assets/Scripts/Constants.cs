@@ -7,7 +7,6 @@ public static class Constants
     {
         public static string Enemy = "Enemy";
         public static string Player = "Player";
-        public static string GameManager = "GameManager";
         public static string SceneStateManager = "SceneStateManager";
         public static string PlayerAttack = "PlayerAttack";
         public static string NextZoneText = "NextZoneText";
@@ -17,9 +16,10 @@ public static class Constants
         public static string GameStateManager = "GameStateManager";
         public static string ZoneDoor = "ZoneDoor";
         public static string SpawnPoint = "SpawnPoint";
-        public static string OneDoor = "OneDoor";
-        public static string TwoDoors = "TwoDoors";
-        public static string ThreeDoors = "ThreeDoors";
+        public static string OneDoor = "OneDoor"; //Remove
+        public static string TwoDoors = "TwoDoors"; //Remove
+        public static string ThreeDoors = "ThreeDoors"; //Remove
+        public static string DoorConfiguration = "DoorConfiguration"; //Remove doors and replace with this
     }
 
     public static class Enums
@@ -27,7 +27,7 @@ public static class Constants
         public enum Scenes
         {
             None,
-            TrainingGround,
+            WorldHub,
 
             //Zone 1
             Zone1_Any,
@@ -63,9 +63,14 @@ public static class Constants
             Scenes.Zone1_Chair_90
         };
 
+        public static readonly List<Scenes> Zone1EliteRooms = new List<Scenes>()
+        {
+        };
+
         public enum SceneType
         {
             None,
+            WorldHub,
             Shop,
             Rest,
             Boss,
@@ -91,7 +96,6 @@ public static class Constants
             Story
         }
 
-        //NOTE: Do not change the order of these as they are used for random generation
         public enum RoomReward
         {
             None,

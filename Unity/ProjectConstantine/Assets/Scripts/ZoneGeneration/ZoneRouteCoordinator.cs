@@ -240,7 +240,7 @@ public class ZoneRouteCoordinator
         {
             ret.Add(
                 new NextRoom(
-                    Constants.Enums.SceneType.None,
+                    Constants.Enums.SceneType.WorldHub,
                     GetRoomReward(Constants.Enums.SceneType.None)));
 
             Helper.LogDebug("Boss Room");

@@ -42,6 +42,10 @@ public class ZoneEncounterManager : MonoBehaviourBase
             _inZone1Start = true;
             return;
         }
+        else if(sceneType == Constants.Enums.SceneType.Boss)
+        {
+            //If we're in a boss fight, need to do something different
+        }
         else if(sceneType == Constants.Enums.SceneType.None ||
             sceneType == Constants.Enums.SceneType.Rest ||
             sceneType == Constants.Enums.SceneType.Shop ||
@@ -51,21 +55,19 @@ public class ZoneEncounterManager : MonoBehaviourBase
             Destroy(gameObject);
             return;
         }
-
-        if(sceneType == Constants.Enums.SceneType.Boss)
+        else
         {
-            //If we're in a boss fight, need to do something different
-        }
+            //We're in a normal or elite fight
+            SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.Tags.SpawnPoint);
+            if(SpawnPoints == null || SpawnPoints.Length == 0)
+            {
+                LogError("Unable to Locate Spawn Points");
+            }
 
-        SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.Tags.SpawnPoint);
-        if(SpawnPoints == null || SpawnPoints.Length == 0)
-        {
-            LogError("Unable to Locate Spawn Points");
+            //Encounters start with enemies already spawned
+            InstantiateWave();
+            //Future: Calculate the following number of waves
         }
-
-        //Encounters start with enemies already spawned
-        InstantiateWave();
-        //Future: Calculate the following number of waves
     }
 
     private void Update()
