@@ -64,18 +64,7 @@ public class ZoneRouteCoordinator
         _availableRoomRewards.AddRange(CreateVotes(Constants.Enums.RoomReward.Cosmetic, ChanceOfCosmetic));
         _availableRoomRewards.AddRange(CreateVotes(Constants.Enums.RoomReward.Currency, ChanceOfCurrency));
     }
-    /*
-    private List<Constants.Enums.RoomType> CreateSceneTypeVotes(Constants.Enums.RoomType roomType, int chanceOfEvent)
-    {
-        var ret = new List<Constants.Enums.RoomType>();
-        for(var i = 0; i < chanceOfEvent; i++)
-        {
-            ret.Add(roomType);
-        }
 
-        return ret;
-    }
-    */
     private List<T> CreateVotes<T>(T eventType, int chanceOfEvent)
     {
         var ret = new List<T>();
