@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NextRoom
 {
@@ -7,14 +6,6 @@ public class NextRoom
     public Constants.Enums.RoomReward RoomReward;
 
     public Constants.Enums.Scenes SceneName { get; private set; }
-
-    //Fight Rooms
-    private List<Constants.Enums.Scenes> _zone1FightRooms = new List<Constants.Enums.Scenes>()
-    {
-        Constants.Enums.Scenes.Zone1_Chair,
-        Constants.Enums.Scenes.Zone1_Large,
-        Constants.Enums.Scenes.Zone1_Square,
-    };
 
     public NextRoom(
         Constants.Enums.SceneType sceneType,
@@ -100,7 +91,15 @@ public class NextRoom
         var scene = Constants.Enums.Scenes.None;
         if(zone == Constants.Enums.Zones.Zone1)
         {
-            scene = _zone1FightRooms[Helper.RandomInclusiveRange(0, _zone1FightRooms.Count - 1)];
+            var gameManager = GameObject.FindGameObjectWithTag(Constants.Tags.GameStateManager)
+                .GetComponent<GameStateManager>();
+
+            var item = Helper.RandomInclusiveRange(0, gameManager.AvailableZoneFightChambers.Count - 1);
+            Helper.LogDebug($"AvailableZoneFightChambers Count: {gameManager.AvailableZoneFightChambers.Count} - " +
+                $"Selection: {item}");
+            scene = gameManager.AvailableZoneFightChambers[
+                item];
+
             Helper.LogDebug($"Next Scene Fight Room: {scene}");
         }
 

@@ -17,6 +17,9 @@ MonoBehaviour:
   ChanceOfFight: 50
   ChanceOfStory: 5
   ChanceOfElite: 25
+  ChanceOfBuff: 33
+  ChanceOfCosmetic: 33
+  ChanceOfCurrency: 33
   Zone1Chambers: 10
   Zone2Chambers: 11
   Zone3Chambers: 12

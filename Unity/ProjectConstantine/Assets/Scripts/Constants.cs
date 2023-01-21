@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class Constants
 {
@@ -38,12 +39,29 @@ public static class Constants
             Zone1_Start,
             Zone1_Chair,
             Zone1_Large,
-            Zone1_Square
+            Zone1_Square,
+            Zone1_HourGlass,
+            Zone1_Square_Small,
+            Zone1_FunkyHouse,
+            Zone1_FunkyHouse_180,
+            Zone1_Chair_90
 
             //Zone 2
 
             //Zone 3
         }
+
+        public static readonly List<Scenes> Zone1FightRooms = new List<Scenes>()
+        {
+            Scenes.Zone1_Chair,
+            Scenes.Zone1_Large,
+            Scenes.Zone1_Square,
+            Scenes.Zone1_HourGlass,
+            Scenes.Zone1_Square_Small,
+            Scenes.Zone1_FunkyHouse,
+            Scenes.Zone1_FunkyHouse_180,
+            Scenes.Zone1_Chair_90
+        };
 
         public enum SceneType
         {

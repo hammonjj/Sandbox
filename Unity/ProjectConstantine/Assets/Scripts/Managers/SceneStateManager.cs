@@ -70,7 +70,6 @@ public class SceneStateManager : MonoBehaviourBase
 
     public void OnAdvanceScenePressed(bool value)
     {
-        LogDebug($"OnAdvanceScenePressed: {value}");
         AdvanceScenePressed = value;
     }
 
@@ -98,21 +97,6 @@ public class SceneStateManager : MonoBehaviourBase
         }
     }
 
-    private void DetermineSceneType(string scene)
-    {
-        var index = scene.IndexOf('_');
-        if(index == -1)
-        {
-            CurrentSceneType = Constants.Enums.SceneType.None;
-        }
-        else
-        {
-            var sceneName = scene.Substring(index + 1);
-            CurrentSceneType = (Constants.Enums.SceneType)Enum.Parse(typeof(Constants.Enums.SceneType), sceneName);
-            LogDebug($"sceneName: {sceneName} - Scene Type: {CurrentSceneType}");
-        }
-    }
-
     public void PauseOrUnpauseGame()
     {
         IsGamePaused = !IsGamePaused;
@@ -136,6 +120,13 @@ public class SceneStateManager : MonoBehaviourBase
     {
         LogDebug($"Leaving Scene: {SceneManager.GetActiveScene().name} - " +
             $"Loading Scene: {sceneName} - Next Scene Reward: {nextRoomReward}");
+
+        //Remove chambers that have been used so they won't appear again in the same run
+        if(CurrentZone != Constants.Enums.Zones.None && 
+            (sceneType == Constants.Enums.SceneType.Fight || sceneType == Constants.Enums.SceneType.Elite)) 
+        {
+            _gameStateManager.AvailableZoneFightChambers.Remove(sceneName);
+        }
 
         _gameStateManager.NextSceneType = sceneType;
         _gameStateManager.NextRoomReward = nextRoomReward;

@@ -82,7 +82,7 @@ public class PlayerDash : MonoBehaviourBase
             if(_skinnedMeshRenderers == null || _skinnedMeshRenderers.Length == 0)
             {
                 _skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-                LogDebug($"_skinnedMeshRenderers.Count: {_skinnedMeshRenderers.Length}");
+                //LogDebug($"_skinnedMeshRenderers.Count: {_skinnedMeshRenderers.Length}");
             }
 
             for(var i = 0; i < _skinnedMeshRenderers.Length; i++)

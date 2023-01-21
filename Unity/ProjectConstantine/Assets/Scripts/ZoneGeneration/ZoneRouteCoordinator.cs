@@ -28,9 +28,9 @@ public class ZoneRouteCoordinator
     private readonly int ChanceOfElite;
 
     //Room Rewards
-    private readonly int ChanceOfBuff = 33;
-    private readonly int ChanceOfCosmetic = 33;
-    private readonly int ChanceOfCurrency = 33;
+    private readonly int ChanceOfBuff;
+    private readonly int ChanceOfCosmetic;
+    private readonly int ChanceOfCurrency;
 
     //Includes the current scene type
     private Constants.Enums.Zones _currentZone;
@@ -44,9 +44,9 @@ public class ZoneRouteCoordinator
         Zone2Length = gameDesignSettings.Zone2Chambers;
         Zone3Length = gameDesignSettings.Zone3Chambers;
 
-        //ChanceOfBuff = gameDesignSettings.ChanceOfBuff;
-        //ChanceOfCosmetic = gameDesignSettings.ChanceOfCosmetic;
-        //ChanceOfCurrency = gameDesignSettings.ChanceOfCurrency;
+        ChanceOfBuff = gameDesignSettings.ChanceOfBuff;
+        ChanceOfCosmetic = gameDesignSettings.ChanceOfCosmetic;
+        ChanceOfCurrency = gameDesignSettings.ChanceOfCurrency;
 
         ChanceOfShop = gameDesignSettings.ChanceOfShop;
         ChanceOfRest = gameDesignSettings.ChanceOfRest;
@@ -54,17 +54,17 @@ public class ZoneRouteCoordinator
         ChanceOfStory = gameDesignSettings.ChanceOfStory;
         ChanceOfElite = gameDesignSettings.ChanceOfElite;
 
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.RoomType.Elite, ChanceOfElite));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.RoomType.Normal, ChanceOfFight));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.RoomType.Rest, ChanceOfRest));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.RoomType.Story, ChanceOfStory));
-        _availableSceneTypes.AddRange(CreateSceneTypeVotes(Constants.Enums.RoomType.Shop, ChanceOfShop));
+        _availableSceneTypes.AddRange(CreateVotes(Constants.Enums.RoomType.Elite, ChanceOfElite));
+        _availableSceneTypes.AddRange(CreateVotes(Constants.Enums.RoomType.Normal, ChanceOfFight));
+        _availableSceneTypes.AddRange(CreateVotes(Constants.Enums.RoomType.Rest, ChanceOfRest));
+        _availableSceneTypes.AddRange(CreateVotes(Constants.Enums.RoomType.Story, ChanceOfStory));
+        _availableSceneTypes.AddRange(CreateVotes(Constants.Enums.RoomType.Shop, ChanceOfShop));
 
-        _availableRoomRewards.AddRange(CreateRoomRewardVotes(Constants.Enums.RoomReward.Combat, ChanceOfBuff));
-        _availableRoomRewards.AddRange(CreateRoomRewardVotes(Constants.Enums.RoomReward.Cosmetic, ChanceOfCosmetic));
-        _availableRoomRewards.AddRange(CreateRoomRewardVotes(Constants.Enums.RoomReward.Currency, ChanceOfCurrency));
+        _availableRoomRewards.AddRange(CreateVotes(Constants.Enums.RoomReward.Combat, ChanceOfBuff));
+        _availableRoomRewards.AddRange(CreateVotes(Constants.Enums.RoomReward.Cosmetic, ChanceOfCosmetic));
+        _availableRoomRewards.AddRange(CreateVotes(Constants.Enums.RoomReward.Currency, ChanceOfCurrency));
     }
-
+    /*
     private List<Constants.Enums.RoomType> CreateSceneTypeVotes(Constants.Enums.RoomType roomType, int chanceOfEvent)
     {
         var ret = new List<Constants.Enums.RoomType>();
@@ -75,13 +75,13 @@ public class ZoneRouteCoordinator
 
         return ret;
     }
-
-    private List<Constants.Enums.RoomReward> CreateRoomRewardVotes(Constants.Enums.RoomReward roomReward, int chanceOfEvent)
+    */
+    private List<T> CreateVotes<T>(T eventType, int chanceOfEvent)
     {
-        var ret = new List<Constants.Enums.RoomReward>();
+        var ret = new List<T>();
         for(var i = 0; i < chanceOfEvent; i++)
         {
-            ret.Add(roomReward);
+            ret.Add(eventType);
         }
 
         return ret;
@@ -119,7 +119,7 @@ public class ZoneRouteCoordinator
         var currentSceneExits = GetCurrentSceneExits();
         for(int i = 0; i < currentSceneExits; i++)
         {
-            var nextRoomType = _availableSceneTypes[Random.Range(0, _availableSceneTypes.Count - 1)];
+            var nextRoomType = _availableSceneTypes[Helper.RandomInclusiveRange(0, _availableSceneTypes.Count - 1)];
             switch(nextRoomType)
             {
                 case Constants.Enums.RoomType.Normal:
@@ -256,7 +256,9 @@ public class ZoneRouteCoordinator
         {
             case Constants.Enums.SceneType.Fight:
                 //Choose between combat, currency or cosmetic
-                reward = (Constants.Enums.RoomReward)Helper.RandomInclusiveRange(1, 3);
+                //reward = (Constants.Enums.RoomReward)Helper.RandomInclusiveRange(1, 3);
+                reward = _availableRoomRewards[Helper.RandomInclusiveRange(0, _availableRoomRewards.Count - 1)];
+                Helper.LogDebug($"Room Reward: {reward}");
                 break;
             case Constants.Enums.SceneType.Elite:
                 //Elite fights are hard, so should return combat

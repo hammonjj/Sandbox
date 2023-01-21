@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class GameStateManager : MonoBehaviourBase
     public GameDesignSettings GameDesignSettings;
     public Constants.Enums.SceneType NextSceneType;
     public Constants.Enums.RoomReward NextRoomReward;
+
+    public List<Constants.Enums.Scenes> AvailableZoneFightChambers = new();
 
     //For Debug UI
     public int CurrentChamber
@@ -35,6 +38,7 @@ public class GameStateManager : MonoBehaviourBase
             _instance = this;
             DontDestroyOnLoad(this);
             SceneManager.sceneLoaded += OnSceneLoaded;
+            AvailableZoneFightChambers = Constants.Enums.Zone1FightRooms;
         }
         else
         {
