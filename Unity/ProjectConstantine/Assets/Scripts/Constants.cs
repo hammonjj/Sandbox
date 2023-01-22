@@ -20,6 +20,7 @@ public static class Constants
         public static string TwoDoors = "TwoDoors"; //Remove
         public static string ThreeDoors = "ThreeDoors"; //Remove
         public static string DoorConfiguration = "DoorConfiguration"; //Remove doors and replace with this
+        public static string RoomVariation = "RoomVariation";
     }
 
     public static class Enums

@@ -24,7 +24,7 @@ public class SceneStateManager : MonoBehaviourBase
 
     private void Awake()
     {
-        PickSceneConfiguration();
+        ChooseRoomVariation();
 
         _pauseMenu = Extensions.FindGameObjectWithTag(Constants.Tags.PauseMenu);
         if(_pauseMenu == null)
@@ -73,13 +73,30 @@ public class SceneStateManager : MonoBehaviourBase
         AdvanceScenePressed = value;
     }
 
-    private void PickSceneConfiguration()
+    private void ChooseRoomVariation()
     {
         //Decide how many doors this room will have
         //  - Check to see if OneDoor, TwoDoors or ThreeDoors exist in scene
         //  - Pick a number and enable that game object
         //LogDebug("Setting room doors");
         //One door is a given unless it's a boss fight
+        LogDebug($"Choosing Room Variation");
+
+        var variations = Extensions.FindGameObjectsWithTag(Constants.Tags.RoomVariation);
+        LogDebug($"Room variations found: {variations.Count}");
+
+        if(variations.Count == 0 || variations.Count == 1)
+        {
+            LogDebug("Only one variation present");
+            return;
+        }
+
+        var chosenVariation = Helper.RandomInclusiveRange(0, variations.Count - 1);
+        LogDebug($"Chosen Variation: {chosenVariation}");
+        for(int i = 0; i < variations.Count; i++)
+        {
+            variations[i].SetActive(i == chosenVariation);
+        }
     }
 
     private void DetermineZone(string name)
