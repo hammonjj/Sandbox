@@ -92,7 +92,6 @@ public class ZoneRouteCoordinator
     {
         _currentZone = currentZone;
         _previousSceneTypes.Add(currentSceneType);
-        //RemoveInvalidSceneTypes();
 
         //Check that we aren't in a static situation
         var ret = CheckAgainstStaticRules();
@@ -245,7 +244,6 @@ public class ZoneRouteCoordinator
         {
             case Constants.Enums.SceneType.Fight:
                 //Choose between combat, currency or cosmetic
-                //reward = (Constants.Enums.RoomReward)Helper.RandomInclusiveRange(1, 3);
                 reward = _availableRoomRewards[Helper.RandomInclusiveRange(0, _availableRoomRewards.Count - 1)];
                 Helper.LogDebug($"Room Reward: {reward}");
                 break;
