@@ -1682,7 +1682,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh44222
+  m_Name: pb_Mesh28612
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16271,8 +16271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426a08cec14f047b4a8ca5c20b000fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: -1
   DistanceToTalk: 2
-  CharacterName: 0
+  CharacterName: 3
 --- !u!136 &1385757871
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25545,7 +25546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &1512362194798368769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25740,7 +25741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1512362195282513194
 MonoBehaviour:
   m_ObjectHideFlags: 0

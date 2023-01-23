@@ -2,36 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueAgent : MonoBehaviour
+public class DialogueAgent : MonoBehaviourBase
 {
     public float DistanceToTalk = 2.0f;
     public Constants.Enums.Characters CharacterName;
 
     private bool _hasDialogue;
+    private bool _isDialogueActive;
     private GameObject _player;
     private GameObject _dialogueBox;
     private EventManager _eventManager;
 
     private void Awake()
     {
-        //Get currently available dialogue    
+        var dialog = DialogManager.GetInstance().GetDialog(CharacterName);
+        LogDebug($"DialogueAgent - Character: {CharacterName}");
     }
 
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
-        _dialogueBox = GameObject.FindGameObjectWithTag(Constants.Tags.DialogueBox);
+        //_dialogueBox = GameObject.FindGameObjectWithTag(Constants.Tags.DialogueBox);
 
         _eventManager = EventManager.GetInstance();
-        _eventManager.onAdvanceScenePressed += OnDisplayDialogue;
+        _eventManager.onAdvanceScenePressed += OnDisplayDialog;
     }
 
-    private void Update()
-    {
-        
-    }
-
-    private void OnDisplayDialogue(bool value)
+    private void OnDisplayDialog(bool value)
     {
         if(!value ||
             !_hasDialogue ||
@@ -39,7 +36,14 @@ public class DialogueAgent : MonoBehaviour
         {
             return;
         }
+        else if(_isDialogueActive)
+        {
+            //Speed up dialog or skip
+            return;
+        }
 
+        LogDebug("Starting Dialog");
+        _isDialogueActive = true;
         //Display current dialogue
     }
 }
