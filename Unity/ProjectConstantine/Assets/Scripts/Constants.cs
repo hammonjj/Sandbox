@@ -21,10 +21,20 @@ public static class Constants
         public static string ThreeDoors = "ThreeDoors"; //Remove
         public static string DoorConfiguration = "DoorConfiguration"; //Remove doors and replace with this
         public static string RoomVariation = "RoomVariation";
+
+        public static string DialogueBox = "DialogueBox";
     }
 
     public static class Enums
     {
+        public enum Characters
+        {
+            None,
+            Test,
+            Player,
+            Guide
+        }
+
         public enum Scenes
         {
             None,
