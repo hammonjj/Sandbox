@@ -6,11 +6,11 @@ public class DialogItem
 {
 	public struct Dialog
 	{
-		public Constants.Enums.Character Character;
+		public Constants.Enums.Characters Character;
 		public string DialogLine;
 	}
 
-	private SortedDictionary<Constants.Enums.Character, string> _dialog;
+	private SortedDictionary<Constants.Enums.Characters, string> _dialog;
 
     public DialogItem()
 	{
@@ -18,7 +18,9 @@ public class DialogItem
 
 	public Dialog GetNextLine()
 	{
+		var lineOfDialog = new Dialog();
 
+		return lineOfDialog;
 	}
 }
 
