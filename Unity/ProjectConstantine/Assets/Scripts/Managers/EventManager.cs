@@ -18,6 +18,9 @@ public class EventManager
     public Action onPause;
     public Action<bool> onAdvanceScenePressed;
 
+    //Debugging
+    public Action onSpawnEnemies;
+
     //Private Members
     private static EventManager _instance;
 
@@ -45,6 +48,11 @@ public class EventManager
         onPlayerSecondaryAttack = null;
         onPause = null;
         onAdvanceScenePressed = null;
+    }
+
+    public void OnSpawnEnemies()
+    {
+        onSpawnEnemies?.Invoke();
     }
 
     public void OnPlayerDeath()

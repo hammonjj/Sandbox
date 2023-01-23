@@ -32,5 +32,11 @@ public class DebugGameWindow : EditorWindow
                 Destroy(enemy);
             }
         }
+
+        if(GUI.Button(new Rect(0, 90, 200, 25), "Spawn Enemies"))
+        {
+            Helper.LogDebug("Spawning Enemies");
+            EventManager.GetInstance().OnSpawnEnemies();
+        }
     }
 }

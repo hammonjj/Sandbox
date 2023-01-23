@@ -31,6 +31,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         _eventManager = EventManager.GetInstance();
         _eventManager.onEnemyDeath += OnEnemyDeath;
+        _eventManager.onSpawnEnemies += OnSpawnEnemies; //For debugging purposes
 
         var sceneType = _sceneManager.CurrentSceneType;
         LogDebug($"Current Scene Type: {sceneType}");
@@ -126,7 +127,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
             Instantiate(
                 NormalEnemyPrefabs[randomPrefab],
-                unusedSpawns[spawnPoint].transform.localPosition, //Need to add height (Y) to prevent from spawning in floor
+                unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
 
             //Prevent enemies from spawning on top of each other
@@ -134,5 +135,34 @@ public class ZoneEncounterManager : MonoBehaviourBase
         }
 
         LogDebug($"Finished instantiating wave {_currentWave} of {WavesToSpawn}");
+    }
+
+    //This comes through the debugging window
+    private void OnSpawnEnemies()
+    {
+        //We're in a normal or elite fight
+        SpawnPoints = GameObject.FindGameObjectsWithTag(Constants.Tags.SpawnPoint);
+        if(SpawnPoints == null || SpawnPoints.Length == 0)
+        {
+            LogError("Unable to Locate Spawn Points");
+        }
+
+        var unusedSpawns = SpawnPoints.ToList();
+        for(int i = 0; i < EnemiesToSpawn; i++)
+        {
+            var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, NormalEnemyPrefabs.Length - 1);
+
+            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
+            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
+
+            Instantiate(
+                NormalEnemyPrefabs[randomPrefab],
+                unusedSpawns[spawnPoint].transform.position,
+                unusedSpawns[spawnPoint].transform.rotation);
+
+            //Prevent enemies from spawning on top of each other
+            unusedSpawns.RemoveAt(spawnPoint);
+        }
     }
 }
