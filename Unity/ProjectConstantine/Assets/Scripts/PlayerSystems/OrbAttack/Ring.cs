@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ring : MonoBehaviourBase
 {
     public Transform OrbSpawn;
-    public Vector3 RotationAxis = Vector3.up;
+    public Vector3 RotationAxis;
     public float AngularVelocity = 20f;
     public float OrbRespawnRate;
     public GameObject OrbPrefab;
@@ -48,10 +48,19 @@ public class Ring : MonoBehaviourBase
             _orbs.Add(orb);
         }
 
+        //Equal orb orbit
+        //Get orb count
+        //Determine orbital pattern based off of number of current number of orbs
+        //  - Two orbs -> Opposite Sides
+        //  - Three -> Triangle
+        //  - Four ->
+        //  - Five ->
+        //Iterate through orbs and slow them down (except for the first) until they reach the right point
         foreach(var orb in _orbs)
         {
+            //Check if orb is equal distance from the other orbs and slow them down
             orb.transform.RotateAround(
-                gameObject.transform.position, new Vector3(0, 1, 0), AngularVelocity * Time.deltaTime);
+                gameObject.transform.position, RotationAxis, AngularVelocity * Time.deltaTime);
         }
     }
 

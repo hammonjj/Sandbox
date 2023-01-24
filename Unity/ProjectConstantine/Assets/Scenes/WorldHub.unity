@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11475,13 +11475,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: -1
   OrbSpawn: {fileID: 836648117}
-  RotationAxis: {x: 0, y: 0, z: 0}
+  RotationAxis: {x: 0, y: 1, z: 0}
   AngularVelocity: 200
   OrbRespawnRate: 3
   OrbPrefab: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
     type: 3}
   AttackCooldown: 0.5
-  MaxOrbs: 1
+  MaxOrbs: 3
 --- !u!43 &946340705
 Mesh:
   m_ObjectHideFlags: 0
