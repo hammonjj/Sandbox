@@ -9,16 +9,25 @@ public class Orb : MonoBehaviourBase
     public float AttackRange = 10f;
 
     private Vector3 _InitialPosition;
-
+    private Transform _playerTransform;
     private void Awake()
     {
         _InitialPosition = gameObject.transform.position;
+    }
+
+    private void Start()
+    {
+        _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
+            .GetComponent<Transform>();
     }
 
     private void Update()
     {
         if(!HasBeenFired)
         {
+            //Keep the rotation pointed in the same direction of the player
+            transform.rotation = _playerTransform.rotation;
+
             return;
         }
 

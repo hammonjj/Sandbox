@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ring : MonoBehaviourBase
 {
+    public bool DrawDebugLines = true;
+    public float OrbDistanceFromPlayerCenter = 0.75f;
     public Transform OrbSpawn;
     public Vector3 RotationAxis;
     public float AngularVelocity = 20f;
@@ -16,7 +19,8 @@ public class Ring : MonoBehaviourBase
     private bool _canSpawnOrb;
     private float _orbCooldownCurrent;
     private float _attackCooldownCurrent;
-    private List<GameObject> _orbs = new();
+
+    private List<GameObject> _orbSpawns = new();
 
     private void Awake()
     {
@@ -26,46 +30,136 @@ public class Ring : MonoBehaviourBase
 
     private void Start()
     {
-        var orb = Instantiate(OrbPrefab, OrbSpawn);
-        _orbs.Add(orb);
+        CalculateOrbSpawns();
+        SpawnInitialOrbs();
+        _orbCooldownCurrent = OrbRespawnRate;
+    }
+
+    private void CalculateOrbSpawns()
+    {
+        //Calculate Orb Spawns
+        //  - Angle in degrees = 360° / number of parts
+        //  - Angle in radian = 2π / number of parts
+        //  - Angle in multiples of pi = 2 / number of parts
+        //  - https://rechneronline.de/winkel/divide-circle.php
+        //Draw a ray the center through the line given by the calculation and place a spawn point there
+        //Need to figure out how to calculate when the ring is tilted
+        //Rotate that spawn point around the origin (player)
+        //Spawn an orb when the spawn is empty (has no children)
+        //  - The spawn is the orbs parent
+
+        var degreesBetweenSections = (float)360 / MaxOrbs;
+
+        //Works for flat ring only
+        for(int i = 0; i < MaxOrbs; i++)
+        {
+            var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;
+
+            Ray r = new Ray(gameObject.transform.position, directionOfRay);
+            var point = r.GetPoint(OrbDistanceFromPlayerCenter);
+
+            var gObjI = Instantiate(new GameObject(), point, transform.rotation);
+            gObjI.transform.SetParent(transform);
+            gObjI.name = $"OrbSpawn-{i}";
+            _orbSpawns.Add(gObjI);
+        }
+    }
+
+    private void SpawnInitialOrbs()
+    {
+        foreach(var spawn in _orbSpawns)
+        {
+            var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
+            orb.transform.SetParent(spawn.transform);
+        }
     }
 
     private void Update()
     {
-        UpdateAttackCooldown();
+        if(DrawDebugLines)
+        {
+            foreach(var spawn in _orbSpawns)
+            {
+                Debug.DrawLine(gameObject.transform.position, spawn.transform.position, Color.blue);
+            }
+        }
 
-        if(_orbs.Count < MaxOrbs)
+        UpdateAttackCooldown();
+        
+        if(GetCurrentOrbCount() < MaxOrbs)
         {
             UpdateOrbCooldown();
         }
 
         if(_canSpawnOrb)
         {
-            LogDebug("Spawning Orb");
             _canSpawnOrb = false;
             _orbCooldownCurrent = OrbRespawnRate;
-            var orb = Instantiate(OrbPrefab, OrbSpawn);
-            _orbs.Add(orb);
+            SpawnOrb();
         }
 
-        //Equal orb orbit
-        //Get orb count
-        //Determine orbital pattern based off of number of current number of orbs
-        //  - Two orbs -> Opposite Sides
-        //  - Three -> Triangle
-        //  - Four ->
-        //  - Five ->
-        //Iterate through orbs and slow them down (except for the first) until they reach the right point
-        foreach(var orb in _orbs)
+        foreach(var spawn in _orbSpawns)
         {
-            //Check if orb is equal distance from the other orbs and slow them down
-            orb.transform.RotateAround(
+            spawn.transform.RotateAround(
                 gameObject.transform.position, RotationAxis, AngularVelocity * Time.deltaTime);
         }
     }
 
+    private void SpawnOrb()
+    {
+        LogDebug("Spawning Orb");
+        var spawn = GetFirstVacantSpawn();
+        var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
+        orb.transform.SetParent(spawn.transform);
+    }
+
+    private GameObject GetFirstVacantSpawn()
+    {
+        foreach(var spawn in _orbSpawns)
+        {
+            if(spawn.transform.childCount == 0)
+            {
+                return spawn;
+            }
+        }
+
+        return null;
+    }
+
+    private int GetCurrentOrbCount()
+    {
+        var count = 0;
+
+        foreach(var spawn in _orbSpawns)
+        {
+            if(spawn.transform.childCount != 0)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private bool IsOrbSpawnVacant()
+    {
+        foreach(var spawn in _orbSpawns)
+        {
+            if(spawn.transform.childCount == 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void OnAttack()
     {
+        //Need to fix this
+        return;
+
+        /*
         //Select orb and fire it at enemy
         if(_orbs.Count == 0 || !_canAttack)
         {
@@ -84,6 +178,7 @@ public class Ring : MonoBehaviourBase
         firstOrb.transform.rotation = projectileRotation;
         var orb = firstOrb.GetComponent<Orb>();
         orb.HasBeenFired = true;
+        */
     }
 
     private void UpdateAttackCooldown()
