@@ -7,7 +7,6 @@ public class Ring : MonoBehaviourBase
 {
     public bool DrawDebugLines = true;
     public float OrbDistanceFromPlayerCenter = 0.75f;
-    public Transform OrbSpawn;
     public Vector3 RotationAxis;
     public float AngularVelocity = 20f;
     public float OrbRespawnRate;
@@ -19,12 +18,10 @@ public class Ring : MonoBehaviourBase
     private bool _canSpawnOrb;
     private float _orbCooldownCurrent;
     private float _attackCooldownCurrent;
-
     private List<GameObject> _orbSpawns = new();
 
     private void Awake()
     {
-        //Need to spread orbs out at even intervals around player
         EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
     }
 
@@ -98,6 +95,7 @@ public class Ring : MonoBehaviourBase
             SpawnOrb();
         }
 
+        //Rotate orbs
         foreach(var spawn in _orbSpawns)
         {
             spawn.transform.RotateAround(
@@ -111,6 +109,19 @@ public class Ring : MonoBehaviourBase
         var spawn = GetFirstVacantSpawn();
         var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
         orb.transform.SetParent(spawn.transform);
+    }
+
+    private GameObject GetFirstOrb()
+    {
+        foreach(var spawn in _orbSpawns)
+        {
+            if(spawn.transform.childCount != 0)
+            {
+                return spawn.transform.GetChild(0).gameObject;
+            }
+        }
+
+        return null;
     }
 
     private GameObject GetFirstVacantSpawn()
@@ -156,29 +167,32 @@ public class Ring : MonoBehaviourBase
 
     private void OnAttack()
     {
-        //Need to fix this
-        return;
-
-        /*
         //Select orb and fire it at enemy
-        if(_orbs.Count == 0 || !_canAttack)
+        if(!_canAttack || GetCurrentOrbCount() == 0)
         {
             LogDebug("No Orbs or can't attack");
             return;
         }
 
         LogDebug("Firing orb");
-        var firstOrb = _orbs[0];
-        _orbs.RemoveAt(0);
-
-        var (enemyPos, projectileRotation) = FindEnemiesToAttack(firstOrb);
         _canAttack = false;
         _attackCooldownCurrent = AttackCooldown;
+
+        var firstOrb = GetFirstOrb();
+        if(firstOrb == null)
+        {
+            LogError("First orb is null");
+            return;
+        }
+
+        firstOrb.transform.parent = null;
+
+        var (enemyPos, projectileRotation) = FindEnemiesToAttack(firstOrb);
+        
 
         firstOrb.transform.rotation = projectileRotation;
         var orb = firstOrb.GetComponent<Orb>();
         orb.HasBeenFired = true;
-        */
     }
 
     private void UpdateAttackCooldown()

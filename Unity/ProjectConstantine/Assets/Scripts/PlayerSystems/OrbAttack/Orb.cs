@@ -10,15 +10,13 @@ public class Orb : MonoBehaviourBase
 
     private Vector3 _InitialPosition;
     private Transform _playerTransform;
+
     private void Awake()
     {
-        _InitialPosition = gameObject.transform.position;
-    }
-
-    private void Start()
-    {
         _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
-            .GetComponent<Transform>();
+           .GetComponent<Transform>();
+
+        _InitialPosition = _playerTransform.position;
     }
 
     private void Update()
@@ -31,7 +29,7 @@ public class Orb : MonoBehaviourBase
             return;
         }
 
-        if(Vector3.Distance(_InitialPosition, gameObject.transform.position) > AttackRange)
+        if(Vector3.Distance(_InitialPosition, transform.position) > AttackRange)
         {
             LogDebug("Projectile passed AttackRange - Destroying");
             Destroy(gameObject);
