@@ -25,7 +25,7 @@ namespace Assets.Scripts.PlayerSystems
         {
             _attackCooldownCurrent = AttackCooldown;
 
-            EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
+            //EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
             
             _baseLeftFiringPosition = new Vector3(
                 LeftArmAimTarget.transform.localPosition.x,
