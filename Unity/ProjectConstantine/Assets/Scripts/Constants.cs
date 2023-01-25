@@ -27,6 +27,12 @@ public static class Constants
 
     public static class Enums
     {
+        public enum AttackType
+        {
+            Primary,
+            Secondary
+        }
+
         public enum Characters
         {
             None,

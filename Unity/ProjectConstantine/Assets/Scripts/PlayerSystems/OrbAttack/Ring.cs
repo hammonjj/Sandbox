@@ -14,6 +14,8 @@ public class Ring : MonoBehaviourBase
     public float AttackCooldown = 0.50f;
     public int MaxOrbs = 1;
 
+    public Constants.Enums.AttackType AttackType;
+
     private bool _canAttack;
     private bool _canSpawnOrb;
     private float _orbCooldownCurrent;
@@ -29,7 +31,14 @@ public class Ring : MonoBehaviourBase
     private void Start()
     {
         _orbCooldownCurrent = OrbRespawnRate;
-        EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
+        if(AttackType == Constants.Enums.AttackType.Primary)
+        {
+            EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
+        }
+        else if(AttackType == Constants.Enums.AttackType.Secondary)
+        {
+            EventManager.GetInstance().onPlayerSecondaryAttack += OnAttack;
+        }
     }
 
     private void CalculateOrbSpawns()

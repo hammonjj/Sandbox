@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2752842888426458133}
   - component: {fileID: 2301738125479311685}
   m_Layer: 0
-  m_Name: Orb
+  m_Name: ExplosiveOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6871cef4be841b04895e11628837072a, type: 2}
+  - {fileID: 2100000, guid: 69399788442d345658eb5e13a1036bb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

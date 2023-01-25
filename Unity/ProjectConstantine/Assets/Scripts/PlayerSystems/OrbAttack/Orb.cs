@@ -7,6 +7,7 @@ public class Orb : MonoBehaviourBase
     public bool HasBeenFired = false;
     public float ProjectileSpeed = 20f;
     public float AttackRange = 10f;
+    public int AttackDamage = 10;
 
     private Vector3 _InitialPosition;
     private Transform _playerTransform;
@@ -45,19 +46,21 @@ public class Orb : MonoBehaviourBase
         {
             if(!HasBeenFired)
             {
-                LogDebug("Orb Hitting Enemy (Orbiting)");
+                //LogDebug("Orb Hitting Enemy (Orbiting)");
             }
             else
             {
                 LogDebug("Orb Hitting Enemy (Fired)");
-                var enemyBase = other.GetComponent<EnemyBase>();
-                if(enemyBase == null)
+                var baseEnemy = other.GetComponent<BaseEnemy>();
+                if(baseEnemy == null)
                 {
-                    //Need to develop logger for non-monobehavior object
-                    //LogError($"Failed to get enemy base");
+                    LogError($"Failed to get enemy base");
                 }
-
-                //enemyBase.TakeDamage(AttackDamage);
+                else
+                {
+                    baseEnemy.TakeDamage(AttackDamage);
+                }
+                
                 Destroy(gameObject);
             }
         }

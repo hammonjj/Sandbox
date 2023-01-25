@@ -281,6 +281,17 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f6fa166e-f566-4cd5-ae9a-b1fb7be962b8"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""3b5b0ee1-62a0-4870-962b-015ff916eabe"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
