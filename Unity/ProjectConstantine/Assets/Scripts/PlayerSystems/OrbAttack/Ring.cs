@@ -22,14 +22,14 @@ public class Ring : MonoBehaviourBase
 
     private void Awake()
     {
-        EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
+        CalculateOrbSpawns();
+        SpawnInitialOrbs();
     }
 
     private void Start()
     {
-        CalculateOrbSpawns();
-        SpawnInitialOrbs();
         _orbCooldownCurrent = OrbRespawnRate;
+        EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
     }
 
     private void CalculateOrbSpawns()
@@ -47,19 +47,33 @@ public class Ring : MonoBehaviourBase
 
         var degreesBetweenSections = (float)360 / MaxOrbs;
 
+        var tmpGameObject = new GameObject();
+        tmpGameObject.name = "tmpGOB";
+
+        /*
+         * Axis:
+         *  (0, 1, 0) -> Horizontal
+         *  (0, 0, 1) -> Vertical
+         *  (-0.5, 0.5, 0) -> Right High, Left Low
+         *  (0.5, 0.5, 0) -> Left High, Right Low
+         */
+        
+        var vector = new Vector3(0.5f, 0.5f, 0f);
         //Works for flat ring only
         for(int i = 0; i < MaxOrbs; i++)
         {
-            var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;
+            var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;//Vector3.left;
 
-            Ray r = new Ray(gameObject.transform.position, directionOfRay);
+            Ray r = new Ray(transform.position, directionOfRay);
             var point = r.GetPoint(OrbDistanceFromPlayerCenter);
 
-            var gObjI = Instantiate(new GameObject(), point, transform.rotation);
+            var gObjI = Instantiate(tmpGameObject, point, transform.rotation);
             gObjI.transform.SetParent(transform);
             gObjI.name = $"OrbSpawn-{i}";
             _orbSpawns.Add(gObjI);
         }
+
+        Destroy(tmpGameObject);
     }
 
     private void SpawnInitialOrbs()
@@ -67,6 +81,7 @@ public class Ring : MonoBehaviourBase
         foreach(var spawn in _orbSpawns)
         {
             var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
+            orb.name = $"Orb-{spawn.name}";
             orb.transform.SetParent(spawn.transform);
         }
     }
@@ -99,7 +114,7 @@ public class Ring : MonoBehaviourBase
         foreach(var spawn in _orbSpawns)
         {
             spawn.transform.RotateAround(
-                gameObject.transform.position, RotationAxis, AngularVelocity * Time.deltaTime);
+                gameObject.transform.position, new Vector3(0,1,0)/*RotationAxis*/, AngularVelocity * Time.deltaTime);
         }
     }
 
@@ -108,6 +123,7 @@ public class Ring : MonoBehaviourBase
         LogDebug("Spawning Orb");
         var spawn = GetFirstVacantSpawn();
         var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
+        orb.name = $"Orb-{spawn.name}";
         orb.transform.SetParent(spawn.transform);
     }
 
@@ -140,7 +156,6 @@ public class Ring : MonoBehaviourBase
     private int GetCurrentOrbCount()
     {
         var count = 0;
-
         foreach(var spawn in _orbSpawns)
         {
             if(spawn.transform.childCount != 0)
@@ -210,40 +225,54 @@ public class Ring : MonoBehaviourBase
     protected (Vector3, Quaternion) FindEnemiesToAttack(GameObject orb)
     {
         var projectileRotation = gameObject.transform.rotation;
-
         Vector3 retVector = Vector3.zero;
 
         if(this == null)
         {
-            return (new Vector3(0, 0, 0), Quaternion.identity);
+            return (retVector, projectileRotation); 
+            //return (new Vector3(0, 0, 0), Quaternion.identity);
         }
 
         //Watch for performance issues - might need to put enemies on their own layer
+        //and use the non-alloc version of this method
         var collidersHit = Physics.OverlapSphere(gameObject.transform.position, 10f);
-        if(collidersHit.Length > 0)
+        if(collidersHit.Length == 0)
         {
-            foreach(var colliderHit in collidersHit)
-            {
-                if(colliderHit.gameObject.tag != "Enemy")
-                {
-                    continue;
-                }
-
-                var normalizedColliderVector = colliderHit.transform.position - orb.transform.position;
-                normalizedColliderVector.Normalize();
-
-                //0 = 180 degree arc - 0.5 = 90 degree arc
-                if(Vector3.Dot(normalizedColliderVector, orb.transform.forward) > 0.5f)
-                {
-                    LogDebug("Enemy Detected in Range");
-
-                    //var attackTarget = colliderHit.gameObject.GetComponent<EnemyBase>().AttackTarget;
-                    retVector = colliderHit.gameObject.transform.position;
-                    projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
-                    break;
-                }
-            }
+            return (retVector, projectileRotation);
         }
+
+        foreach(var colliderHit in collidersHit)
+        {
+            if(colliderHit.gameObject.tag != "Enemy")
+            {
+                continue;
+            }
+
+            var normalizedColliderVector = colliderHit.transform.position - orb.transform.position;
+            normalizedColliderVector.Normalize();
+
+            //0 = 180 degree arc - 0.5 = 90 degree arc
+            if(Vector3.Dot(normalizedColliderVector, orb.transform.forward) < 0.5f)
+            {
+                continue;
+            }
+
+            //Check if this enemy is closer than the previous one
+            LogDebug("Enemy Detected in Range");
+
+            //Check to see if we have found an enemy first
+            if(retVector == Vector3.zero)
+            {
+                retVector = colliderHit.gameObject.transform.position;
+                projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
+            }
+            else if(Vector3.Distance(gameObject.transform.position, colliderHit.gameObject.transform.position) <
+                Vector3.Distance(gameObject.transform.position, retVector))
+            {
+                retVector = colliderHit.gameObject.transform.position;
+                projectileRotation = Quaternion.LookRotation(normalizedColliderVector, Vector3.up);
+            }
+        }  
 
         return (retVector, projectileRotation);
     }

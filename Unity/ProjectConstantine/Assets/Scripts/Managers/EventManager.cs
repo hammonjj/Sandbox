@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class EventManager
@@ -30,9 +31,19 @@ public class EventManager
         {
             _instance = new EventManager();
             SceneManager.activeSceneChanged += _instance.OnSceneLoaded;
+            EditorApplication.playModeStateChanged += OnPlayModeChange;
         }
 
         return _instance;
+    }
+
+    private static void OnPlayModeChange(PlayModeStateChange state)
+    {
+        if(state == PlayModeStateChange.ExitingPlayMode)
+        {
+            Helper.LogDebug("Reseting Event Manager");
+            _instance = null;
+        }
     }
 
     public void OnSceneLoaded(Scene scene, Scene mode)
