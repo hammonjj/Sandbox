@@ -14,12 +14,9 @@ public class Orb : MonoBehaviourBase
 
     private void Awake()
     {
-        MessageEnding = $"Orb-{Guid.NewGuid()}";
+        MessageEnding = gameObject.name;
         _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
            .GetComponent<Transform>();
-
-        //Can also pass this in if this becomes a problem
-        _initialPosition = GameObject.FindGameObjectWithTag(Constants.Tags.OrbStartPos).transform.position;
     }
 
     private void Update()
@@ -31,20 +28,27 @@ public class Orb : MonoBehaviourBase
             return;
         }
 
-        //Need to check if our parent transform is gone before checking distance otherwise we pull the local position
-        if(transform.parent == null &&
-            //transform.position != transform.localPosition &&
+        if(HasBeenFired &&
             Vector3.Distance(_initialPosition, transform.position) > AttackRange)
         {
-            //BUG: This is sometimes pulling local position on transform.positin instead of world position
             LogDebug($"Projectile passed AttackRange - Destroying - " +
-                $"InitialPostion: {_initialPosition} - Transform Position: {transform.position} - TransformLocalPosition: {transform.localPosition}");
-            
+                $"InitialPostion: {_initialPosition} - Transform Position: {transform.position}");
+
             Destroy(gameObject);
         }
+        else
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * ProjectileSpeed);
+        }
+    }
 
-        //Update Position
-        transform.Translate(Vector3.forward * Time.deltaTime * ProjectileSpeed);
+    public void Fire()
+    {
+        HasBeenFired = true;
+
+        //Can also pass this in if this becomes a problem
+        _initialPosition = GameObject.FindGameObjectWithTag(Constants.Tags.OrbStartPos).transform.position;
+        LogDebug($"Initial Position: {_initialPosition}");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +67,7 @@ public class Orb : MonoBehaviourBase
                 if(baseEnemy == null)
                 {
                     LogError($"Failed to get enemy base");
+                    Debug.Break();
                 }
                 else
                 {

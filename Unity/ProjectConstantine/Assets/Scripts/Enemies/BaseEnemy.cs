@@ -1,6 +1,5 @@
 using UnityEngine;
 
-//RangedEnemy
 public class BaseEnemy : MonoBehaviourBase
 {
     [Header("Debugging")]
@@ -8,7 +7,6 @@ public class BaseEnemy : MonoBehaviourBase
     public bool DrawDebugLines;
 
     [Header("Enemy Base")]
-    [Tooltip("Where on the mesh the player will shoot the enemy")]
     public BaseEnemyData EnemyData;
 
     private bool _foundPlayer = false;
@@ -86,6 +84,7 @@ public class BaseEnemy : MonoBehaviourBase
 
     private void DebugLines()
     {
+        EnemyData.DebugLines();
         var rotation = gameObject.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0);
         /*
@@ -102,7 +101,7 @@ public class BaseEnemy : MonoBehaviourBase
             rotation,
             EnemyData.AttackRange,
             Color.red);
-        
+
         if(_foundPlayer)
         {
             return;

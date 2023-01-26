@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,10 +21,15 @@ public class Ring : MonoBehaviourBase
     private float _attackCooldownCurrent;
     private List<GameObject> _orbSpawns = new();
 
+    //Debugging
+    private float _attackRange;
+
     private void Awake()
     {
         CalculateOrbSpawns();
         SpawnInitialOrbs();
+
+        _attackRange = OrbPrefab.GetComponent<Orb>().AttackRange;
     }
 
     private void Start()
@@ -88,7 +94,7 @@ public class Ring : MonoBehaviourBase
         foreach(var spawn in _orbSpawns)
         {
             var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
-            orb.name = $"Orb-{spawn.name}";
+            orb.name = $"Orb-{Guid.NewGuid()}";
             orb.transform.SetParent(spawn.transform);
         }
     }
@@ -97,10 +103,16 @@ public class Ring : MonoBehaviourBase
     {
         if(DrawDebugLines)
         {
+            //Orb orbit
             foreach(var spawn in _orbSpawns)
             {
                 Debug.DrawLine(gameObject.transform.position, spawn.transform.position, Color.blue);
             }
+
+            //Attack Range
+            var rotation = gameObject.transform.rotation;
+            rotation *= Quaternion.Euler(90, 0, 0);
+            Debug.DrawCircle(gameObject.transform.position, rotation, _attackRange, Color.blue);
         }
 
         UpdateAttackCooldown();
@@ -130,7 +142,7 @@ public class Ring : MonoBehaviourBase
         LogDebug("Spawning Orb");
         var spawn = GetFirstVacantSpawn();
         var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
-        orb.name = $"Orb-{spawn.name}";
+        orb.name = $"Orb-{Guid.NewGuid()}";
         orb.transform.SetParent(spawn.transform);
     }
 
@@ -207,14 +219,12 @@ public class Ring : MonoBehaviourBase
             return;
         }
 
-        firstOrb.transform.parent = null;
-
         var (enemyPos, projectileRotation) = FindEnemiesToAttack(firstOrb);
-        
 
+        firstOrb.transform.parent = null;
         firstOrb.transform.rotation = projectileRotation;
         var orb = firstOrb.GetComponent<Orb>();
-        orb.HasBeenFired = true;
+        orb.Fire();
     }
 
     private void UpdateAttackCooldown()

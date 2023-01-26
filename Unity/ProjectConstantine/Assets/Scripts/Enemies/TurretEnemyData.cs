@@ -28,13 +28,17 @@ public class TurretEnemyData : BaseEnemyData
             ProjectileAttackData.ProjectilePrefab,
             _firingPosition.position,
             _firingPosition.rotation);
-
-        enemyProjectile.name = "TurretProjectileAttack";
     }
 
     public override void Move()
     {
-        _parentGameObject.transform.LookAt(_playerBodyAttackTarget.transform);
+        var playerTransform = _playerBodyAttackTarget.transform;
+        playerTransform.position = new Vector3(
+            _playerBodyAttackTarget.transform.position.x,
+            _parentGameObject.transform.position.y,
+            _playerBodyAttackTarget.transform.position.z);
+
+        _parentGameObject.transform.LookAt(playerTransform);
     }
 
     public override void Death() { }
