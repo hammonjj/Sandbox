@@ -28,7 +28,7 @@ public class BaseEnemy : MonoBehaviourBase
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
         
 
-        EnemyData.Setup(gameObject); //-> Virtual function to setup things like contraints for turrets
+        EnemyData.Setup(gameObject);
     }
 
     private void Update()
@@ -43,45 +43,30 @@ public class BaseEnemy : MonoBehaviourBase
 
         if(!_foundPlayer)
         {
-            //EnemyData.Idle -> Before the player is found
+            EnemyData.Idle();
         }
 
         if(!_foundPlayer &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.DetectionRange)
         {
             _foundPlayer = true;
-            EnemyData.PlayerFound(); //-> Used for animations or initial actions after finding the player
+            EnemyData.PlayerFound();
         }
 
         if(_foundPlayer)
         {
-            //transform.LookAt(_playerBodyAttackTarget.transform);
-            EnemyData.Move(); //-> Used to determine what the enemy should do if we have found the player
-            //  ex. Chase player, not move but rotate to face, etc.
+            EnemyData.Move();
         }
 
         if(_foundPlayer &&
             _canAttack &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.AttackRange)
         {
-            //Attack();
             EnemyData.Attack();
             _attackCooldownCurrent = EnemyData.AttackCooldown;
         }
     }
 
-    /*
-    private void Attack() //-> Will need to be a virtually overridden function in derived classes or a method in the enemydata
-    {
-        LogDebug("Attacking Player");
-        var enemyProjectile = Instantiate(
-            EnemyData.ProjectileAttackData.ProjectilePrefab,
-            _firingPosition.position,
-            _firingPosition.rotation);
-
-        enemyProjectile.name = "ProjectileAttack";
-    }
-    */
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;

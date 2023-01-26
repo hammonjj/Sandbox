@@ -36,9 +36,10 @@ public class Orb : MonoBehaviourBase
             //transform.position != transform.localPosition &&
             Vector3.Distance(_initialPosition, transform.position) > AttackRange)
         {
-            //This is sometimes pulling local position on transform.positin instead of world position
+            //BUG: This is sometimes pulling local position on transform.positin instead of world position
             LogDebug($"Projectile passed AttackRange - Destroying - " +
                 $"InitialPostion: {_initialPosition} - Transform Position: {transform.position} - TransformLocalPosition: {transform.localPosition}");
+            
             Destroy(gameObject);
         }
 

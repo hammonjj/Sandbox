@@ -2,19 +2,15 @@
 using System.Collections;
 
 [CreateAssetMenu(fileName = "TurretEnemyData", menuName = "Enemy/TurretEnemyData")]
-public class TurrentEnemyData : BaseEnemyData
+public class TurretEnemyData : BaseEnemyData
 {
     [Header("Turret")]
-    public float AttackDamage = 10f;
     public EnemyProjectileBaseData ProjectileAttackData;
 
     private Transform _firingPosition;
     private GameObject _parentGameObject;
     private GameObject _playerBodyAttackTarget;
 
-    //m_Script: {fileID: 11500000, guid: ade4ed07debeb41ccb2e670b4b50bf36, type: 3}
-
-    //Virtual Methods
     public override void Setup(GameObject parentGameObject)
     {
         _parentGameObject = parentGameObject;
@@ -41,5 +37,6 @@ public class TurrentEnemyData : BaseEnemyData
         _parentGameObject.transform.LookAt(_playerBodyAttackTarget.transform);
     }
 
+    public override void Death() { }
     public override void DebugLines() { }
 }

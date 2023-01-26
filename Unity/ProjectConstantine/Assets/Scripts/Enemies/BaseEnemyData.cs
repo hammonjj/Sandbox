@@ -13,9 +13,7 @@ public class BaseEnemyData : ScriptableObject
 
     [Header("Attack")]
     public float AttackRange = 5f;
-    //public float AttackDamage = 10f;
     public float AttackCooldown = 1.5f;
-    //public EnemyProjectileBaseData ProjectileAttackData;
 
     //Virtual Methods
     public virtual void Setup(GameObject parentGameObject) { }
@@ -23,6 +21,7 @@ public class BaseEnemyData : ScriptableObject
     public virtual void PlayerFound() { }
     public virtual void Attack() { }
     public virtual void Move() { }
+    public virtual void Death() { }
 
     public virtual void DebugLines() { }
 }
