@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//RangedEnemy
 public class BaseEnemy : MonoBehaviourBase
 {
     [Header("Debugging")]
@@ -10,7 +9,6 @@ public class BaseEnemy : MonoBehaviourBase
 
     [Header("Enemy Base")]
     [Tooltip("Where on the mesh the player will shoot the enemy")]
-    public GameObject AttackTarget;
     public BaseEnemyData EnemyData;
 
     private bool _foundPlayer = false;
@@ -19,11 +17,14 @@ public class BaseEnemy : MonoBehaviourBase
     private float _attackCooldownCurrent;
 
     private GameObject _player;
+    private GameObject _playerBodyAttackTarget;
 
     private void Start()
     {
         _currentHealth = EnemyData.MaxHealth;
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
+        _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
     }
 
     private void Update()
@@ -41,6 +42,26 @@ public class BaseEnemy : MonoBehaviourBase
         {
             _foundPlayer = true;
         }
+
+        if(_foundPlayer)
+        {
+            transform.LookAt(_playerBodyAttackTarget.transform);
+        }
+
+        if(_foundPlayer &&
+            _canAttack &&
+            Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.AttackRange)
+        {
+            Attack();
+            _attackCooldownCurrent = EnemyData.AttackCooldown;
+        }
+    }
+
+    private void Attack()
+    {
+        LogDebug("Attacking Player");
+        var enemyProjectile = Instantiate(EnemyData.ProjectileAttackData.ProjectilePrefab, transform);
+        enemyProjectile.name = "ProjectileAttack";
     }
 
     public void TakeDamage(int damage)

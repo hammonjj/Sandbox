@@ -22,6 +22,8 @@ TagManager:
   - ThreeDoors
   - DoorConfiguration
   - RoomVariation
+  - OrbStartPos
+  - PlayerBodyAttackTarget
   layers:
   - Default
   - TransparentFX

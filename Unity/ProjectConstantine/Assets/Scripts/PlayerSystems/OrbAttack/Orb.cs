@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Orb : MonoBehaviourBase
@@ -9,7 +7,7 @@ public class Orb : MonoBehaviourBase
     public float AttackRange = 10f;
     public int AttackDamage = 10;
 
-    private Vector3 _InitialPosition;
+    private Vector3 _initialPosition;
     private Transform _playerTransform;
 
     private void Awake()
@@ -17,7 +15,8 @@ public class Orb : MonoBehaviourBase
         _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
            .GetComponent<Transform>();
 
-        _InitialPosition = _playerTransform.position;
+        //Can also pass this in if this becomes a problem
+        _initialPosition = GameObject.FindGameObjectWithTag(Constants.Tags.OrbStartPos).transform.position;
     }
 
     private void Update()
@@ -30,9 +29,9 @@ public class Orb : MonoBehaviourBase
             return;
         }
 
-        if(Vector3.Distance(_InitialPosition, transform.position) > AttackRange)
+        if(Vector3.Distance(_initialPosition, transform.position) > AttackRange)
         {
-            LogDebug("Projectile passed AttackRange - Destroying");
+            LogDebug($"Projectile passed AttackRange - Destroying - InitialPostion: {_initialPosition} - Transform Position: {transform.position}");
             Destroy(gameObject);
         }
 

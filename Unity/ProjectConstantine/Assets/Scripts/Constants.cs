@@ -21,8 +21,9 @@ public static class Constants
         public static string ThreeDoors = "ThreeDoors"; //Remove
         public static string DoorConfiguration = "DoorConfiguration"; //Remove doors and replace with this
         public static string RoomVariation = "RoomVariation";
-
+        public static string OrbStartPos = "OrbStartPos";
         public static string DialogueBox = "DialogueBox";
+        public static string PlayerBodyAttackTarget = "PlayerBodyAttackTarget";
     }
 
     public static class Enums
