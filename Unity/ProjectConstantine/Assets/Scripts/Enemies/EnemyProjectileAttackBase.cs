@@ -9,6 +9,7 @@ public class EnemyProjectileAttackBase : MonoBehaviourBase
     private void Start()
     {
         _initialPosition = transform.position;
+        LogDebug($"Starting: {_initialPosition}");
     }
 
     private void Update()
@@ -30,6 +31,7 @@ public class EnemyProjectileAttackBase : MonoBehaviourBase
             LogDebug("Hit Player");
         }
 
+        LogDebug($"Destroying Projectile: {transform.position} - Other Object: {other.gameObject.name}");
         Destroy(gameObject);
     }
 }

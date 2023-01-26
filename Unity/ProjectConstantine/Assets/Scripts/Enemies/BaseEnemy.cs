@@ -18,13 +18,17 @@ public class BaseEnemy : MonoBehaviourBase
 
     private GameObject _player;
     private GameObject _playerBodyAttackTarget;
+    private Transform _firingPosition;
 
     private void Start()
     {
         _currentHealth = EnemyData.MaxHealth;
+        _firingPosition = transform.Find("FiringPosition");
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
+        
+
+        EnemyData.Setup(gameObject); //-> Virtual function to setup things like contraints for turrets
     }
 
     private void Update()
@@ -37,33 +41,47 @@ public class BaseEnemy : MonoBehaviourBase
             DebugLines();
         }
 
+        if(!_foundPlayer)
+        {
+            //EnemyData.Idle -> Before the player is found
+        }
+
         if(!_foundPlayer &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.DetectionRange)
         {
             _foundPlayer = true;
+            EnemyData.PlayerFound(); //-> Used for animations or initial actions after finding the player
         }
 
         if(_foundPlayer)
         {
-            transform.LookAt(_playerBodyAttackTarget.transform);
+            //transform.LookAt(_playerBodyAttackTarget.transform);
+            EnemyData.Move(); //-> Used to determine what the enemy should do if we have found the player
+            //  ex. Chase player, not move but rotate to face, etc.
         }
 
         if(_foundPlayer &&
             _canAttack &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.AttackRange)
         {
-            Attack();
+            //Attack();
+            EnemyData.Attack();
             _attackCooldownCurrent = EnemyData.AttackCooldown;
         }
     }
 
-    private void Attack()
+    /*
+    private void Attack() //-> Will need to be a virtually overridden function in derived classes or a method in the enemydata
     {
         LogDebug("Attacking Player");
-        var enemyProjectile = Instantiate(EnemyData.ProjectileAttackData.ProjectilePrefab, transform);
+        var enemyProjectile = Instantiate(
+            EnemyData.ProjectileAttackData.ProjectilePrefab,
+            _firingPosition.position,
+            _firingPosition.rotation);
+
         enemyProjectile.name = "ProjectileAttack";
     }
-
+    */
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
@@ -92,18 +110,14 @@ public class BaseEnemy : MonoBehaviourBase
             rotation,
             EnemyObj.AttackRange * .75f,
             Color.blue);
-
+        */
         //Attack Range
-        Debug.DrawArc(
-            90 - (EnemyObj.AttackWidth / 2),
-            90 + (EnemyObj.AttackWidth / 2),
+        Debug.DrawCircle(
             gameObject.transform.position,
             rotation,
-            EnemyObj.AttackRange,
-            Color.red,
-            false,
-            true);
-        */
+            EnemyData.AttackRange,
+            Color.red);
+        
         if(_foundPlayer)
         {
             return;

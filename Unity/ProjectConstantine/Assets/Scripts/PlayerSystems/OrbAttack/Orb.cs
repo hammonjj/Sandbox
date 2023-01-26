@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Orb : MonoBehaviourBase
 {
@@ -12,6 +14,7 @@ public class Orb : MonoBehaviourBase
 
     private void Awake()
     {
+        MessageEnding = $"Orb-{Guid.NewGuid()}";
         _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
            .GetComponent<Transform>();
 
@@ -25,14 +28,17 @@ public class Orb : MonoBehaviourBase
         {
             //Keep the rotation pointed in the same direction of the player
             transform.rotation = _playerTransform.rotation;
-
             return;
         }
 
-        if(Vector3.Distance(_initialPosition, transform.position) > AttackRange)
+        //Need to check if our parent transform is gone before checking distance otherwise we pull the local position
+        if(transform.parent == null &&
+            //transform.position != transform.localPosition &&
+            Vector3.Distance(_initialPosition, transform.position) > AttackRange)
         {
-            //THIS IS SOMETIMES PULLING LOCAL POSITION ON transform.positin instead of world position
-            LogDebug($"Projectile passed AttackRange - Destroying - InitialPostion: {_initialPosition} - Transform Position: {transform.position}");
+            //This is sometimes pulling local position on transform.positin instead of world position
+            LogDebug($"Projectile passed AttackRange - Destroying - " +
+                $"InitialPostion: {_initialPosition} - Transform Position: {transform.position} - TransformLocalPosition: {transform.localPosition}");
             Destroy(gameObject);
         }
 
@@ -42,6 +48,7 @@ public class Orb : MonoBehaviourBase
 
     private void OnTriggerEnter(Collider other)
     {
+        //OrbDataObject.OnHit(other);
         if(other.tag == Constants.Tags.Enemy)
         {
             if(!HasBeenFired)
@@ -64,5 +71,7 @@ public class Orb : MonoBehaviourBase
                 Destroy(gameObject);
             }
         }
+
+        //Need to deal with hitting walls and other objects
     }
 }
