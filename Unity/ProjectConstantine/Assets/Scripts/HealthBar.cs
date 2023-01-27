@@ -7,7 +7,11 @@ public class HealthBar : MonoBehaviourBase
 
     private void Start()
     {
-        _healthBar = transform.Find(Constants.ObjectNames.Health).gameObject.GetComponent<Image>();
+        _healthBar = transform.Find(Constants.ObjectNames.Health)?.gameObject?.GetComponent<Image>();
+        if(_healthBar == null)
+        {
+            _healthBar = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerHeathBar).GetComponent<Image>();
+        }
     }
 
     public void UpdateHealth(float fraction)

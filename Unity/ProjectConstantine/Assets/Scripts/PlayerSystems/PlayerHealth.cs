@@ -12,10 +12,13 @@ public class PlayerHealth : MonoBehaviourBase
     private void Awake()
     {
         _currentHealth = _maxHealth;
+        _eventManager = EventManager.GetInstance();
+    }
+
+    private void Start()
+    {
         _healthBar = GetComponent<HealthBar>();
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
-
-        _eventManager = EventManager.GetInstance();
     }
 
     public void TakeDamage(int incomingDamage)

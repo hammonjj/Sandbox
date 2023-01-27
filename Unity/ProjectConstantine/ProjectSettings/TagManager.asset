@@ -24,6 +24,7 @@ TagManager:
   - RoomVariation
   - OrbStartPos
   - PlayerBodyAttackTarget
+  - PlayerHeathBar
   layers:
   - Default
   - TransparentFX

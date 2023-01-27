@@ -31,6 +31,7 @@ public static class Constants
         public static string OrbStartPos = "OrbStartPos";
         public static string DialogueBox = "DialogueBox";
         public static string PlayerBodyAttackTarget = "PlayerBodyAttackTarget";
+        public static string PlayerHeathBar = "PlayerHeathBar";
     }
 
     public static class Enums
