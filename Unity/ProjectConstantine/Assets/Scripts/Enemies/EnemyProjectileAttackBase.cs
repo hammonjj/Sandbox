@@ -25,13 +25,24 @@ public class EnemyProjectileAttackBase : MonoBehaviourBase
 
     private void OnTriggerEnter(Collider other)
     {
+        bool destroyObject = true;
         if(other.tag == Constants.Tags.Player)
         {
-            //HurtPlayer
             LogDebug("Hit Player");
+            destroyObject = true;
+            var playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            playerHealth?.TakeDamage(AttackData.ProjectileDamage);
+        }
+        else if(other.tag == Constants.Tags.Enemy)
+        {
+            //Pass on through
+            destroyObject = false;
         }
 
-        LogDebug($"Destroying Projectile: {transform.position} - Other Object: {other.gameObject.name}");
-        Destroy(gameObject);
+        if(destroyObject)
+        {
+            LogDebug($"Destroying Projectile: {transform.position} - Other Object: {other.gameObject.name}");
+            Destroy(gameObject);
+        }        
     }
 }

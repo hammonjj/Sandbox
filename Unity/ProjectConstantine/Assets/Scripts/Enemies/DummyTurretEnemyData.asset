@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: DummyEnemyTurret
   MaxHealth: 100
   MovementSpeed: 0
-  DetectionRange: 10
+  DetectionRange: 11
   AttackRange: 10
   AttackCooldown: 1.5
   ProjectileAttackData: {fileID: 11400000, guid: a107eff49d0b3854e9f7ee4453aba310,

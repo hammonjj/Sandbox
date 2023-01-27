@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectileBaseData
   MovementSpeed: 5
   ProjectileDamage: 10
-  ProjectileRange: 10
+  ProjectileRange: 12
   ProjectilePrefab: {fileID: 2752842888426458132, guid: 74718383b0c68e94a8e608f28f79cf01,
     type: 3}

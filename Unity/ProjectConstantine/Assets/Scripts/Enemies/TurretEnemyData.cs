@@ -14,7 +14,8 @@ public class TurretEnemyData : BaseEnemyData
     public override void Setup(GameObject parentGameObject)
     {
         _parentGameObject = parentGameObject;
-        _firingPosition = _parentGameObject.transform.Find("FiringPosition");
+        _firingPosition = Extensions.RecursiveFindChild(
+            _parentGameObject.transform, Constants.ObjectNames.FiringPosition);
         _parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
@@ -42,5 +43,13 @@ public class TurretEnemyData : BaseEnemyData
     }
 
     public override void Death() { }
-    public override void DebugLines() { }
+
+    public override void DebugLines(Quaternion rotation)
+    {
+        Debug.DrawCircle(
+            _parentGameObject.transform.position,
+            rotation,
+            ProjectileAttackData.ProjectileRange,
+            Color.magenta);
+    }
 }

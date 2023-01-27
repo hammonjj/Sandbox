@@ -8,24 +8,25 @@ public class BaseEnemy : MonoBehaviourBase
 
     [Header("Enemy Base")]
     public BaseEnemyData EnemyData;
+    public GameObject FloatingCombatText;
 
     private bool _foundPlayer = false;
     private bool _canAttack = true;
     private int _currentHealth;
     private float _attackCooldownCurrent;
 
+    private HealthBar _healthBar;
     private GameObject _player;
     private GameObject _playerBodyAttackTarget;
     private Transform _firingPosition;
 
     private void Start()
     {
+        _healthBar = transform.Find(Constants.ObjectNames.EnemyHealthBarCanvas).GetComponent<HealthBar>();
         _currentHealth = EnemyData.MaxHealth;
-        _firingPosition = transform.Find("FiringPosition");
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
         
-
         EnemyData.Setup(gameObject);
     }
 
@@ -70,31 +71,32 @@ public class BaseEnemy : MonoBehaviourBase
         _currentHealth -= damage;
         LogDebug($"I got hit - Attack Damage: {damage} - Current Health: {_currentHealth}");
 
-        //LoadFloatingCombatText(damage);
+        ShowFloatingCombatText(damage);
         if(_currentHealth <= 0)
         {
             LogDebug("I Died");
+            EnemyData.Death();
             EventManager.GetInstance().OnEnemyDeath();
             Destroy(gameObject);
             return;
         }
 
-        //_healthBar.UpdateHealth((float)_currentHealth / EnemyObj.MaxHealth);
+        _healthBar.UpdateHealth((float)_currentHealth / EnemyData.MaxHealth);
+    }
+
+    private void ShowFloatingCombatText(int damage)
+    {
+        var gObj = Instantiate(FloatingCombatText, transform.position, Quaternion.identity, transform);
+        gObj.GetComponent<FloatingCombatText>().SetDamage(damage);
     }
 
     private void DebugLines()
     {
-        EnemyData.DebugLines();
         var rotation = gameObject.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0);
-        /*
-        //Attack Stop Range
-        Debug.DrawCircle(
-            gameObject.transform.position,
-            rotation,
-            EnemyObj.AttackRange * .75f,
-            Color.blue);
-        */
+
+        EnemyData.DebugLines(rotation);
+
         //Attack Range
         Debug.DrawCircle(
             gameObject.transform.position,

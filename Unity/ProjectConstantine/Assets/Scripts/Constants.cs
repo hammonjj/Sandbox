@@ -3,6 +3,13 @@ using UnityEngine;
 
 public static class Constants
 {
+    public static class ObjectNames
+    {
+        public static string FiringPosition = "FiringPosition";
+        public static string EnemyHealthBarCanvas = "EnemyHealthBarCanvas";
+        public static string Health = "Health";
+    }
+
     public static class Tags
     {
         public static string Enemy = "Enemy";

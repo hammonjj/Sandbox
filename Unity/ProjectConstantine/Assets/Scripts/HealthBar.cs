@@ -3,10 +3,15 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviourBase
 {
-    public Image HealthBarImage;
+    private Image _healthBar;
+
+    private void Start()
+    {
+        _healthBar = transform.Find(Constants.ObjectNames.Health).gameObject.GetComponent<Image>();
+    }
 
     public void UpdateHealth(float fraction)
     {
-        HealthBarImage.fillAmount = fraction;
+        _healthBar.fillAmount = fraction;
     }
 }
