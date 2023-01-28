@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [CreateAssetMenu(fileName = "TurretEnemyData", menuName = "Enemy/TurretEnemyData")]
 public class TurretEnemyData : BaseEnemyData
@@ -14,7 +13,7 @@ public class TurretEnemyData : BaseEnemyData
     public override void Setup(GameObject parentGameObject)
     {
         _parentGameObject = parentGameObject;
-        _firingPosition = Extensions.RecursiveFindChild(
+        _firingPosition = GameObjectExtensions.RecursiveFindChild(
             _parentGameObject.transform, Constants.ObjectNames.FiringPosition);
         _parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);

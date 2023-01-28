@@ -56,7 +56,7 @@ public class DoorManager : MonoBehaviourBase
         };
 
         //new string[] { "1", "2", "3" }.ToList()
-        var doorConfigurations = Extensions.FindGameObjectsWithTags(tags);
+        var doorConfigurations = GameObjectExtensions.FindGameObjectsWithTags(tags);
         var doorNumber = doorConfigurations[Helper.RandomInclusiveRange(0, doorConfigurations.Count - 1)];
         doorNumber.SetActive(true);
 

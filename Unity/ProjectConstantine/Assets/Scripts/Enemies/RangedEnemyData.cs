@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 [CreateAssetMenu(fileName = "RangedEnemyData", menuName = "Enemy/RangedEnemyData")]
 public class RangedEnemyData : BaseEnemyData
@@ -26,7 +23,7 @@ public class RangedEnemyData : BaseEnemyData
     {
         _parentGameObject = parentGameObject;
         
-        _firingPosition = Extensions.RecursiveFindChild(
+        _firingPosition = GameObjectExtensions.RecursiveFindChild(
             _parentGameObject.transform, Constants.ObjectNames.FiringPosition);
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
 

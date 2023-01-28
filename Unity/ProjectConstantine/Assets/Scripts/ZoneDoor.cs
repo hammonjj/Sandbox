@@ -15,7 +15,7 @@ public class ZoneDoor : MonoBehaviourBase
 
     private void Awake()
     {
-        _nextSceneUITextObj = Extensions.FindGameObjectWithTag(Constants.Tags.NextZoneText);
+        _nextSceneUITextObj = GameObjectExtensions.FindGameObjectWithTag(Constants.Tags.NextZoneText);
         if(_nextSceneUITextObj == null)
         {
             LogError("Couldn't located NextZoneText game object");

@@ -23,5 +23,5 @@ public class BaseEnemyData : ScriptableObject
     public virtual void Move() { }
     public virtual void Death() { }
 
-    public virtual void DebugLines(Quaternion roation) { }
+    public virtual void DebugLines(Quaternion rotation) { }
 }

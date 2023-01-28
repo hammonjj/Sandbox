@@ -26,7 +26,7 @@ public class SceneStateManager : MonoBehaviourBase
     {
         ChooseRoomVariation();
 
-        _pauseMenu = Extensions.FindGameObjectWithTag(Constants.Tags.PauseMenu);
+        _pauseMenu = GameObjectExtensions.FindGameObjectWithTag(Constants.Tags.PauseMenu);
         if(_pauseMenu == null)
         {
             LogError("Pause Menu is null");
@@ -82,7 +82,7 @@ public class SceneStateManager : MonoBehaviourBase
         //One door is a given unless it's a boss fight
         LogDebug($"Choosing Room Variation");
 
-        var variations = Extensions.FindGameObjectsWithTag(Constants.Tags.RoomVariation);
+        var variations = GameObjectExtensions.FindGameObjectsWithTag(Constants.Tags.RoomVariation);
         LogDebug($"Room variations found: {variations.Count}");
 
         if(variations.Count == 0 || variations.Count == 1)

@@ -3,7 +3,6 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviourBase
 {
     [Header("Debugging")]
-    //public bool Stop;
     public bool DrawDebugLines;
 
     [Header("Enemy Base")]
@@ -17,15 +16,12 @@ public class BaseEnemy : MonoBehaviourBase
 
     private HealthBar _healthBar;
     private GameObject _player;
-    private GameObject _playerBodyAttackTarget;
-    private Transform _firingPosition;
 
     private void Start()
     {
         _healthBar = transform.Find(Constants.ObjectNames.EnemyHealthBarCanvas).GetComponent<HealthBar>();
         _currentHealth = EnemyData.MaxHealth;
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
-        _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
         
         EnemyData.Setup(gameObject);
     }
