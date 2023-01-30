@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 public class Helper
 {
@@ -28,5 +29,13 @@ public class Helper
     {
         var random = new System.Random();
         return random.Next(minVal, maxVal + 1);
+    }
+
+    public static float HorizontalDistance(Vector3 vec1, Vector3 vec2)
+    {
+        var vec1_2d = new Vector2(vec1.x, vec1.z);
+        var vec2_2d = new Vector2(vec2.x, vec2.z);
+
+        return Vector2.Distance(vec1_2d, vec2_2d);
     }
 }

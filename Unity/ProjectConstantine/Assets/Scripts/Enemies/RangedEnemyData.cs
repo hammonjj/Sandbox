@@ -53,6 +53,7 @@ public class RangedEnemyData : BaseEnemyData
             {
                 _preparingAttack = false;
                 ShootProjectile();
+                onAttackEnded?.Invoke();
             }
             else
             {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BaseEnemyData", menuName = "Enemy/BaseEnemyData")]
@@ -15,10 +16,14 @@ public class BaseEnemyData : ScriptableObject
     public float AttackRange = 5f;
     public float AttackCooldown = 1.5f;
 
+    //Base Enemy resets cooldown on this
+    public Action onAttackEnded;
+
     //Virtual Methods
     public virtual void Setup(GameObject parentGameObject) { }
     public virtual void Idle() { }
     public virtual void PlayerFound() { }
+    public virtual void Update() { }
     public virtual void Attack() { }
     public virtual void Move() { }
     public virtual void Death() { }

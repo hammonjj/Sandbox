@@ -21,7 +21,7 @@ public class Ring : MonoBehaviourBase
     private float _attackCooldownCurrent;
     private List<GameObject> _orbSpawns = new();
 
-    //Debugging
+    //Pulled from Orb prefab
     private float _attackRange;
 
     private void Awake()
@@ -70,8 +70,7 @@ public class Ring : MonoBehaviourBase
          *  (-0.5, 0.5, 0) -> Right High, Left Low
          *  (0.5, 0.5, 0) -> Left High, Right Low
          */
-        
-        var vector = new Vector3(0.5f, 0.5f, 0f);
+
         //Works for flat ring only
         for(int i = 0; i < MaxOrbs; i++)
         {
@@ -186,19 +185,6 @@ public class Ring : MonoBehaviourBase
         return count;
     }
 
-    private bool IsOrbSpawnVacant()
-    {
-        foreach(var spawn in _orbSpawns)
-        {
-            if(spawn.transform.childCount == 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void OnAttack()
     {
         //Select orb and fire it at enemy
@@ -252,7 +238,7 @@ public class Ring : MonoBehaviourBase
 
         //Watch for performance issues - might need to put enemies on their own layer
         //and use the non-alloc version of this method
-        var collidersHit = Physics.OverlapSphere(gameObject.transform.position, 10f);
+        var collidersHit = Physics.OverlapSphere(gameObject.transform.position, _attackRange);
         if(collidersHit.Length == 0)
         {
             return (retVector, projectileRotation);
@@ -260,7 +246,7 @@ public class Ring : MonoBehaviourBase
 
         foreach(var colliderHit in collidersHit)
         {
-            if(colliderHit.gameObject.tag != "Enemy")
+            if(colliderHit.gameObject.tag != Constants.Tags.Enemy)
             {
                 continue;
             }

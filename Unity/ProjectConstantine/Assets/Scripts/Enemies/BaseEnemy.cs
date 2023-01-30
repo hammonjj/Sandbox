@@ -9,6 +9,7 @@ public class BaseEnemy : MonoBehaviourBase
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
 
+    private bool _resetAttack;
     private bool _foundPlayer = false;
     private bool _canAttack = true;
     private int _currentHealth;
@@ -24,11 +25,16 @@ public class BaseEnemy : MonoBehaviourBase
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
         
         EnemyData.Setup(gameObject);
+        EnemyData.onAttackEnded += OnAttackEnded;
     }
 
     private void Update()
     {
-        _attackCooldownCurrent -= Time.deltaTime;
+        if(_resetAttack)
+        {
+            _attackCooldownCurrent -= Time.deltaTime;
+        }
+
         _canAttack = _attackCooldownCurrent <= 0.0f;
 
         if(DrawDebugLines)
@@ -51,15 +57,22 @@ public class BaseEnemy : MonoBehaviourBase
         if(_foundPlayer)
         {
             EnemyData.Move();
+            EnemyData.Update();
         }
 
         if(_foundPlayer &&
             _canAttack &&
             Vector3.Distance(_player.transform.position, gameObject.transform.position) <= EnemyData.AttackRange)
         {
-            EnemyData.Attack();
+            _resetAttack = false;
             _attackCooldownCurrent = EnemyData.AttackCooldown;
+            EnemyData.Attack();
         }
+    }
+
+    private void OnAttackEnded()
+    {
+        _resetAttack = true;
     }
 
     public void TakeDamage(int damage)

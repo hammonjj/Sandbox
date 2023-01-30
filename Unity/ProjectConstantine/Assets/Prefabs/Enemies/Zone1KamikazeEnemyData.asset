@@ -15,12 +15,11 @@ MonoBehaviour:
   Name: Zone1Kamikaze
   MaxHealth: 100
   MovementSpeed: 2
-  DetectionRange: 5
-  AttackRange: 5
+  DetectionRange: 6
+  AttackRange: 4
   AttackCooldown: 1.5
   ExplosionDamage: 30
-  WindupTimeBeforeSprint: 1.5
-  TimeBeforeDetonation: 1.5
-  SprintSpeed: 30
-  ExplosionRadius: 5
-  ExplosionProximity: 3
+  WindupTimeBeforeSprint: 1
+  SprintSpeed: 25
+  ExplosionRadius: 2
+  ExplosionProximity: 1

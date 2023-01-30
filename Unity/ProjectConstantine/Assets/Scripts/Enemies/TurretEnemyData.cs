@@ -24,10 +24,12 @@ public class TurretEnemyData : BaseEnemyData
 
     public override void Attack()
     {
-        var enemyProjectile = Instantiate(
+        Instantiate(
             ProjectileAttackData.ProjectilePrefab,
             _firingPosition.position,
             _firingPosition.rotation);
+
+        onAttackEnded?.Invoke();
     }
 
     public override void Move()
