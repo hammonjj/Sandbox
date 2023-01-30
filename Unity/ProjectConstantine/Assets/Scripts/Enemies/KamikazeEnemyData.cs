@@ -11,6 +11,7 @@ public class KamikazeEnemyData : BaseEnemyData
     public float ExplosionRadius = 5f;
     public float ExplosionProximity = 3f;
 
+    private bool _isExploding = false;
     private bool _isSprinting;
     private bool _preparingAttack;
     private float _currentWindupTime;
@@ -35,6 +36,11 @@ public class KamikazeEnemyData : BaseEnemyData
 
     public override void Update()
     {
+        if(_isExploding)
+        {
+            //_parentGameObject.transform.localScale *= 1.1f;
+        }
+
         if(_preparingAttack)
         {
             _currentWindupTime += Time.deltaTime;
@@ -43,7 +49,7 @@ public class KamikazeEnemyData : BaseEnemyData
 
     public override void Attack() 
     {
-        if(_preparingAttack || _isSprinting)
+        if(_preparingAttack || _isSprinting || _isExploding)
         {
             return;
         }
@@ -58,6 +64,14 @@ public class KamikazeEnemyData : BaseEnemyData
     
     public override void Move() 
     {
+        if(_isExploding)
+        {
+            _navMeshAgent.isStopped = true;
+            _isSprinting = false;
+            _preparingAttack = false;
+            return;
+        }
+
         if(_preparingAttack && _currentWindupTime >= WindupTimeBeforeSprint)
         {
             Helper.LogDebug("Beginning Sprint");
@@ -138,6 +152,7 @@ public class KamikazeEnemyData : BaseEnemyData
         }
 
         //Add explosion visual effect
-        Destroy(_parentGameObject);
+        _isExploding = true;
+        Destroy(_parentGameObject, 0.2f);
     }
 }
