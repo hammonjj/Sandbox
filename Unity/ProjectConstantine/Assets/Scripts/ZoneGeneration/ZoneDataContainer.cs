@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZoneDataContainer : MonoBehaviourBase
 {
-    //ScriptableObject that contains prefabs for Boss/Normal/Elite enemies
-    private void Start()
-    {
-        
-    }
+    public GameObject[] Zone1Enemies;
 
-    private void Update()
+    private Dictionary<(Constants.Enums.Zones, Constants.Enums.RoomType), GameObject[]> _enemyDictionary = new();
+
+    private void Awake()
     {
-        
+        (Constants.Enums.Zones, Constants.Enums.RoomType) key = (Constants.Enums.Zones.Zone1, Constants.Enums.RoomType.Normal);
+        _enemyDictionary.Add(key, Zone1Enemies);
     }
 
     public List<GameObject> GetAvailableBossEnemies(Constants.Enums.Zones zone, Constants.Enums.RoomType roomType)
@@ -29,7 +28,6 @@ public class ZoneDataContainer : MonoBehaviourBase
 
     public List<GameObject> GetAvailableNormalEnemies(Constants.Enums.Zones zone, Constants.Enums.RoomType roomType)
     {
-        var ret = new List<GameObject>();
-        return ret;
+        return (_enemyDictionary[(zone, roomType)]).ToList();
     }
 }

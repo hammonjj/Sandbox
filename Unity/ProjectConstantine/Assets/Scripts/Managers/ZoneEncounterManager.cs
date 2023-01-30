@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
     public GameObject[] BossEnemyPrefabs; //GetAvailableBossEnemies(Zone, Room);
     public GameObject[] EliteEnemyPrefabs; //GetAvailableEliteEnemies(Zone, Room);
-    public GameObject[] NormalEnemyPrefabs; //GetAvailableNormalEnemies(Zone, Room);
 
     //For future - map all walkable area and use that as an area of spawn points
     public GameObject[] SpawnPoints;
@@ -19,10 +19,14 @@ public class ZoneEncounterManager : MonoBehaviourBase
     private int _currentlyDeadEnemies;
     private EventManager _eventManager;
     private SceneStateManager _sceneManager;
+    private ZoneDataContainer _zoneDataContainer;
+    private List<GameObject> _normalEnemyPrefabs;
 
     private bool _inZone1Start = false;
     private void Start()
     {
+        _zoneDataContainer = GetComponent<ZoneDataContainer>();
+        
         _sceneManager = GameObject.FindGameObjectWithTag("SceneStateManager").GetComponent<SceneStateManager>();
         if(_sceneManager == null)
         {
@@ -34,9 +38,10 @@ public class ZoneEncounterManager : MonoBehaviourBase
         _eventManager.onSpawnEnemies += OnSpawnEnemies; //For debugging purposes
 
         var sceneType = _sceneManager.CurrentSceneType;
+        var currentZone = _sceneManager.GetCurrentZone();
         LogDebug($"Current Scene Type: {sceneType}");
-        if(sceneType == Constants.Enums.SceneType.None && 
-            _sceneManager.GetCurrentZone() == Constants.Enums.Zones.Zone1)
+        if(sceneType == Constants.Enums.SceneType.None &&
+            currentZone == Constants.Enums.Zones.Zone1)
         {
             //If we are here it's because we are in Zone 1 start
             //Player needs to kill the first enemy to unlock the door
@@ -63,6 +68,14 @@ public class ZoneEncounterManager : MonoBehaviourBase
             if(SpawnPoints == null || SpawnPoints.Length == 0)
             {
                 LogError("Unable to Locate Spawn Points");
+            }
+
+            _normalEnemyPrefabs = _zoneDataContainer.GetAvailableNormalEnemies(
+                currentZone, Constants.Enums.RoomType.Normal);
+
+            if(_normalEnemyPrefabs == null || _normalEnemyPrefabs.Count == 0)
+            {
+                LogError($"No enemy prefabs for zone/roomType: {currentZone}, Normal");
             }
 
             //Encounters start with enemies already spawned
@@ -120,13 +133,13 @@ public class ZoneEncounterManager : MonoBehaviourBase
         for(int i = 0; i < EnemiesToSpawn; i++)
         {
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
-            var randomPrefab = Helper.RandomInclusiveRange(0, NormalEnemyPrefabs.Length - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, _normalEnemyPrefabs.Count - 1);
 
             //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
             //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
 
             Instantiate(
-                NormalEnemyPrefabs[randomPrefab],
+                _normalEnemyPrefabs[randomPrefab],
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
 
@@ -151,13 +164,13 @@ public class ZoneEncounterManager : MonoBehaviourBase
         for(int i = 0; i < EnemiesToSpawn; i++)
         {
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
-            var randomPrefab = Helper.RandomInclusiveRange(0, NormalEnemyPrefabs.Length - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, _normalEnemyPrefabs.Count - 1);
 
             //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
             //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
 
             Instantiate(
-                NormalEnemyPrefabs[randomPrefab],
+                _normalEnemyPrefabs[randomPrefab],
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
 
