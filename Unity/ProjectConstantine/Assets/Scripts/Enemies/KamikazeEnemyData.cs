@@ -10,8 +10,8 @@ public class KamikazeEnemyData : BaseEnemyData
     public float SprintSpeed = 20f;
     public float ExplosionRadius = 5f;
     public float ExplosionProximity = 3f;
+    public float DistAboveGround = 1.5f;
 
-    private bool _isExploding = false;
     private bool _isSprinting;
     private bool _preparingAttack;
     private float _currentWindupTime;
@@ -29,6 +29,12 @@ public class KamikazeEnemyData : BaseEnemyData
         _navMeshAgent.speed = MovementSpeed;
 
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
+
+        //var currentPos = _parentGameObject.GetComponent<Transform>().position;
+        //_parentGameObject.GetComponent<Transform>().position = 
+        //    new Vector3(currentPos.x, DistAboveGround, currentPos.z);
+
+        //_parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
     }
 
     public override void Idle() { }
@@ -36,10 +42,9 @@ public class KamikazeEnemyData : BaseEnemyData
 
     public override void Update()
     {
-        if(_isExploding)
-        {
-            //_parentGameObject.transform.localScale *= 1.1f;
-        }
+        //var currentPos = _parentGameObject.GetComponent<Transform>().position;
+        //_parentGameObject.GetComponent<Transform>().position = 
+        //    new Vector3(currentPos.x, DistAboveGround, currentPos.z);
 
         if(_preparingAttack)
         {
@@ -49,7 +54,7 @@ public class KamikazeEnemyData : BaseEnemyData
 
     public override void Attack() 
     {
-        if(_preparingAttack || _isSprinting || _isExploding)
+        if(_preparingAttack || _isSprinting)
         {
             return;
         }
@@ -64,14 +69,6 @@ public class KamikazeEnemyData : BaseEnemyData
     
     public override void Move() 
     {
-        if(_isExploding)
-        {
-            _navMeshAgent.isStopped = true;
-            _isSprinting = false;
-            _preparingAttack = false;
-            return;
-        }
-
         if(_preparingAttack && _currentWindupTime >= WindupTimeBeforeSprint)
         {
             Helper.LogDebug("Beginning Sprint");
@@ -113,6 +110,7 @@ public class KamikazeEnemyData : BaseEnemyData
             Vector3.Distance(
                 _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
         {
+            Helper.LogDebug("Moving");
             _navMeshAgent.SetDestination(_playerBodyAttackTarget.transform.position);
         }
     }
@@ -152,7 +150,7 @@ public class KamikazeEnemyData : BaseEnemyData
         }
 
         //Add explosion visual effect
-        _isExploding = true;
-        Destroy(_parentGameObject, 0.2f);
+        Helper.LogDebug("Need to add explosion VFX");
+        Destroy(_parentGameObject);
     }
 }
