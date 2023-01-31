@@ -16,6 +16,15 @@ public class HealthBar : MonoBehaviourBase
 
     public void UpdateHealth(float fraction)
     {
+        if(_healthBar == null)
+        {
+            _healthBar = transform.Find(Constants.ObjectNames.Health)?.gameObject?.GetComponent<Image>();
+            if(_healthBar == null)
+            {
+                _healthBar = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerHeathBar).GetComponent<Image>();
+            }
+        }
+
         _healthBar.fillAmount = fraction;
     }
 }

@@ -60,7 +60,7 @@ public class SceneStateManager : MonoBehaviourBase
         _eventManager.onPlayerDeath += OnPlayerDeath;
         _eventManager.onEncounterEnded += OnEncounterEnded;
         _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
-
+        /*
         _navMeshSurface = 
             GameObject.FindGameObjectWithTag(Constants.Tags.NavMeshSurface).GetComponent<NavMeshSurface>();
 
@@ -73,6 +73,7 @@ public class SceneStateManager : MonoBehaviourBase
         playerObj?.SetActive(false);
         _navMeshSurface.BuildNavMesh();
         playerObj?.SetActive(true);
+        */
     }
 
     public void OnEncounterEnded()
@@ -112,6 +113,19 @@ public class SceneStateManager : MonoBehaviourBase
         {
             variations[i].SetActive(i == chosenVariation);
         }
+
+        _navMeshSurface =
+            GameObject.FindGameObjectWithTag(Constants.Tags.NavMeshSurface).GetComponent<NavMeshSurface>();
+
+        if(_navMeshSurface == null)
+        {
+            LogError("NavMeshSurface is null");
+        }
+
+        var playerObj = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
+        playerObj?.SetActive(false);
+        _navMeshSurface.BuildNavMesh();
+        playerObj?.SetActive(true);
     }
 
     private void DetermineZone(string name)

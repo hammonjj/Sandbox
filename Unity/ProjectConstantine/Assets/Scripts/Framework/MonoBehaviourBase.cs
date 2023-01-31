@@ -19,7 +19,29 @@ public class MonoBehaviourBase : MonoBehaviour
 
     protected string MessageEnding;
 
-    public virtual void LogDebug(string message, 
+    protected T GetDependency<T>()
+    {
+        var ret = GetComponent<T>();
+        if(ret == null)
+        {
+            LogError($"Dependency is null - Component Name: {typeof(T).FullName}");
+        }
+
+        return ret;
+    }
+
+    protected T GetDependency<T>(string tag)
+    {
+        var ret = GameObject.FindGameObjectWithTag(tag).GetComponent<T>();
+        if(ret == null)
+        {
+            LogError($"Dependency is null - Tag: {tag} - Component Name: {typeof(T).FullName}");
+        }
+
+        return ret;
+    }
+
+    protected virtual void LogDebug(string message, 
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
@@ -29,7 +51,7 @@ public class MonoBehaviourBase : MonoBehaviour
         }
     }
 
-    public virtual void LogWarning(string message,
+    protected virtual void LogWarning(string message,
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
@@ -40,7 +62,7 @@ public class MonoBehaviourBase : MonoBehaviour
         }
     }
 
-    public virtual void LogError(string message,
+    protected virtual void LogError(string message,
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {
@@ -52,7 +74,7 @@ public class MonoBehaviourBase : MonoBehaviour
         }
     }
 
-    public virtual void LogVerbose(string message,
+    protected virtual void LogVerbose(string message,
         [CallerLineNumber] int lineNumber = 0,
         [CallerFilePath] string sourceFilePath = "")
     {

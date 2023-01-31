@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BaseEnemyData", menuName = "Enemy/BaseEnemyData")]
-public class BaseEnemyData : ScriptableObject
+public class BaseEnemyData : ScriptableObjectBase
 {
     [Header("Base")]
     public string Name;
@@ -18,6 +18,7 @@ public class BaseEnemyData : ScriptableObject
 
     //Base Enemy resets cooldown on this
     public Action onAttackEnded;
+    public Action onDeath;
 
     //Virtual Methods
     public virtual void Setup(GameObject parentGameObject) { }

@@ -2589,7 +2589,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 52749d2e0ee35fe4bb6d8b02f0b70259, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &561787307
 GameObject:
@@ -5917,7 +5917,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh75848
+  m_Name: pb_Mesh111414
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6211,7 +6211,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh45020
+  m_Name: pb_Mesh91126
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

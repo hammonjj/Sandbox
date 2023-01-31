@@ -66,16 +66,18 @@ public class RangedEnemyData : BaseEnemyData
         }
 
         //Run away from Player
-        if(Vector3.Distance(
-            _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) < DistanceToMaintain)
+        if(_parentGameObject != null &&
+            Vector3.Distance(
+                _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) < DistanceToMaintain)
         {
             _navMeshAgent.isStopped = false;
             var dirToPlayer = _parentGameObject.transform.position - _playerBodyAttackTarget.transform.position;
             _navMeshAgent.SetDestination(_parentGameObject.transform.position + dirToPlayer);
         }
         //Run towards player
-        else if(Vector3.Distance(
-            _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
+        else if(_parentGameObject != null &&
+            Vector3.Distance(
+                _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
         {
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_playerBodyAttackTarget.transform.position);
@@ -86,6 +88,11 @@ public class RangedEnemyData : BaseEnemyData
 
     public override void DebugLines(Quaternion rotation)
     {
+        if(_parentGameObject == null)
+        {
+            return;
+        }
+
         Debug.DrawCircle(
             _parentGameObject.transform.position,
             rotation,
@@ -109,6 +116,11 @@ public class RangedEnemyData : BaseEnemyData
 
     private bool IsEnemyFacingPlayerPos()
     {
+        if(_parentGameObject == null)
+        {
+            return false;
+        }
+
         var dirFromAtoB = (_currentShotTarget.position - _parentGameObject.transform.position).normalized;
         var dotProd = Vector3.Dot(dirFromAtoB, _parentGameObject.transform.forward);
         return dotProd > 0.9;

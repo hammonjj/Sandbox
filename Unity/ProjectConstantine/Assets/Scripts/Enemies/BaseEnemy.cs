@@ -9,6 +9,7 @@ public class BaseEnemy : MonoBehaviourBase
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
 
+    private bool _isDead = false;
     private bool _resetAttack;
     private bool _foundPlayer = false;
     private bool _canAttack = true;
@@ -26,6 +27,7 @@ public class BaseEnemy : MonoBehaviourBase
         
         EnemyData.Setup(gameObject);
         EnemyData.onAttackEnded += OnAttackEnded;
+        EnemyData.onDeath += OnDeath;
     }
 
     private void Update()
@@ -36,6 +38,11 @@ public class BaseEnemy : MonoBehaviourBase
         }
 
         _canAttack = _attackCooldownCurrent <= 0.0f;
+
+        if(_isDead)
+        {
+            return;
+        }
 
         if(DrawDebugLines)
         {
@@ -75,6 +82,15 @@ public class BaseEnemy : MonoBehaviourBase
         _resetAttack = true;
     }
 
+    private void OnDeath()
+    {
+        _isDead = true;
+        LogDebug("I Died");
+        EnemyData.Death();
+        EventManager.GetInstance().OnEnemyDeath();
+        Destroy(gameObject);
+    }
+
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
@@ -83,10 +99,7 @@ public class BaseEnemy : MonoBehaviourBase
         ShowFloatingCombatText(damage);
         if(_currentHealth <= 0)
         {
-            LogDebug("I Died");
-            EnemyData.Death();
-            EventManager.GetInstance().OnEnemyDeath();
-            Destroy(gameObject);
+            OnDeath();
             return;
         }
 

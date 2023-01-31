@@ -2883,7 +2883,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4c98361308e829346a5206719013782b, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &964183688
 PrefabInstance:
@@ -3903,7 +3903,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh72774
+  m_Name: pb_Mesh109372
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

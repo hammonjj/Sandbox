@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zone1TurretEnemyData
   m_EditorClassIdentifier: 
   Name: Zone1EnemyTurret
-  MaxHealth: 100
+  MaxHealth: 50
   MovementSpeed: 0
   DetectionRange: 11
   AttackRange: 10

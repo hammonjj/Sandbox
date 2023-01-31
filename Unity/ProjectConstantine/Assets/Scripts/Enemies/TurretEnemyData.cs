@@ -15,6 +15,12 @@ public class TurretEnemyData : BaseEnemyData
         _parentGameObject = parentGameObject;
         _firingPosition = GameObjectExtensions.RecursiveFindChild(
             _parentGameObject.transform, Constants.ObjectNames.FiringPosition);
+
+        if(_firingPosition == null)
+        {
+            LogError("Firing Position not found");
+        }
+
         _parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
@@ -34,6 +40,11 @@ public class TurretEnemyData : BaseEnemyData
 
     public override void Move()
     {
+        if(_parentGameObject == null)
+        {
+            return;
+        }
+
         var playerTransform = _playerBodyAttackTarget.transform;
         playerTransform.position = new Vector3(
             _playerBodyAttackTarget.transform.position.x,
@@ -47,6 +58,11 @@ public class TurretEnemyData : BaseEnemyData
 
     public override void DebugLines(Quaternion rotation)
     {
+        if(_parentGameObject == null)
+        {
+            return;
+        }
+
         Debug.DrawCircle(
             _parentGameObject.transform.position,
             rotation,

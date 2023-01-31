@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zone1KamikazeEnemyData
   m_EditorClassIdentifier: 
   Name: Zone1Kamikaze
-  MaxHealth: 100
+  MaxHealth: 30
   MovementSpeed: 2
   DetectionRange: 6
   AttackRange: 4
@@ -23,3 +23,4 @@ MonoBehaviour:
   SprintSpeed: 25
   ExplosionRadius: 2
   ExplosionProximity: 1
+  DistAboveGround: 1.5
