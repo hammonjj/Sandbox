@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.AI.Navigation;
 using UnityEngine.SceneManagement;
 
 public class SceneStateManager : MonoBehaviourBase
@@ -13,6 +14,7 @@ public class SceneStateManager : MonoBehaviourBase
     private GameObject _pauseMenu;
     private EventManager _eventManager;
     private GameStateManager _gameStateManager;
+    private NavMeshSurface _navMeshSurface;
 
     public Constants.Enums.Zones GetCurrentZone()
     {
@@ -58,6 +60,19 @@ public class SceneStateManager : MonoBehaviourBase
         _eventManager.onPlayerDeath += OnPlayerDeath;
         _eventManager.onEncounterEnded += OnEncounterEnded;
         _eventManager.onAdvanceScenePressed += OnAdvanceScenePressed;
+
+        _navMeshSurface = 
+            GameObject.FindGameObjectWithTag(Constants.Tags.NavMeshSurface).GetComponent<NavMeshSurface>();
+
+        if(_navMeshSurface == null)
+        {
+            LogError("NavMeshSurface is null");
+        }
+
+        var playerObj = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
+        playerObj?.SetActive(false);
+        _navMeshSurface.BuildNavMesh();
+        playerObj?.SetActive(true);
     }
 
     public void OnEncounterEnded()

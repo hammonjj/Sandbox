@@ -25,6 +25,7 @@ TagManager:
   - OrbStartPos
   - PlayerBodyAttackTarget
   - PlayerHeathBar
+  - NavMeshSurface
   layers:
   - Default
   - TransparentFX
