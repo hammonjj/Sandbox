@@ -22,8 +22,7 @@ public class KamikazeEnemyData : BaseEnemyData
     {
         _isSprinting = false;
         _preparingAttack = false;
-        var navMeshAgent = parentGameObject.GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = MovementSpeed;
+        parentGameObject.GetComponent<NavMeshAgent>().speed = MovementSpeed;
 
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
@@ -51,7 +50,6 @@ public class KamikazeEnemyData : BaseEnemyData
         _currentWindupTime = 0f;
         parentGameObject.GetComponent<NavMeshAgent>().ResetPath();
         _currentAttackPosition = _playerBodyAttackTarget.transform.position;
-        Helper.LogDebug($"1. CurrentAttackPosition: {_currentAttackPosition}");
     }
     
     public override void Move(GameObject parentGameObject) 
@@ -68,7 +66,6 @@ public class KamikazeEnemyData : BaseEnemyData
         }
 
         if(_isSprinting &&
-            parentGameObject != null &&
             Helper.HorizontalDistance(
                 parentGameObject.transform.position, _currentAttackPosition) <= ExplosionProximity)
         {
@@ -97,7 +94,6 @@ public class KamikazeEnemyData : BaseEnemyData
         //Move towards player
         if(!_isSprinting &&
             !_preparingAttack &&
-            parentGameObject != null &&
             Vector3.Distance(
                 parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
         {
@@ -140,7 +136,6 @@ public class KamikazeEnemyData : BaseEnemyData
         }
 
         //Add explosion visual effect
-        Helper.LogDebug("Need to add explosion VFX");
         onDeath?.Invoke();
     }
 }
