@@ -1938,6 +1938,21 @@ MonoBehaviour:
   LoggingLevel: -1
   LeftBorder: 310
   VerticalBorder: 275
+--- !u!114 &1032467070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032467066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32258e73279244ec2b03e711931406ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: 0
+  PlayerHealthTracker: {fileID: 0}
+  PrimaryOrbUpgradeTracker: {fileID: 0}
 --- !u!1 &1160234425
 GameObject:
   m_ObjectHideFlags: 0
