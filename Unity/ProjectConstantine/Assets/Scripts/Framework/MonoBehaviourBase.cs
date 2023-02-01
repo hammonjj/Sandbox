@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class MonoBehaviourBase : MonoBehaviour
 
     protected string MessageEnding;
 
-    protected T GetDependency<T>()
+    protected T VerifyComponent<T>()
     {
         var ret = GetComponent<T>();
         if(ret == null)
@@ -30,7 +31,7 @@ public class MonoBehaviourBase : MonoBehaviour
         return ret;
     }
 
-    protected T GetDependency<T>(string tag)
+    protected T VerifyComponent<T>(string tag)
     {
         var ret = GameObject.FindGameObjectWithTag(tag).GetComponent<T>();
         if(ret == null)
@@ -39,6 +40,11 @@ public class MonoBehaviourBase : MonoBehaviour
         }
 
         return ret;
+    }
+
+    protected IEnumerator PauseForTime(float interval)
+    {
+        yield return new WaitForSeconds(interval);
     }
 
     protected virtual void LogDebug(string message, 

@@ -8,6 +8,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
     public int WavesToSpawn = 3;
     public int EnemiesToSpawn = 5;
     public int TimeBetweenWaves = 3;
+    public float InitialTimeBeforeSpawn = 1500f;
 
     public GameObject[] BossEnemyPrefabs; //GetAvailableBossEnemies(Zone, Room);
     public GameObject[] EliteEnemyPrefabs; //GetAvailableEliteEnemies(Zone, Room);
@@ -25,13 +26,8 @@ public class ZoneEncounterManager : MonoBehaviourBase
     private bool _inZone1Start = false;
     private void Start()
     {
-        _zoneDataContainer = GetComponent<ZoneDataContainer>();
-        
-        _sceneManager = GameObject.FindGameObjectWithTag("SceneStateManager").GetComponent<SceneStateManager>();
-        if(_sceneManager == null)
-        {
-            LogError("Failed to Acquire Scene State Manager");
-        }
+        _zoneDataContainer = VerifyComponent<ZoneDataContainer>();
+        _sceneManager = VerifyComponent<SceneStateManager>(Constants.Tags.SceneStateManager);
 
         _eventManager = EventManager.GetInstance();
         _eventManager.onEnemyDeath += OnEnemyDeath;
@@ -78,7 +74,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
                 LogError($"No enemy prefabs for zone/roomType: {currentZone}, Normal");
             }
 
-            //Encounters start with enemies already spawned
+            //Encounters start with enemies already spawned but pause first to let player get their bearings
             InstantiateWave();
             //Future: Calculate the following number of waves
         }

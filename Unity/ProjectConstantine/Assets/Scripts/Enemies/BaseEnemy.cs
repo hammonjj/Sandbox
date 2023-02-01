@@ -52,7 +52,7 @@ public class BaseEnemy : MonoBehaviourBase
 
         if(!_foundPlayer)
         {
-            EnemyData.Idle();
+            EnemyData.Idle(gameObject);
         }
 
         if(!_foundPlayer &&

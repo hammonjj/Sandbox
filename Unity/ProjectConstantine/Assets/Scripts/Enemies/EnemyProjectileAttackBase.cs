@@ -38,6 +38,10 @@ public class EnemyProjectileAttackBase : MonoBehaviourBase
             //Pass on through
             destroyObject = false;
         }
+        else
+        {
+            destroyObject = true;
+        }
 
         if(destroyObject)
         {

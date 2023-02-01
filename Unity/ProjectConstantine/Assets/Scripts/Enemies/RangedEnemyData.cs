@@ -27,7 +27,6 @@ public class RangedEnemyData : BaseEnemyData
         navMeshAgent.speed = MovementSpeed;
     }
 
-    public override void Idle() { }
     public override void PlayerFound() { }
 
     public override void Attack(GameObject parentGameObject)

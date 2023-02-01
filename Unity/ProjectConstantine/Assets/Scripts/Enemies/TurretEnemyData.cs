@@ -23,7 +23,11 @@ public class TurretEnemyData : BaseEnemyData
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
 
-    public override void Idle() { }
+    public override void Idle(GameObject parentGameObject)
+    {
+        //Turrets don't move
+    }
+
     public override void PlayerFound() { }
 
     public override void Attack(GameObject parentGameObject)

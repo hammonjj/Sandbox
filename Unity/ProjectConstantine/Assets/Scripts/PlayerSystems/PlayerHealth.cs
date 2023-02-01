@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void Start()
     {
-        _healthBar = GetDependency<HealthBar>();
+        _healthBar = VerifyComponent<HealthBar>();
         //_healthBar = GetComponent<HealthBar>();
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }

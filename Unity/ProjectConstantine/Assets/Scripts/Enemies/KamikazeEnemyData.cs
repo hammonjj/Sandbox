@@ -27,7 +27,6 @@ public class KamikazeEnemyData : BaseEnemyData
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
 
-    public override void Idle() { }
     public override void PlayerFound() { }
 
     public override void Update(GameObject parentGameObject)
