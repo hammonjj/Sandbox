@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1c7a169033941d69840e4fa42873aa, type: 3}
   m_Name: Zone1RangedEnemyData
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   Name: Zone1Ranged
-  MaxHealth: 100
+  MaxHealth: 50
   MovementSpeed: 2
-  DetectionRange: 10
-  AttackRange: 9
+  DetectionRange: 9
+  AttackRange: 8.5
   AttackCooldown: 1.5
   ProjectileAttackData: {fileID: 11400000, guid: a107eff49d0b3854e9f7ee4453aba310,
     type: 2}

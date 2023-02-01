@@ -110,5 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fa40bf4fdd75e498173f6a8b566548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoggingLevel: -1
+  LoggingLevel: 0
   AttackData: {fileID: 11400000, guid: a107eff49d0b3854e9f7ee4453aba310, type: 2}

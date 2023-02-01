@@ -41,6 +41,7 @@ public class BaseEnemy : MonoBehaviourBase
 
         if(_isDead)
         {
+            Destroy(gameObject);
             return;
         }
 
@@ -63,8 +64,8 @@ public class BaseEnemy : MonoBehaviourBase
 
         if(_foundPlayer)
         {
-            EnemyData.Move();
-            EnemyData.Update();
+            EnemyData.Move(gameObject);
+            EnemyData.Update(gameObject);
         }
 
         if(_foundPlayer &&
@@ -73,7 +74,7 @@ public class BaseEnemy : MonoBehaviourBase
         {
             _resetAttack = false;
             _attackCooldownCurrent = EnemyData.AttackCooldown;
-            EnemyData.Attack();
+            EnemyData.Attack(gameObject);
         }
     }
 
@@ -117,7 +118,7 @@ public class BaseEnemy : MonoBehaviourBase
         var rotation = gameObject.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0);
 
-        EnemyData.DebugLines(rotation);
+        EnemyData.DebugLines(rotation, gameObject);
 
         //Attack Range
         Debug.DrawCircle(

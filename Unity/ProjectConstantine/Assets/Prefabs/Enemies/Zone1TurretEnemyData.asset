@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade4ed07debeb41ccb2e670b4b50bf36, type: 3}
   m_Name: Zone1TurretEnemyData
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
   Name: Zone1EnemyTurret
   MaxHealth: 50
   MovementSpeed: 0
-  DetectionRange: 11
-  AttackRange: 10
+  DetectionRange: 9
+  AttackRange: 7
   AttackCooldown: 1.5
   ProjectileAttackData: {fileID: 11400000, guid: a107eff49d0b3854e9f7ee4453aba310,
     type: 2}

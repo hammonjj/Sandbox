@@ -7,28 +7,26 @@ public class TurretEnemyData : BaseEnemyData
     public EnemyProjectileBaseData ProjectileAttackData;
 
     private Transform _firingPosition;
-    private GameObject _parentGameObject;
     private GameObject _playerBodyAttackTarget;
 
     public override void Setup(GameObject parentGameObject)
     {
-        _parentGameObject = parentGameObject;
         _firingPosition = GameObjectExtensions.RecursiveFindChild(
-            _parentGameObject.transform, Constants.ObjectNames.FiringPosition);
+            parentGameObject.transform, Constants.ObjectNames.FiringPosition);
 
         if(_firingPosition == null)
         {
             LogError("Firing Position not found");
         }
 
-        _parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
 
     public override void Idle() { }
     public override void PlayerFound() { }
 
-    public override void Attack()
+    public override void Attack(GameObject parentGameObject)
     {
         Instantiate(
             ProjectileAttackData.ProjectilePrefab,
@@ -38,33 +36,24 @@ public class TurretEnemyData : BaseEnemyData
         onAttackEnded?.Invoke();
     }
 
-    public override void Move()
+    public override void Move(GameObject parentGameObject)
     {
-        if(_parentGameObject == null)
-        {
-            return;
-        }
-
         var playerTransform = _playerBodyAttackTarget.transform;
+
         playerTransform.position = new Vector3(
             _playerBodyAttackTarget.transform.position.x,
-            _parentGameObject.transform.position.y,
+            parentGameObject.transform.position.y,
             _playerBodyAttackTarget.transform.position.z);
 
-        _parentGameObject.transform.LookAt(playerTransform);
+        parentGameObject.transform.LookAt(playerTransform);
     }
 
     public override void Death() { }
 
-    public override void DebugLines(Quaternion rotation)
+    public override void DebugLines(Quaternion rotation, GameObject parentGameObject)
     {
-        if(_parentGameObject == null)
-        {
-            return;
-        }
-
         Debug.DrawCircle(
-            _parentGameObject.transform.position,
+            parentGameObject.transform.position,
             rotation,
             ProjectileAttackData.ProjectileRange,
             Color.magenta);

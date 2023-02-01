@@ -15,8 +15,6 @@ public class KamikazeEnemyData : BaseEnemyData
     private bool _isSprinting;
     private bool _preparingAttack;
     private float _currentWindupTime;
-    private NavMeshAgent _navMeshAgent;
-    private GameObject _parentGameObject;
     private GameObject _playerBodyAttackTarget;
     private Vector3 _currentAttackPosition;
 
@@ -24,9 +22,8 @@ public class KamikazeEnemyData : BaseEnemyData
     {
         _isSprinting = false;
         _preparingAttack = false;
-        _parentGameObject = parentGameObject;
-        _navMeshAgent = _parentGameObject.GetComponent<NavMeshAgent>();
-        _navMeshAgent.speed = MovementSpeed;
+        var navMeshAgent = parentGameObject.GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = MovementSpeed;
 
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
@@ -34,7 +31,7 @@ public class KamikazeEnemyData : BaseEnemyData
     public override void Idle() { }
     public override void PlayerFound() { }
 
-    public override void Update()
+    public override void Update(GameObject parentGameObject)
     {
         if(_preparingAttack)
         {
@@ -42,7 +39,7 @@ public class KamikazeEnemyData : BaseEnemyData
         }
     }
 
-    public override void Attack() 
+    public override void Attack(GameObject parentGameObject) 
     {
         if(_preparingAttack || _isSprinting)
         {
@@ -52,87 +49,83 @@ public class KamikazeEnemyData : BaseEnemyData
         Helper.LogDebug("Initializing Attack");
         _preparingAttack = true;
         _currentWindupTime = 0f;
-        _navMeshAgent.ResetPath();
+        parentGameObject.GetComponent<NavMeshAgent>().ResetPath();
         _currentAttackPosition = _playerBodyAttackTarget.transform.position;
         Helper.LogDebug($"1. CurrentAttackPosition: {_currentAttackPosition}");
     }
     
-    public override void Move() 
+    public override void Move(GameObject parentGameObject) 
     {
+        var navMeshAgent = parentGameObject.GetComponent<NavMeshAgent>();
         if(_preparingAttack && _currentWindupTime >= WindupTimeBeforeSprint)
         {
             Helper.LogDebug("Beginning Sprint");
             _isSprinting = true;
             _preparingAttack = false;
-            _navMeshAgent.speed = SprintSpeed;
-            _navMeshAgent.acceleration = 100f;
-            _navMeshAgent.SetDestination(_currentAttackPosition);
+            navMeshAgent.speed = SprintSpeed;
+            navMeshAgent.acceleration = 100f;
+            navMeshAgent.SetDestination(_currentAttackPosition);
         }
 
         if(_isSprinting &&
-            _parentGameObject != null &&
+            parentGameObject != null &&
             Helper.HorizontalDistance(
-                _parentGameObject.transform.position, _currentAttackPosition) <= ExplosionProximity)
+                parentGameObject.transform.position, _currentAttackPosition) <= ExplosionProximity)
         {
             Helper.LogDebug("Finished Sprint");
 
             _isSprinting = false;
-            _navMeshAgent.acceleration = 8f;
-            _navMeshAgent.speed = MovementSpeed;
-            _navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.acceleration = 8f;
+            navMeshAgent.speed = MovementSpeed;
+            navMeshAgent.velocity = Vector3.zero;
 
-            if(_parentGameObject != null &&
+            if(parentGameObject != null &&
                 Helper.HorizontalDistance(
-                    _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) < ExplosionProximity)
+                    parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) < ExplosionProximity)
             {
                 Helper.LogDebug("Player in explosion proximity");
-                _navMeshAgent.isStopped = true;
-                Explode();
+                navMeshAgent.isStopped = true;
+                Explode(parentGameObject);
                 return;
             }
 
             onAttackEnded?.Invoke();
             _currentWindupTime = 0f;
-            _navMeshAgent.ResetPath();
+            navMeshAgent.ResetPath();
         }
         
         //Move towards player
         if(!_isSprinting &&
-            !_preparingAttack && 
-            _parentGameObject != null &&
+            !_preparingAttack &&
+            parentGameObject != null &&
             Vector3.Distance(
-                _parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
+                parentGameObject.transform.position, _playerBodyAttackTarget.transform.position) > AttackRange)
         {
-            _navMeshAgent.SetDestination(_playerBodyAttackTarget.transform.position);
+            navMeshAgent.SetDestination(_playerBodyAttackTarget.transform.position);
         }
     }
 
     public override void Death() { }
 
-    public override void DebugLines(Quaternion rotation) 
+    public override void DebugLines(Quaternion rotation, GameObject parentGameObject) 
     {
-        if(_parentGameObject == null)
-        {
-            return;
-        }
-
         Debug.DrawCircle(
-            _parentGameObject.transform.position,
+            parentGameObject.transform.position,
             rotation,
             ExplosionRadius,
             Color.magenta);
 
         Debug.DrawCircle(
-            _parentGameObject.transform.position,
+            parentGameObject.transform.position,
             rotation,
             ExplosionProximity,
             Color.magenta);
     }
 
-    private void Explode()
+    private void Explode(GameObject parentGameObject)
     {
         Helper.LogDebug("Exploding");
-        var collidersHit = Physics.OverlapSphere(_parentGameObject.transform.position, ExplosionRadius);
+        var collidersHit = Physics.OverlapSphere(parentGameObject.transform.position, ExplosionRadius);
         foreach(var collider in collidersHit)
         {
             if(collider.gameObject.tag != Constants.Tags.Player)

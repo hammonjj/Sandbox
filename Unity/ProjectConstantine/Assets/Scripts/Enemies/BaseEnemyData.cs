@@ -24,10 +24,10 @@ public class BaseEnemyData : ScriptableObjectBase
     public virtual void Setup(GameObject parentGameObject) { }
     public virtual void Idle() { }
     public virtual void PlayerFound() { }
-    public virtual void Update() { }
-    public virtual void Attack() { }
-    public virtual void Move() { }
+    public virtual void Update(GameObject parentGameObject) { }
+    public virtual void Attack(GameObject parentGameObject) { }
+    public virtual void Move(GameObject parentGameObject) { }
     public virtual void Death() { }
 
-    public virtual void DebugLines(Quaternion rotation) { }
+    public virtual void DebugLines(Quaternion rotation, GameObject parentGameObject) { }
 }
