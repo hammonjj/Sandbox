@@ -26,6 +26,7 @@ public class MonoBehaviourBase : MonoBehaviour
         if(ret == null)
         {
             LogError($"Dependency is null - Component Name: {typeof(T).FullName}");
+            Debug.Break();
         }
 
         return ret;
@@ -37,6 +38,7 @@ public class MonoBehaviourBase : MonoBehaviour
         if(ret == null)
         {
             LogError($"Dependency is null - Tag: {tag} - Component Name: {typeof(T).FullName}");
+            Debug.Break();
         }
 
         return ret;

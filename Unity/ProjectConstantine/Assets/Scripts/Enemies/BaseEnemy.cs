@@ -9,7 +9,7 @@ public class BaseEnemy : MonoBehaviourBase
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
 
-    private bool _isDead = false;
+    //private bool _isDead = false;
     private bool _resetAttack;
     private bool _foundPlayer = false;
     private bool _canAttack = true;
@@ -39,11 +39,11 @@ public class BaseEnemy : MonoBehaviourBase
 
         _canAttack = _attackCooldownCurrent <= 0.0f;
 
-        if(_isDead)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        //if(_isDead)
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
 
         if(DrawDebugLines)
         {
@@ -65,7 +65,7 @@ public class BaseEnemy : MonoBehaviourBase
         if(_foundPlayer)
         {
             EnemyData.Move(gameObject);
-            EnemyData.Update(gameObject);
+            EnemyData.UpdateDataObj(gameObject);
         }
 
         if(_foundPlayer &&
@@ -85,7 +85,7 @@ public class BaseEnemy : MonoBehaviourBase
 
     private void OnDeath()
     {
-        _isDead = true;
+        //_isDead = true;
         LogDebug("I Died");
         EnemyData.Death();
         EventManager.GetInstance().OnEnemyDeath();

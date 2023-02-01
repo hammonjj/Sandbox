@@ -8,6 +8,7 @@ public class EventManager
     public Action onEnemyDeath;
     public Action onPlayerDeath;
     public Action onEncounterEnded;
+    public Action onSceneEnding;
 
     //Player Inputs
     public Action onUseItem;
@@ -59,6 +60,12 @@ public class EventManager
         onPlayerSecondaryAttack = null;
         onPause = null;
         onAdvanceScenePressed = null;
+        onSceneEnding = null;
+    }
+
+    public void OnSceneEnding()
+    {
+        onSceneEnding?.Invoke();
     }
 
     public void OnSpawnEnemies()

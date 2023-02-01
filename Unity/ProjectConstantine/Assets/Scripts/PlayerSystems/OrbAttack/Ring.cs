@@ -15,6 +15,7 @@ public class Ring : MonoBehaviourBase
 
     public Constants.Enums.AttackType AttackType;
 
+    private bool _initialized = false;
     private bool _canAttack;
     private bool _canSpawnOrb;
     private float _orbCooldownCurrent;
@@ -24,17 +25,19 @@ public class Ring : MonoBehaviourBase
     //Pulled from Orb prefab
     private float _attackRange;
 
-    private void Awake()
+    public void Initialize()
     {
+        _initialized = true;
+        if(!enabled)
+        {
+            return;
+        }
+
         CalculateOrbSpawns();
         SpawnInitialOrbs();
-
-        _attackRange = OrbPrefab.GetComponent<Orb>().AttackRange;
-    }
-
-    private void Start()
-    {
         _orbCooldownCurrent = OrbRespawnRate;
+
+        _attackRange = OrbPrefab.GetComponent<BaseOrb>().BaseOrbData.AttackRange;
         if(AttackType == Constants.Enums.AttackType.Primary)
         {
             EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
@@ -43,6 +46,11 @@ public class Ring : MonoBehaviourBase
         {
             EventManager.GetInstance().onPlayerSecondaryAttack += OnAttack;
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void CalculateOrbSpawns()
@@ -100,6 +108,11 @@ public class Ring : MonoBehaviourBase
 
     private void Update()
     {
+        if(!_initialized || !enabled)
+        {
+            return;
+        }
+
         if(DrawDebugLines)
         {
             //Orb orbit
@@ -209,7 +222,7 @@ public class Ring : MonoBehaviourBase
 
         firstOrb.transform.parent = null;
         firstOrb.transform.rotation = projectileRotation;
-        var orb = firstOrb.GetComponent<Orb>();
+        var orb = firstOrb.GetComponent<BaseOrb>();
         orb.Fire();
     }
 

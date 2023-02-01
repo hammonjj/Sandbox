@@ -111,6 +111,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
-  HasBeenFired: 0
-  ProjectileSpeed: 20
-  AttackRange: 10
+  BaseOrbData: {fileID: 11400000, guid: a3d7f615892b646ba85a50edb8850066, type: 2}

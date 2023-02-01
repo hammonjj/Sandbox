@@ -33,6 +33,8 @@ public static class Constants
         public static string PlayerBodyAttackTarget = "PlayerBodyAttackTarget";
         public static string PlayerHeathBar = "PlayerHeathBar";
         public static string NavMeshSurface = "NavMeshSurface";
+        public static string PrimaryRing = "PrimaryRing";
+        public static string SecondaryRing = "SecondaryRing";
     }
 
     public static class Enums

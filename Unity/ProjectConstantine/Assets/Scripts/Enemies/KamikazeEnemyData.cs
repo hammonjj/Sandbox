@@ -29,7 +29,7 @@ public class KamikazeEnemyData : BaseEnemyData
 
     public override void PlayerFound() { }
 
-    public override void Update(GameObject parentGameObject)
+    public override void UpdateDataObj(GameObject parentGameObject)
     {
         if(_preparingAttack)
         {
@@ -44,7 +44,7 @@ public class KamikazeEnemyData : BaseEnemyData
             return;
         }
 
-        Helper.LogDebug("Initializing Attack");
+        LogDebug("Initializing Attack");
         _preparingAttack = true;
         _currentWindupTime = 0f;
         parentGameObject.GetComponent<NavMeshAgent>().ResetPath();
@@ -119,7 +119,7 @@ public class KamikazeEnemyData : BaseEnemyData
 
     private void Explode(GameObject parentGameObject)
     {
-        Helper.LogDebug("Exploding");
+        LogDebug("Exploding");
         var collidersHit = Physics.OverlapSphere(parentGameObject.transform.position, ExplosionRadius);
         foreach(var collider in collidersHit)
         {
@@ -131,7 +131,7 @@ public class KamikazeEnemyData : BaseEnemyData
             var playerHealth = collider.gameObject.GetComponent<PlayerHealth>();
             playerHealth.TakeDamage(ExplosionDamage);
 
-            Helper.LogDebug($"Did {ExplosionDamage} to player");
+            LogDebug($"Did {ExplosionDamage} to player");
         }
 
         //Add explosion visual effect

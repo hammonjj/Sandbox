@@ -26,6 +26,8 @@ TagManager:
   - PlayerBodyAttackTarget
   - PlayerHeathBar
   - NavMeshSurface
+  - PrimaryRing
+  - SecondaryRing
   layers:
   - Default
   - TransparentFX
