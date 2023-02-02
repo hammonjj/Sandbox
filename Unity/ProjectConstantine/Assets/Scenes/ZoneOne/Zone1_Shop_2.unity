@@ -2670,6 +2670,7 @@ GameObject:
   - component: {fileID: 683123487}
   - component: {fileID: 683123486}
   - component: {fileID: 683123485}
+  - component: {fileID: 683123488}
   m_Layer: 5
   m_Name: ItemButtonTemplate
   m_TagString: Untagged
@@ -2780,6 +2781,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683123483}
   m_CullTransparentMesh: 1
+--- !u!114 &683123488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683123483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066545c5a96144f32af8c8d81c7db24c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: {fileID: 2853285006784929899}
+  Description: {fileID: 2853285007829707613}
+  Cost: {fileID: 2853285007288351735}
 --- !u!1 &721208201
 GameObject:
   m_ObjectHideFlags: 0
@@ -8448,3 +8464,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7285e909a28d2493e963c8afaef47f62, type: 3}
+--- !u!1 &8072506231797398103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8072506231392762492, guid: 7285e909a28d2493e963c8afaef47f62,
+    type: 3}
+  m_PrefabInstance: {fileID: 8072506231797398102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8072506231797398104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072506231797398103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf47f996f6eb742db804931bb7106bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
