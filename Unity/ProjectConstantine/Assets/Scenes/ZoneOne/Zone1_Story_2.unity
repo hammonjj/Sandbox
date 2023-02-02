@@ -3960,6 +3960,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1877439600606820847, guid: 07c32d511f5e5434bbd4b4b721f988e4,
         type: 3}
+      propertyPath: DoorType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877439600606820847, guid: 07c32d511f5e5434bbd4b4b721f988e4,
+        type: 3}
       propertyPath: SceneToGoTo
       value: 0
       objectReference: {fileID: 0}
