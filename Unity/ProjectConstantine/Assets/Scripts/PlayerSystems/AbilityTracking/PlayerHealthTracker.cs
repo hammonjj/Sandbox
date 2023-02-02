@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "PlayerHealthTracker", menuName = "Trackers/PlayerHealthTracker")]
-public class PlayerHealthTracker : ScriptableObjectBase
+public class PlayerHealthTracker
 {
-    public int CurrentHealth;
-    public int MaxHealth;
-    public float EnemyDamageResistPercent;
+    public int CurrentHealth = 100;
+    public int MaxHealth = 100;
+    public float EnemyDamageResistPercent = 0f;
+
+    public PlayerHealthTracker()
+    {
+        CurrentHealth = 100;
+        MaxHealth = 100;
+        EnemyDamageResistPercent = 0f;
+    }
 }

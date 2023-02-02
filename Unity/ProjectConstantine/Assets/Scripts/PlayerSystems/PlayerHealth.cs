@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public class PlayerHealth : MonoBehaviourBase
 {
     public int CurrentHealth { get; private set; }
@@ -19,9 +16,9 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void Start()
     {
-        var gameStateManager = VerifyComponent<GameStateManager>(Constants.Tags.GameStateManager);
-        MaxHealth = gameStateManager.CurrentMaxHealth;
-        CurrentHealth = gameStateManager.CurrentHealth == 0 ? 100 : gameStateManager.CurrentHealth;
+        var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
+        MaxHealth = abilityTracker.PlayerHealthTracker.MaxHealth;
+        CurrentHealth = abilityTracker.PlayerHealthTracker.CurrentHealth;
 
         _healthBar = VerifyComponent<HealthBar>();
         _healthBar.UpdateHealth((float)CurrentHealth / MaxHealth);
@@ -43,8 +40,8 @@ public class PlayerHealth : MonoBehaviourBase
 
     public void SceneEnding()
     {
-        var gameStateManager = VerifyComponent<GameStateManager>(Constants.Tags.GameStateManager);
-        gameStateManager.CurrentHealth = CurrentHealth;
-        gameStateManager.CurrentMaxHealth = MaxHealth;
+        var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
+        abilityTracker.PlayerHealthTracker.CurrentHealth = CurrentHealth;
+        abilityTracker.PlayerHealthTracker.MaxHealth = MaxHealth;
     }
 }

@@ -1,5 +1,7 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DebugGameWindow : EditorWindow
 {
@@ -37,6 +39,13 @@ public class DebugGameWindow : EditorWindow
         {
             Helper.LogDebug("Spawning Enemies");
             EventManager.GetInstance().OnSpawnEnemies();
+        }
+
+        if(GUI.Button(new Rect(0, 120, 200, 25), "Load Zone 1 Start"))
+        {
+            Helper.LogDebug("Load Zone 1 Start");
+            EditorSceneManager.OpenScene("Assets/Scenes/ZoneOne/" +
+                Constants.Enums.Scenes.Zone1_Start.ToString() + ".unity");
         }
     }
 }

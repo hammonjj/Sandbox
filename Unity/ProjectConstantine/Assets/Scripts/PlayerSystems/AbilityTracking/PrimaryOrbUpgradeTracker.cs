@@ -1,20 +1,30 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "PrimaryOrbUpgradeTracker", menuName = "Trackers/PrimaryOrbUpgradeTracker")]
-public class PrimaryOrbUpgradeTracker : ScriptableObjectBase
+public class PrimaryOrbUpgradeTracker
 {
-	[Header("Critical Hits")]
-	public bool CanCrit;
-	public float CritPercent;
-	public float CritModifier;
+	public bool CanCrit = false;
+	public float CritPercent = 0f;
+	public float CritModifier = 0f;
 
-	[Header("Movement Modifiers")]
-	public bool CanPassThroughEnemies;
+	public bool CanPassThroughEnemies = false;
 
-	[Header("Base Stats")]
-	public int MaxOrbs;
-	public int AttackDamage;
-	public float OrbRespawnTime;
+	public int MaxOrbs = 3;
+	public int AttackDamage = 10;
+	public float OrbRespawnTime = 1.0f;
+
+	public GameObject PrimaryOrbPrefab;
+
+	public PrimaryOrbUpgradeTracker()
+    {
+		MaxOrbs = 3;
+		AttackDamage = 10;
+		OrbRespawnTime = 1.0f;
+
+		CanPassThroughEnemies = false;
+		CritPercent = 0f;
+		CritModifier = 0f;
+
+		CanCrit = false;
+	}
 }
 

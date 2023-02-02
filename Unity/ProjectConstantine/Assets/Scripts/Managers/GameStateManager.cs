@@ -10,27 +10,6 @@ public class GameStateManager : MonoBehaviourBase
 
     public List<Constants.Enums.Scenes> AvailableZoneFightChambers = new();
 
-    /* BEGIN Player Status Between Scenes BEGIN */
-    public int CurrentHealth = 0;
-    public int CurrentMaxHealth = 100;
-
-    //Primary Ring Stats
-    public bool PrimaryRingActive = true;
-    
-    public int PrimaryMaxOrbs = 3;
-    public GameObject PrimaryOrbPrefab;
-
-    //Primary Upgrades
-    public bool PrimaryCanShootThroughEnemies;
-    public bool PrimaryCanCrit;
-
-    //Secondary Ring Stats
-    public bool SecondaryRingActive = false;
-    public int SecondaryMaxOrbs = 3;
-    public GameObject SecondaryOrbPrefab;
-
-    /* END Player Status Between Scenes END */
-
     //For Debug UI
     public int CurrentChamber
     {
