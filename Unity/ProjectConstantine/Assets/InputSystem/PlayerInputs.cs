@@ -10,42 +10,76 @@ namespace Constantine
 		[DisplayWithoutEdit()]
 		public Vector2 Move;
 
+		private bool _pausePlayerController = false;
 		private EventManager _eventManager;
 
         private void Awake()
         {
 			_eventManager = EventManager.GetInstance();
+			_eventManager.onPausePlayerController += PausePlayerController;
+		}
+
+		public void PausePlayerController(bool value)
+		{
+			_pausePlayerController = value;
 		}
 
         public void OnMove(InputValue value)
 		{
-			Move = value.Get<Vector2>();
+            if(_pausePlayerController)
+			{
+                Move = Vector2.zero;
+                return;
+			}
+
+            Move = value.Get<Vector2>();
 		}
 
 		public void OnPrimaryAttack(InputValue value)
 		{
-			_eventManager.OnPlayerPrimaryAttack();
+            if(_pausePlayerController)
+            {
+                return;
+            }
+
+            _eventManager.OnPlayerPrimaryAttack();
 		}
 
         public void OnSecondaryAttack(InputValue value)
         {
-			_eventManager.OnPlayerSecondaryAttack();
+            if(_pausePlayerController)
+            {
+                return;
+            }
+
+            _eventManager.OnPlayerSecondaryAttack();
 		}
 
 		public void OnUseItem(InputValue value)
         {
-			_eventManager.OnUseItem();
+            if(_pausePlayerController)
+            {
+                return;
+            }
+
+            _eventManager.OnUseItem();
 		}
 
         public void OnDash(InputValue value)
 		{
-			_eventManager.OnPlayerDash();
+            if(_pausePlayerController)
+            {
+                return;
+            }
+
+            _eventManager.OnPlayerDash();
 		}
 
 		public void OnAdvanceScene(InputValue value)
         {
-			_eventManager.OnAdvanceScenePressed(value.isPressed);
+            _eventManager.OnAdvanceScenePressed(value.isPressed);
 		}
+
         public void OnPause(InputValue value)
         {
 			_eventManager.OnPause();

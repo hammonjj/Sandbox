@@ -96,6 +96,12 @@ public static class Constants
         {
         };
 
+        public enum DoorType
+        {
+            Smart,
+            Dumb
+        }
+
         public enum SceneType
         {
             None,

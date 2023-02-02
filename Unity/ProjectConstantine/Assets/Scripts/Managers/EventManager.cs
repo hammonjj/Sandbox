@@ -15,6 +15,7 @@ public class EventManager
     public Action onPlayerDash;
     public Action onPlayerPrimaryAttack;
     public Action onPlayerSecondaryAttack;
+    public Action<bool> onPausePlayerController;
 
     //Misc. Player Actions
     public Action onPause;
@@ -61,6 +62,11 @@ public class EventManager
         onPause = null;
         onAdvanceScenePressed = null;
         onSceneEnding = null;
+    }
+
+    public void OnPausePlayerController(bool value)
+    {
+        onPausePlayerController?.Invoke(value);
     }
 
     public void OnSceneEnding()

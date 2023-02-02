@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShopKeeper : MonoBehaviourBase
 {
     public GameObject ShopUi;
+    public GameObject FirstShopButton;
+
     public float PlayerDistance;
 
     private bool _isPlayerCloseEnough = false;
@@ -20,10 +23,23 @@ public class ShopKeeper : MonoBehaviourBase
 
         _isPlayerCloseEnough = Vector3.Distance(
             gameObject.transform.position, _playerTransform.position) <= PlayerDistance;
+
+        if(!_isPlayerCloseEnough && ShopUi.activeSelf)
+        {
+            ShopUi.SetActive(false);
+            EventManager.GetInstance().OnPausePlayerController(false);
+        }
     }
 
     private void OnInteract(bool value)
     {
+        if(value && ShopUi.activeSelf)
+        {
+            ShopUi.SetActive(false);
+            EventManager.GetInstance().OnPausePlayerController(false);
+            return;
+        }
+
         if(!value || !_isPlayerCloseEnough)
         {
             return;
@@ -31,6 +47,8 @@ public class ShopKeeper : MonoBehaviourBase
 
         LogDebug("Opening Shop UI");
         ShopUi.SetActive(true);
+        EventManager.GetInstance().OnPausePlayerController(true);
+        EventSystem.current.SetSelectedGameObject(FirstShopButton, null);
     }
 
     private void DebugLines()

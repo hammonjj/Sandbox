@@ -6,6 +6,7 @@ public class ZoneDoor : MonoBehaviourBase
     public Constants.Enums.Scenes SceneToGoTo;
     public Constants.Enums.RoomReward NextRoomReward;
     public Constants.Enums.SceneType SceneType;
+    public Constants.Enums.DoorType DoorType;
 
     private bool _enableRoomDoor;
     private bool _isPlayerCloseEnough;
@@ -42,7 +43,12 @@ public class ZoneDoor : MonoBehaviourBase
             LogDebug("Failed to Acquire Scene Manager");
         }
 
-        if(_sceneStateManager.GetCurrentZone() == Constants.Enums.Zones.Zone1 &&
+        if(DoorType == Constants.Enums.DoorType.Dumb)
+        {
+            //Used for Shops and Story segments so they player can leave when they want
+            _enableRoomDoor = true;
+        }
+        else if(_sceneStateManager.GetCurrentZone() == Constants.Enums.Zones.Zone1 &&
             _sceneStateManager.CurrentSceneType == Constants.Enums.SceneType.None)
         {
             //This is to ensure the door locks when we enter the first chamber of the first zone
