@@ -6,6 +6,7 @@ public class AbilityTracker : MonoBehaviourBase
     public PlayerHealthTracker PlayerHealthTracker = new();
     public PrimaryOrbUpgradeTracker PrimaryOrbUpgradeTracker = new();
 
+    public int Currency;
 
     //Secondary Ring Stats
     public bool SecondaryRingActive = false;

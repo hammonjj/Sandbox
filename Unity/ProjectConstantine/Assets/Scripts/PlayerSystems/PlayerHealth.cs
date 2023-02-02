@@ -1,15 +1,13 @@
 public class PlayerHealth : MonoBehaviourBase
 {
-    public int CurrentHealth { get; private set; }
-    public int MaxHealth { get; private set; } = 100;
+    private int _maxHealth;
+    private int _currentHealth;
 
-    private EventManager _eventManager;
     private HealthBar _healthBar;
+    private EventManager _eventManager;
 
     private void Awake()
     {
-        //Get this from the GameStateManager
-        CurrentHealth = MaxHealth;
         _eventManager = EventManager.GetInstance();
         _eventManager.onSceneEnding += SceneEnding;
     }
@@ -17,31 +15,31 @@ public class PlayerHealth : MonoBehaviourBase
     private void Start()
     {
         var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
-        MaxHealth = abilityTracker.PlayerHealthTracker.MaxHealth;
-        CurrentHealth = abilityTracker.PlayerHealthTracker.CurrentHealth;
+        _maxHealth = abilityTracker.PlayerHealthTracker.MaxHealth;
+        _currentHealth = abilityTracker.PlayerHealthTracker.CurrentHealth;
 
         _healthBar = VerifyComponent<HealthBar>();
-        _healthBar.UpdateHealth((float)CurrentHealth / MaxHealth);
+        _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
 
     public void TakeDamage(int incomingDamage)
     {
-        CurrentHealth -= incomingDamage;
-        LogDebug($"Updating Health: {CurrentHealth} - MaxHealth: {MaxHealth}");
+        _currentHealth -= incomingDamage;
+        LogDebug($"Updating Health: {_currentHealth} - MaxHealth: {_maxHealth}");
 
-        if(CurrentHealth <= 0)
+        if(_currentHealth <= 0)
         {
             //Invoke Death Animation
             _eventManager.onPlayerDeath();
         }
 
-        _healthBar.UpdateHealth((float)CurrentHealth / MaxHealth);
+        _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
     }
 
-    public void SceneEnding()
+    private void SceneEnding()
     {
         var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
-        abilityTracker.PlayerHealthTracker.CurrentHealth = CurrentHealth;
-        abilityTracker.PlayerHealthTracker.MaxHealth = MaxHealth;
+        abilityTracker.PlayerHealthTracker.CurrentHealth = _currentHealth;
+        abilityTracker.PlayerHealthTracker.MaxHealth = _maxHealth;
     }
 }
