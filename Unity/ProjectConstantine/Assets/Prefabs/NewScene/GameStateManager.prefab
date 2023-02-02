@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5740002400781328043}
   - component: {fileID: 651517544391637067}
+  - component: {fileID: 1032467067}
+  - component: {fileID: 1032467070}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: GameStateManager
@@ -46,3 +48,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: -1
   GameDesignSettings: {fileID: 11400000, guid: f0cf2d087cb77524fb32062f64478128, type: 2}
+  NextSceneType: 0
+  NextRoomReward: 0
+  AvailableZoneFightChambers: 
+--- !u!114 &1032467067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5740002400781328042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378c79fa3d4f2e24a8456c61dd985f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: -1
+  LeftBorder: 310
+  VerticalBorder: 275
+--- !u!114 &1032467070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5740002400781328042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32258e73279244ec2b03e711931406ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoggingLevel: 0
+  Currency: 0
+  SecondaryRingActive: 0
+  SecondaryMaxOrbs: 3
+  SecondaryOrbPrefab: {fileID: 0}

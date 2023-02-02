@@ -14,9 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WorldHub.unity
     guid: 8f985f11a14cf3c469558bb5fb61f6ad
-  - enabled: 1
-    path: Assets/Scenes/TutorialZone.unity
-    guid: 5c4dd83def67e2f4199941d8315b3f0e
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/ZoneOne/Zone1_Start.unity
     guid: 39f3e82386ee34da197acc018b9391d6

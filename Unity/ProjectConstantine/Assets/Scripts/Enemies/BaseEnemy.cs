@@ -9,7 +9,6 @@ public class BaseEnemy : MonoBehaviourBase
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
 
-    //private bool _isDead = false;
     private bool _resetAttack;
     private bool _foundPlayer = false;
     private bool _canAttack = true;
@@ -38,12 +37,6 @@ public class BaseEnemy : MonoBehaviourBase
         }
 
         _canAttack = _attackCooldownCurrent <= 0.0f;
-
-        //if(_isDead)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
 
         if(DrawDebugLines)
         {
@@ -85,7 +78,6 @@ public class BaseEnemy : MonoBehaviourBase
 
     private void OnDeath()
     {
-        //_isDead = true;
         LogDebug("I Died");
         EnemyData.Death();
         EventManager.GetInstance().OnEnemyDeath();
@@ -115,6 +107,11 @@ public class BaseEnemy : MonoBehaviourBase
 
     private void DebugLines()
     {
+        if(!Application.isEditor)
+        {
+            return;
+        }
+
         var rotation = gameObject.transform.rotation;
         rotation *= Quaternion.Euler(90, 0, 0);
 

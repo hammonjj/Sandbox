@@ -2925,9 +2925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Ring1: {fileID: 0}
-  Ring2: {fileID: 0}
-  Ring3: {fileID: 0}
 --- !u!1 &7075886050540819290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2940,7 +2937,7 @@ GameObject:
   - component: {fileID: 1693269944299479037}
   m_Layer: 8
   m_Name: Secondary
-  m_TagString: Untagged
+  m_TagString: SecondaryRing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2981,7 +2978,7 @@ MonoBehaviour:
   OrbPrefab: {fileID: 2752842888426458132, guid: 78f2a3de89a694c7893d408b624fbfcd,
     type: 3}
   AttackCooldown: 0.5
-  MaxOrbs: 3
+  MaxOrbs: 0
   AttackType: 1
 --- !u!1 &7217209293975416171
 GameObject:
@@ -3347,7 +3344,7 @@ GameObject:
   - component: {fileID: 4330834943053168776}
   m_Layer: 8
   m_Name: Primary
-  m_TagString: Untagged
+  m_TagString: PrimaryRing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3388,7 +3385,7 @@ MonoBehaviour:
   OrbPrefab: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
     type: 3}
   AttackCooldown: 0.5
-  MaxOrbs: 5
+  MaxOrbs: 3
   AttackType: 0
 --- !u!1 &7456026485845639109
 GameObject:

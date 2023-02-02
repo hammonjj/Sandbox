@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class AbilityTracker : MonoBehaviourBase
+public class PlayerTracker : MonoBehaviourBase
 {
     public PlayerHealthTracker PlayerHealthTracker = new();
     public PrimaryOrbUpgradeTracker PrimaryOrbUpgradeTracker = new();
@@ -13,7 +13,7 @@ public class AbilityTracker : MonoBehaviourBase
     public int SecondaryMaxOrbs = 3;
     public GameObject SecondaryOrbPrefab;
 
-    private static AbilityTracker _instance;
+    private static PlayerTracker _instance;
 
     private void Awake()
     {

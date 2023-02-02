@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,6 +40,7 @@ public class GameStateManager : MonoBehaviourBase
             DontDestroyOnLoad(this);
             SceneManager.sceneLoaded += OnSceneLoaded;
             AvailableZoneFightChambers = Constants.Enums.Zone1FightRooms;
+            EditorApplication.playModeStateChanged += OnPlayModeChange;
         }
         else
         {
@@ -119,5 +121,14 @@ public class GameStateManager : MonoBehaviourBase
         _sceneStateManager = null;
         _isInitialized = false;
         _recalculateRoomOptions = true;
+    }
+
+    private static void OnPlayModeChange(PlayModeStateChange state)
+    {
+        if(state == PlayModeStateChange.ExitingPlayMode)
+        {
+            Helper.LogDebug("Reseting AbilityTracker");
+            _instance = null;
+        }
     }
 }

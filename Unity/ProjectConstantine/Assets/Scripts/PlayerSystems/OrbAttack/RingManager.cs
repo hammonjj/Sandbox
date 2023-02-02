@@ -3,7 +3,7 @@ public class RingManager : MonoBehaviourBase
     private Ring _primaryRing;
     private Ring _secondaryRing;
 
-    private AbilityTracker _abilityTracker;
+    private PlayerTracker _abilityTracker;
 
     //Need to take an object that has a mesh and an orbit around the player
     //Player will shoot these out and will have to re-charge them (reload)
@@ -16,7 +16,7 @@ public class RingManager : MonoBehaviourBase
         _secondaryRing = VerifyComponent<Ring>(Constants.Tags.SecondaryRing);
 
         //Update ring/orb status
-        _abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
+        _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
         
         _primaryRing.MaxOrbs = _abilityTracker.PrimaryOrbUpgradeTracker.MaxOrbs;
 

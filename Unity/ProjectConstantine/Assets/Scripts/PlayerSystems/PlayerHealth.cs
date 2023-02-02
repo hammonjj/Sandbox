@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void Start()
     {
-        var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
+        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
         _maxHealth = abilityTracker.PlayerHealthTracker.MaxHealth;
         _currentHealth = abilityTracker.PlayerHealthTracker.CurrentHealth;
 
@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void SceneEnding()
     {
-        var abilityTracker = VerifyComponent<AbilityTracker>(Constants.Tags.GameStateManager);
+        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
         abilityTracker.PlayerHealthTracker.CurrentHealth = _currentHealth;
         abilityTracker.PlayerHealthTracker.MaxHealth = _maxHealth;
     }

@@ -5,6 +5,8 @@ public class HealthBar : MonoBehaviourBase
 {
     private Image _healthBar;
 
+    //For draining the healthbar
+    //  - https://www.youtube.com/watch?v=-UbElCzKwuA
     private void Start()
     {
         _healthBar = transform.Find(Constants.ObjectNames.Health)?.gameObject?.GetComponent<Image>();
