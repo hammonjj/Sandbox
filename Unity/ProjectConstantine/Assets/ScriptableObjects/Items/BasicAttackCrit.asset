@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ef6788b3ff34a66b2eb77d630f7206, type: 3}
-  m_Name: ExplosiveOrbShopData
+  m_Name: BasicAttackCrit
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Name: Explosive Orb
-  Description: A secondary attack that explodes on contact with an enemy
-  Cost: 10
+  Name: Basic Attack Crit
+  Description: Your basic attacks can now crit
+  Cost: 0
+  UpgradeType: 0
+  AttackUpgrade: 1

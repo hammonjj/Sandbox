@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ef6788b3ff34a66b2eb77d630f7206, type: 3}
-  m_Name: BulletPassThrough
+  m_Script: {fileID: 11500000, guid: 6487478ab074140cd87b178e17c2dea3, type: 3}
+  m_Name: PrimaryOrbData
   m_EditorClassIdentifier: 
-  LoggingLevel: 0
-  Name: BulletPassThrough
-  Description: Your basic attacks go through enemies
-  Cost: 10
+  LoggingLevel: -1
+  AttackDamage: 10
+  AttackRange: 10
+  ProjectileSpeed: 20
+  CanCrit: 0
+  CritPercent: 0
+  CritModifier: 10
+  CanPassThroughEnemies: 0

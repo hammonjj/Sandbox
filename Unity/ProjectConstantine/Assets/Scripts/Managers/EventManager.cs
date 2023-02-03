@@ -10,6 +10,8 @@ public class EventManager
     public Action onEncounterEnded;
     public Action onSceneEnding;
 
+    public Action<ShopItemData> onUpgradePurchase;
+
     //Player Inputs
     public Action onUseItem;
     public Action onPlayerDash;
@@ -62,6 +64,11 @@ public class EventManager
         onPause = null;
         onAdvanceScenePressed = null;
         onSceneEnding = null;
+    }
+
+    public void OnUpgradePurchase(ShopItemData itemData)
+    {
+        onUpgradePurchase?.Invoke(itemData);
     }
 
     public void OnPausePlayerController(bool value)

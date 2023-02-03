@@ -35,10 +35,30 @@ public static class Constants
         public static string NavMeshSurface = "NavMeshSurface";
         public static string PrimaryRing = "PrimaryRing";
         public static string SecondaryRing = "SecondaryRing";
+        public static string RingManager = "RingManager";
     }
 
     public static class Enums
     {
+        public enum UpgradeType
+        {
+            PrimaryAttack,
+            PrimaryRing,
+            SecondaryAttack,
+            SecondaryRing,
+            Item
+        }
+
+        //This is dirty. Will need to abstract this into its own object
+        public enum AttackUpgrade
+        {
+            None,
+            AttackCrit,
+            ProjectilePassThrough,
+            PrimaryIncreaseOrbs,
+            SecondaryExplosiveOrb
+        }
+
         public enum AttackType
         {
             Primary,

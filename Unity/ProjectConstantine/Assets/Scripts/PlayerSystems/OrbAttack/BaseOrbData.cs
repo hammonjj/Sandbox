@@ -41,4 +41,5 @@ public class BaseOrbData : ScriptableObjectBase
 
         return true;
     }
+
 }

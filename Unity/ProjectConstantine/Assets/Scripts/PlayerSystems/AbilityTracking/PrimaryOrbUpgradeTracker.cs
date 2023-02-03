@@ -4,7 +4,7 @@ public class PrimaryOrbUpgradeTracker
 {
 	public bool CanCrit = false;
 	public float CritPercent = 0f;
-	public float CritModifier = 0f;
+	public float CritModifier = 10f;
 
 	public bool CanPassThroughEnemies = false;
 

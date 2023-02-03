@@ -28,6 +28,7 @@ TagManager:
   - NavMeshSurface
   - PrimaryRing
   - SecondaryRing
+  - RingManager
   layers:
   - Default
   - TransparentFX

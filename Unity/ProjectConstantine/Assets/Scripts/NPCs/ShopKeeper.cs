@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class ShopKeeper : MonoBehaviourBase
 {
     public GameObject ShopUi;
-    public GameObject FirstShopButton;
+
 
     public float PlayerDistance;
 
@@ -48,7 +48,6 @@ public class ShopKeeper : MonoBehaviourBase
         LogDebug("Opening Shop UI");
         ShopUi.SetActive(true);
         EventManager.GetInstance().OnPausePlayerController(true);
-        EventSystem.current.SetSelectedGameObject(FirstShopButton, null);
     }
 
     private void DebugLines()
