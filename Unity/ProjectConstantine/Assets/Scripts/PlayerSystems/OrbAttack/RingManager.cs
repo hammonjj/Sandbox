@@ -11,28 +11,29 @@ public class RingManager : MonoBehaviourBase
     //Similar to Syndra or Aurelion Sol
     private void Start()
     {
-        EventManager.GetInstance().onSceneEnding += SceneEnding;
         _primaryRing = VerifyComponent<Ring>(Constants.Tags.PrimaryRing);
         _secondaryRing = VerifyComponent<Ring>(Constants.Tags.SecondaryRing);
 
-        //Update ring/orb status
-        _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
-        
-        _primaryRing.MaxOrbs = _abilityTracker.PrimaryOrbUpgradeTracker.MaxOrbs;
-
-        _secondaryRing.MaxOrbs = _abilityTracker.SecondaryMaxOrbs;
-        _secondaryRing.enabled = _abilityTracker.SecondaryRingActive;
+        GetUpgrades();
 
         _primaryRing.Initialize();
         _secondaryRing.Initialize();
     }
 
-    private void SceneEnding()
+    private void GetUpgrades()
     {
-        LogDebug("Saving Ring Data");
-        _abilityTracker.PrimaryOrbUpgradeTracker.MaxOrbs = _primaryRing.MaxOrbs;
+        _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
+        var upgrades = _abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryRing);
+        foreach(var upgrade in upgrades)
+        {
+            switch(upgrade.AttackUpgrade)
+            {
+                case Constants.Enums.AttackUpgrade.PrimaryIncreaseOrbs:
+                    _primaryRing.MaxOrbs++;
+                    break;
+            }
+        }
 
-        _abilityTracker.SecondaryRingActive = _secondaryRing.enabled;
-        _abilityTracker.SecondaryMaxOrbs = _secondaryRing.MaxOrbs;
+        _secondaryRing.enabled = _abilityTracker.SecondaryRingActive;
     }
 }

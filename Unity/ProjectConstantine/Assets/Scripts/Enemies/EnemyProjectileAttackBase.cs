@@ -33,7 +33,7 @@ public class EnemyProjectileAttackBase : MonoBehaviourBase
             var playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             playerHealth?.TakeDamage(AttackData.ProjectileDamage);
         }
-        else if(other.tag == Constants.Tags.Enemy)
+        else if(other.tag == Constants.Tags.Enemy || other.tag == Constants.Tags.Projectile)
         {
             //Pass on through
             destroyObject = false;

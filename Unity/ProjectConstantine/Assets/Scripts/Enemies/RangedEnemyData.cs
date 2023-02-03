@@ -9,9 +9,10 @@ public class RangedEnemyData : BaseEnemyData
     public float DistanceToRun = 3.0f;
     public float DistanceToMaintain = 2.0f;
     public float RotationSpeed = 120f;
+    public Transform _firingPosition;
 
     private bool _preparingAttack;
-    private Transform _firingPosition;
+    
     private GameObject _playerBodyAttackTarget;
 
     private Quaternion _attackEnemyRotation;
@@ -19,8 +20,6 @@ public class RangedEnemyData : BaseEnemyData
 
     public override void Setup(GameObject parentGameObject)
     {
-        _firingPosition = GameObjectExtensions.RecursiveFindChild(
-            parentGameObject.transform, Constants.ObjectNames.FiringPosition);
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
 
         var navMeshAgent = parentGameObject.GetComponent<NavMeshAgent>();
@@ -29,8 +28,9 @@ public class RangedEnemyData : BaseEnemyData
 
     public override void PlayerFound() { }
 
-    public override void Attack(GameObject parentGameObject)
+    public override void Attack(GameObject parentGameObject, Transform firingPosition)
     {
+        _firingPosition = firingPosition;
         _preparingAttack = true;
         parentGameObject.GetComponent<NavMeshAgent>().isStopped = true;
         _currentShotTarget = _playerBodyAttackTarget.transform.position;

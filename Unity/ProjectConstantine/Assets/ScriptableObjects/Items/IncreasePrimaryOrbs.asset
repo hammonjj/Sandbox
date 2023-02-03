@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: IncreasePrimaryOrbs
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Name: Bigger Clip
+  Title: 
   Description: Increase Primary Orbs by 1
   Cost: 0
-  PurchaseType: 0
+  Id: 
+  UpgradeType: 1
   AttackUpgrade: 3

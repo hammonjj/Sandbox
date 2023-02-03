@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ExplosiveOrbShopData
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Name: Explosive Orb
+  Title: 
   Description: A secondary attack that explodes on contact with an enemy
   Cost: 10
-  PurchaseType: 1
+  Id: a7c87a95-0e9f-4fc5-bd65-c76446c642ca
+  UpgradeType: 0
   AttackUpgrade: 3

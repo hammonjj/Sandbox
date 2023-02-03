@@ -43,7 +43,7 @@ public class BaseEnemyData : ScriptableObjectBase
 
     public virtual void PlayerFound() { }
     public virtual void UpdateDataObj(GameObject parentGameObject) { }
-    public virtual void Attack(GameObject parentGameObject) { }
+    public virtual void Attack(GameObject parentGameObject, Transform firingPosition) { }
     public virtual void Move(GameObject parentGameObject) { }
     public virtual void Death() { }
 

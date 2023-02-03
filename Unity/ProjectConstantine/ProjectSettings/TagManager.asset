@@ -29,6 +29,7 @@ TagManager:
   - PrimaryRing
   - SecondaryRing
   - RingManager
+  - Projectile
   layers:
   - Default
   - TransparentFX

@@ -46,39 +46,8 @@ public class Ring : MonoBehaviourBase
         {
             EventManager.GetInstance().onPlayerSecondaryAttack += OnAttack;
         }
-
-        EventManager.GetInstance().onUpgradePurchase += Upgrade;
     }
-
-    private void Upgrade(ShopItemData itemData)
-    {
-        LogDebug($"Upgrade: {itemData.Name}");
-
-        if(itemData.UpgradeType != Constants.Enums.UpgradeType.PrimaryRing)
-        {
-            return;
-        }
-
-        if(itemData.AttackUpgrade == Constants.Enums.AttackUpgrade.PrimaryIncreaseOrbs)
-        {
-            //Kill all orbs and respawn
-            LogDebug($"Upgrade: Constants.Enums.AttackUpgrade.PrimaryIncreaseOrbs");
-            foreach(var spawn in _orbSpawns)
-            {
-                DestroyImmediate(spawn);
-            }
-
-            MaxOrbs += 1;
-            _orbSpawns.Clear();
-            CalculateOrbSpawns();
-        }
-    }
-
-    private void Start()
-    {
-        
-    }
-
+    
     private void CalculateOrbSpawns()
     {
         //Calculate Orb Spawns

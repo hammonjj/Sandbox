@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BasicAttackCrit
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Name: Basic Attack Crit
+  Title: 
   Description: Your basic attacks can now crit
   Cost: 0
+  Id: 9883ef75-0442-4f9f-9129-25e3ab6c404a
   UpgradeType: 0
   AttackUpgrade: 1

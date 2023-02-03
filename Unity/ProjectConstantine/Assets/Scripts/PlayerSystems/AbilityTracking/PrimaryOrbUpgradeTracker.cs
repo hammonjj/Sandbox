@@ -3,8 +3,8 @@
 public class PrimaryOrbUpgradeTracker
 {
 	public bool CanCrit = false;
-	public float CritPercent = 0f;
-	public float CritModifier = 10f;
+	public float CritPercent = 10f;
+	public float CritModifier = 50f;
 
 	public bool CanPassThroughEnemies = false;
 
@@ -21,8 +21,8 @@ public class PrimaryOrbUpgradeTracker
 		OrbRespawnTime = 1.0f;
 
 		CanPassThroughEnemies = false;
-		CritPercent = 0f;
-		CritModifier = 0f;
+		CritPercent = 10f;
+		CritModifier = 50f;
 
 		CanCrit = false;
 	}

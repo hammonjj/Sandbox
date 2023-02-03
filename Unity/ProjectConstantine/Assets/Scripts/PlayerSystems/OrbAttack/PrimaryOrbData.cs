@@ -13,46 +13,31 @@ public class PrimaryOrbData : BaseOrbData
 
     private PlayerTracker _abilityTracker;
 
-    private void Awake()
+    public override void Initialize()
     {
         _abilityTracker = GameObject.FindGameObjectWithTag(
             Constants.Tags.GameStateManager).GetComponent<PlayerTracker>();
 
-        CanCrit = _abilityTracker.PrimaryOrbUpgradeTracker.CanCrit;
-        CritModifier = _abilityTracker.PrimaryOrbUpgradeTracker.CritModifier;
-        CritPercent = _abilityTracker.PrimaryOrbUpgradeTracker.CritPercent;
-
-        EventManager.GetInstance().onUpgradePurchase += Upgrade;
-        EventManager.GetInstance().onSceneEnding += SceneEnding;
+        GetUpgrades();
     }
 
-    private void Upgrade(ShopItemData itemData)
+    private void GetUpgrades()
     {
-        LogDebug($"Upgrade: {itemData.Name}");
-        if(itemData.UpgradeType != Constants.Enums.UpgradeType.PrimaryAttack)
+        var upgrades = _abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryAttack);
+        foreach(var upgrade in upgrades)
         {
-            return;
+            switch(upgrade.AttackUpgrade)
+            {
+                case Constants.Enums.AttackUpgrade.AttackCrit:
+                    CanCrit = true; ;
+                    CritModifier = 50f;
+                    CritPercent = 10f;
+                    break;
+                case Constants.Enums.AttackUpgrade.ProjectilePassThrough:
+                    CanPassThroughEnemies = true;
+                    break;
+            }
         }
-
-        switch(itemData.AttackUpgrade)
-        {
-            case Constants.Enums.AttackUpgrade.AttackCrit:
-                CanCrit = true;
-                CritPercent = 10f;
-                break;
-            case Constants.Enums.AttackUpgrade.ProjectilePassThrough:
-                CanPassThroughEnemies = true;
-                break;
-        }
-    }
-
-    private void SceneEnding()
-    {
-        LogDebug("Scene Ending");
-        _abilityTracker = GameObject.FindGameObjectWithTag(Constants.Tags.GameStateManager).GetComponent<PlayerTracker>();
-        _abilityTracker.PrimaryOrbUpgradeTracker.CanCrit = CanCrit;
-        _abilityTracker.PrimaryOrbUpgradeTracker.CritModifier = CritModifier;
-        _abilityTracker.PrimaryOrbUpgradeTracker.CritPercent = CritPercent;
     }
 
     public override bool OnHit(Collider other, bool hasBeenFired)
@@ -72,6 +57,10 @@ public class PrimaryOrbData : BaseOrbData
                 baseEnemy.TakeDamage(AttackDamage);
                 destroy = !CanPassThroughEnemies;
             }
+        }
+        else if(other.tag == Constants.Tags.Player || other.tag == Constants.Tags.Projectile)
+        {
+            destroy = false;
         }
 
         return destroy;

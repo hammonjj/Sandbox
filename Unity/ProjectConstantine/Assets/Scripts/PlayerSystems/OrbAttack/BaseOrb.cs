@@ -8,11 +8,13 @@ public class BaseOrb : MonoBehaviourBase
     private Vector3 _initialPosition;
     private Transform _playerTransform;
 
-    private void Awake()
+    private void Start()
     {
         MessageEnding = gameObject.name;
         _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
            .GetComponent<Transform>();
+
+        BaseOrbData.Initialize();
     }
 
     private void Update()

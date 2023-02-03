@@ -6,11 +6,12 @@ public class TurretEnemyData : BaseEnemyData
     [Header("Turret")]
     public EnemyProjectileBaseData ProjectileAttackData;
 
-    private Transform _firingPosition;
+    public Transform _firingPosition;
     private GameObject _playerBodyAttackTarget;
 
     public override void Setup(GameObject parentGameObject)
     {
+        /*
         _firingPosition = GameObjectExtensions.RecursiveFindChild(
             parentGameObject.transform, Constants.ObjectNames.FiringPosition);
 
@@ -18,7 +19,7 @@ public class TurretEnemyData : BaseEnemyData
         {
             LogError("Firing Position not found");
         }
-
+        */
         parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }
@@ -30,12 +31,12 @@ public class TurretEnemyData : BaseEnemyData
 
     public override void PlayerFound() { }
 
-    public override void Attack(GameObject parentGameObject)
+    public override void Attack(GameObject parentGameObject, Transform firingPosition)
     {
         Instantiate(
             ProjectileAttackData.ProjectilePrefab,
-            _firingPosition.position,
-            _firingPosition.rotation);
+            firingPosition.position,
+            firingPosition.rotation);
 
         onAttackEnded?.Invoke();
     }

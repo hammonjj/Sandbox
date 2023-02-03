@@ -36,6 +36,7 @@ public static class Constants
         public static string PrimaryRing = "PrimaryRing";
         public static string SecondaryRing = "SecondaryRing";
         public static string RingManager = "RingManager";
+        public static string Projectile = "Projectile";
     }
 
     public static class Enums
@@ -46,7 +47,8 @@ public static class Constants
             PrimaryRing,
             SecondaryAttack,
             SecondaryRing,
-            Item
+            Item,
+            All
         }
 
         //This is dirty. Will need to abstract this into its own object

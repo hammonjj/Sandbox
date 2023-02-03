@@ -8,6 +8,7 @@ public class BaseEnemy : MonoBehaviourBase
     [Header("Enemy Base")]
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
+    public Transform FiringPosition;
 
     private bool _resetAttack;
     private bool _foundPlayer = false;
@@ -67,7 +68,7 @@ public class BaseEnemy : MonoBehaviourBase
         {
             _resetAttack = false;
             _attackCooldownCurrent = EnemyData.AttackCooldown;
-            EnemyData.Attack(gameObject);
+            EnemyData.Attack(gameObject, FiringPosition);
         }
     }
 

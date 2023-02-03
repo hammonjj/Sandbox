@@ -59,14 +59,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5740002400781328042}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 378c79fa3d4f2e24a8456c61dd985f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
-  LeftBorder: 310
-  VerticalBorder: 275
+  LeftBorder: 260
+  VerticalBorder: 213
 --- !u!114 &1032467070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,3 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4a093173cb5472eaeb35839c683daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
+  ShopItemData:
+  - {fileID: 11400000, guid: 327eb173e9f4d4cc8a2371debfbe269c, type: 2}
+  - {fileID: 11400000, guid: 846f2031c7daa4e80aca41495e9e493e, type: 2}
+  - {fileID: 11400000, guid: 9b6b22f56950543038888ce7137471f5, type: 2}
+  - {fileID: 11400000, guid: 0b1a5d3deb13a4151a9bf3fdedae2240, type: 2}
+  ShopItemUiTemplate: {fileID: 3743625115963535172, guid: 82b026196d42f4a59a053086e8917dc2,
+    type: 3}

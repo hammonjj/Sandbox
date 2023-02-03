@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class DataWarehouse : MonoBehaviourBase
 {
     [Header("Shop")]
-    public ShopItemData[] ShopItemData;
+    public UpgradeData[] ShopItemData;
     public GameObject ShopItemUiTemplate;
 
     private static DataWarehouse _instance;

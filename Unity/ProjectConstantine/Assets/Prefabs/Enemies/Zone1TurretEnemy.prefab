@@ -218,6 +218,7 @@ MonoBehaviour:
   EnemyData: {fileID: 11400000, guid: 92f195333d71a4d0aa771a843a9b776c, type: 2}
   FloatingCombatText: {fileID: 8125645889426680208, guid: f0ab56c4dad5c934aafc0960b791b6b4,
     type: 3}
+  FiringPosition: {fileID: 404824753721793349}
 --- !u!54 &404824753213774663
 Rigidbody:
   m_ObjectHideFlags: 0

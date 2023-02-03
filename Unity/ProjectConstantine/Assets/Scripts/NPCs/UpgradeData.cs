@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ShopItemData", menuName = "ShopItems/ShopItemData")]
-public class ShopItemData : ScriptableObjectBase
+[CreateAssetMenu(fileName = "UpgradeData", menuName = "ShopItems/UpgradeData")]
+public class UpgradeData : ScriptableObjectBase
 {
-    public string Name;
+    public string Title;
     public string Description;
     public int Cost;
+    public Guid UpgradeId;
+    public string Id;
     //Add ShopImage
 
     public Constants.Enums.UpgradeType UpgradeType;

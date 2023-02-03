@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2301738125479311685}
   m_Layer: 0
   m_Name: ExplosiveOrb
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
-  HasBeenFired: 0
-  ProjectileSpeed: 20
-  AttackRange: 10
+  BaseOrbData: {fileID: 0}

@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 public class ShopManager : MonoBehaviourBase
 {
     public int NumOfItems = 3;
-    public ShopItemData[] ShopItemData;
-    public GameObject ShopItemUiTemplate; // -> ShopItemUiTemplate
+    public UpgradeData[] ShopItemData;
+    public GameObject ShopItemUiTemplate;
     public GameObject ItemUiListParent;
 
     private void Start()
@@ -17,6 +17,8 @@ public class ShopManager : MonoBehaviourBase
         var dataWarehouse = VerifyComponent<DataWarehouse>(Constants.Tags.GameStateManager);
         ShopItemData = dataWarehouse.ShopItemData;
         ShopItemUiTemplate = dataWarehouse.ShopItemUiTemplate;
+
+        RemoveAcquiredUpgrades();
 
         var rnd = new System.Random();
         ShopItemData = ShopItemData.OrderBy(x => rnd.Next()).ToArray(); //Randomize Shop Items
@@ -26,7 +28,7 @@ public class ShopManager : MonoBehaviourBase
             var itemData = ShopItemData[i];
             var newItem = Instantiate(ShopItemUiTemplate, ItemUiListParent.transform);
             newItem.GetComponent<ShopItemUiTemplate>()
-                .SetItemDetails(itemData.Name, itemData.Description, itemData.Cost);
+                .SetItemDetails(itemData.Title, itemData.Description, itemData.Cost);
 
             var button = newItem.GetComponent<Button>();
             button.onClick.AddListener(() => { ItemSelected(itemData); });
@@ -38,7 +40,26 @@ public class ShopManager : MonoBehaviourBase
         }
     }
 
-    public void ItemSelected(ShopItemData itemData)
+    private void RemoveAcquiredUpgrades()
+    {
+        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
+        var upgrades = abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.All);
+
+        var shopItemDataList = ShopItemData.ToList();
+        foreach(var upgrade in upgrades)
+        {
+            if(upgrade.Id == string.Empty)
+            {
+                continue;
+            }
+
+            shopItemDataList.RemoveAll(x => x.Id == upgrade.Id);
+        }
+
+        ShopItemData = shopItemDataList.ToArray();
+    }
+
+    public void ItemSelected(UpgradeData itemData)
     {
         LogDebug($"Item Selected: {itemData.name}");
 

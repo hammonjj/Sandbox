@@ -37,7 +37,7 @@ public class KamikazeEnemyData : BaseEnemyData
         }
     }
 
-    public override void Attack(GameObject parentGameObject) 
+    public override void Attack(GameObject parentGameObject, Transform firingPosition) 
     {
         if(_preparingAttack || _isSprinting)
         {

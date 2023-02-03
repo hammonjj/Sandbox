@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BulletPassThrough
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Name: BulletPassThrough
+  Title: 
   Description: Your basic attacks go through enemies
   Cost: 0
-  PurchaseType: 0
+  Id: b609ea15-e7a7-429b-ab76-b94a26667f95
+  UpgradeType: 0
   AttackUpgrade: 2

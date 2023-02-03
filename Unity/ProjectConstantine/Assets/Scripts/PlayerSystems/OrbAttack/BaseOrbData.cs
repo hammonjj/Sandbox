@@ -10,6 +10,7 @@ public class BaseOrbData : ScriptableObjectBase
     public float AttackRange = 10f;
     public float ProjectileSpeed = 20f;
 
+    public virtual void Initialize() { }
     public virtual void OnMaxRangePassed(Vector3 currPos) { }
 
     //Returns true if the orb should be destroyed

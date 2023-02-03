@@ -10,7 +10,7 @@ public class EventManager
     public Action onEncounterEnded;
     public Action onSceneEnding;
 
-    public Action<ShopItemData> onUpgradePurchase;
+    public Action<UpgradeData> onUpgradePurchase;
 
     //Player Inputs
     public Action onUseItem;
@@ -66,7 +66,7 @@ public class EventManager
         onSceneEnding = null;
     }
 
-    public void OnUpgradePurchase(ShopItemData itemData)
+    public void OnUpgradePurchase(UpgradeData itemData)
     {
         onUpgradePurchase?.Invoke(itemData);
     }
