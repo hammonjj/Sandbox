@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ed9217ef4d7ce46a0c3296fa41082d, type: 3}
+  m_Name: Zone1EnemySpawnerEnemyData
+  m_EditorClassIdentifier: 
+  LoggingLevel: 0
+  Name: Zone1EnemySpawner
+  MaxHealth: 100
+  MovementSpeed: 2
+  DetectionRange: 5
+  PatrolPathRange: 3
+  AttackRange: 5
+  AttackCooldown: 1.5
+  EnemySpawnTimer: 5
+  DistanceToMaintain: 2
+  SpawnedEnemyPrefab: {fileID: 5383475913913071370, guid: e45a13b23471e0c4d9091c7e78bf64ba,
+    type: 3}

@@ -27,6 +27,19 @@ public class BaseEnemyData : ScriptableObjectBase
 
     public virtual void Idle(GameObject parentGameObject)
     {
+        RandomPatrol(parentGameObject);
+    }
+
+    public virtual void PlayerFound() { }
+    public virtual void UpdateDataObj(GameObject parentGameObject) { }
+    public virtual void Attack(GameObject parentGameObject, Transform firingPosition) { }
+    public virtual void Move(GameObject parentGameObject) { }
+    public virtual void Death() { }
+
+    public virtual void DebugLines(Quaternion rotation, GameObject parentGameObject) { }
+
+    protected void RandomPatrol(GameObject parentGameObject)
+    {
         //Simple random pathing while searching for player
         var navMeshAgent = parentGameObject.GetComponent<NavMeshAgent>();
         if(navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
@@ -40,14 +53,6 @@ public class BaseEnemyData : ScriptableObjectBase
             navMeshAgent.SetDestination(patrolPoint);
         }
     }
-
-    public virtual void PlayerFound() { }
-    public virtual void UpdateDataObj(GameObject parentGameObject) { }
-    public virtual void Attack(GameObject parentGameObject, Transform firingPosition) { }
-    public virtual void Move(GameObject parentGameObject) { }
-    public virtual void Death() { }
-
-    public virtual void DebugLines(Quaternion rotation, GameObject parentGameObject) { }
 
     private Vector3 RandomPoint(Vector3 center, float range)
     {

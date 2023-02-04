@@ -9,6 +9,7 @@ public class BaseEnemy : MonoBehaviourBase
     public BaseEnemyData EnemyData;
     public GameObject FloatingCombatText;
     public Transform FiringPosition;
+    public bool EmitDeathEvent = true;
 
     private bool _resetAttack;
     private bool _foundPlayer = false;
@@ -79,9 +80,13 @@ public class BaseEnemy : MonoBehaviourBase
 
     private void OnDeath()
     {
+        if(EmitDeathEvent)
+        {
+            EventManager.GetInstance().OnEnemyDeath();
+        }
+
         LogDebug("I Died");
         EnemyData.Death();
-        EventManager.GetInstance().OnEnemyDeath();
         Destroy(gameObject);
     }
 

@@ -55,7 +55,7 @@ public static class Constants
         public enum AttackUpgrade
         {
             None,
-            AttackCrit,
+            IncreaseCritChance,
             ProjectilePassThrough,
             PrimaryIncreaseOrbs,
             SecondaryExplosiveOrb

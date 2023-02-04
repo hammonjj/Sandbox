@@ -14,6 +14,13 @@ public class DebugHud : MonoBehaviourBase
     private GameStateManager _gameStateManager;
     private SceneStateManager _sceneStateManager;
 
+    private void Start()
+    {
+        //get camer
+        //get player
+        //get distance during update
+    }
+
     private void Update()
     {
         if(_doorManager == null)

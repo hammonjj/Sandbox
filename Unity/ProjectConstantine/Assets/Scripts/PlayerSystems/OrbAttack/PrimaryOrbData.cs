@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PrimaryOrbData", menuName = "Orbs/PrimaryOrbData")]
 public class PrimaryOrbData : BaseOrbData
 {
-    public bool CanCrit = false;
-    public float CritPercent = 0f;
-    public float CritModifier = 10f;
+    public float CritChance = 0f;
+    public float CritModifier = 1.50f;
 
     public bool CanPassThroughEnemies = false;
 
@@ -28,10 +25,8 @@ public class PrimaryOrbData : BaseOrbData
         {
             switch(upgrade.AttackUpgrade)
             {
-                case Constants.Enums.AttackUpgrade.AttackCrit:
-                    CanCrit = true; ;
-                    CritModifier = 50f;
-                    CritPercent = 10f;
+                case Constants.Enums.AttackUpgrade.IncreaseCritChance:
+                    CritChance += 10f;
                     break;
                 case Constants.Enums.AttackUpgrade.ProjectilePassThrough:
                     CanPassThroughEnemies = true;
@@ -54,7 +49,14 @@ public class PrimaryOrbData : BaseOrbData
             }
             else
             {
-                baseEnemy.TakeDamage(AttackDamage);
+                int attackDamage = AttackDamage;
+                if(CritChance >= Helper.RandomInclusiveRange(1, 100))
+                {
+                    attackDamage = (int)(attackDamage * CritModifier);
+                    LogDebug($"Critical Strike -  Crit: {attackDamage} - Attack: {AttackDamage}");
+                }
+
+                baseEnemy.TakeDamage(attackDamage);
                 destroy = !CanPassThroughEnemies;
             }
         }

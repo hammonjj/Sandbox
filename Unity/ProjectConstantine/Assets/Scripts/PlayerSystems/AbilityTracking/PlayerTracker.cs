@@ -44,11 +44,7 @@ public class PlayerTracker : MonoBehaviourBase
 
     private void Upgrade(UpgradeData upgradeData)
     {
-        if(upgradeData.Id == string.Empty)
-        {
-            PlayerUpgrades.Add(upgradeData);
-        }
-        else if(!PlayerUpgrades.Any(x => x.Id == upgradeData.Id))
+        if(upgradeData.Id == string.Empty || !PlayerUpgrades.Any(x => x.Id == upgradeData.Id))
         {
             PlayerUpgrades.Add(upgradeData);
         }
