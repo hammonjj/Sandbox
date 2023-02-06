@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1480,6 +1480,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4330834943053168776, guid: 2951cdc54b32db44ca8618b2041efd23,
+        type: 3}
+      propertyPath: OrbSpawnPrefab
+      value: 
+      objectReference: {fileID: 5539337395922491519, guid: aee8cf62c3327462397421bd5d02d167,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2951cdc54b32db44ca8618b2041efd23, type: 3}
 --- !u!1 &799168002
@@ -1683,10 +1689,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1032467070, guid: e9d4293b7439564488ae65d2d8d60c1d, type: 3}
-      propertyPath: LoggingLevel
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 5740002400781328042, guid: e9d4293b7439564488ae65d2d8d60c1d,
         type: 3}
       propertyPath: m_Name
@@ -1747,6 +1749,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
+        type: 3}
+      propertyPath: PrimaryOrbPrefab
+      value: 
+      objectReference: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9d4293b7439564488ae65d2d8d60c1d, type: 3}
 --- !u!1 &1160234425
@@ -1796,7 +1804,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1291352020
 PrefabInstance:
@@ -1873,7 +1881,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35274
+  m_Name: pb_Mesh28766
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2134,7 +2142,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh77304
+  m_Name: pb_Mesh28686
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3612,7 +3620,7 @@ PrefabInstance:
     - target: {fileID: 404824753213774776, guid: 853610c0805e24cc3859f8b0d4e34834,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 404824753213774776, guid: 853610c0805e24cc3859f8b0d4e34834,
         type: 3}
@@ -3684,7 +3692,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 404824751755610167, guid: 853610c0805e24cc3859f8b0d4e34834, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 853610c0805e24cc3859f8b0d4e34834, type: 3}
 --- !u!114 &1512362194113367849 stripped
 MonoBehaviour:

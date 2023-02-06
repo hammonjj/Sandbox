@@ -79,8 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32258e73279244ec2b03e711931406ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoggingLevel: 0
+  LoggingLevel: -1
   Currency: 0
+  PlayerUpgrades: []
   SecondaryRingActive: 0
   SecondaryMaxOrbs: 3
   SecondaryOrbPrefab: {fileID: 0}

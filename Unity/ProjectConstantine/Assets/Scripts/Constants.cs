@@ -45,6 +45,7 @@ public static class Constants
         {
             PrimaryAttack,
             PrimaryRing,
+            PrimaryOrbSpawn,
             SecondaryAttack,
             SecondaryRing,
             Item,

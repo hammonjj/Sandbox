@@ -8,36 +8,23 @@ public class Ring : MonoBehaviourBase
     public float OrbDistanceFromPlayerCenter = 0.75f;
     public Vector3 RotationAxis;
     public float AngularVelocity = 20f;
-    public float OrbRespawnRate;
-    public GameObject OrbPrefab;
     public float AttackCooldown = 0.50f;
     public int MaxOrbs = 1;
 
+    public GameObject OrbSpawnPrefab;
     public Constants.Enums.AttackType AttackType;
 
-    private bool _initialized = false;
     private bool _canAttack;
-    private bool _canSpawnOrb;
-    private float _orbCooldownCurrent;
     private float _attackCooldownCurrent;
     private List<GameObject> _orbSpawns = new();
 
-    //Pulled from Orb prefab
+    //Pulled from Orb prefab for convenience
     private float _attackRange;
 
-    public void Initialize()
+    private void Start()
     {
-        _initialized = true;
-        if(!enabled)
-        {
-            return;
-        }
-
+        GetUpgrades();
         CalculateOrbSpawns();
-        SpawnInitialOrbs();
-        _orbCooldownCurrent = OrbRespawnRate;
-
-        _attackRange = OrbPrefab.GetComponent<BaseOrb>().BaseOrbData.AttackRange;
         if(AttackType == Constants.Enums.AttackType.Primary)
         {
             EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
@@ -52,62 +39,36 @@ public class Ring : MonoBehaviourBase
     {
         //Calculate Orb Spawns
         //  - Angle in degrees = 360° / number of parts
-        //  - Angle in radian = 2π / number of parts
-        //  - Angle in multiples of pi = 2 / number of parts
-        //  - https://rechneronline.de/winkel/divide-circle.php
-        //Draw a ray the center through the line given by the calculation and place a spawn point there
-        //Need to figure out how to calculate when the ring is tilted
-        //Rotate that spawn point around the origin (player)
-        //Spawn an orb when the spawn is empty (has no children)
-        //  - The spawn is the orbs parent
-
+        //
+        //Axis:
+        // (0, 1, 0) -> Horizontal
+        // (0, 0, 1) -> Vertical
+        // (-0.5, 0.5, 0) -> Right High, Left Low
+        // (0.5, 0.5, 0) -> Left High, Right Low
+        
         var degreesBetweenSections = (float)360 / MaxOrbs;
-
-        var tmpGameObject = new GameObject();
-        tmpGameObject.name = "tmpGOB";
-
-        /*
-         * Axis:
-         *  (0, 1, 0) -> Horizontal
-         *  (0, 0, 1) -> Vertical
-         *  (-0.5, 0.5, 0) -> Right High, Left Low
-         *  (0.5, 0.5, 0) -> Left High, Right Low
-         */
+        var orbPrefab = VerifyComponent<DataWarehouse>(Constants.Tags.GameStateManager).PrimaryOrbPrefab;
+        _attackRange = orbPrefab.GetComponent<BaseOrb>().BaseOrbData.AttackRange;
 
         //Works for flat ring only
         for(int i = 0; i < MaxOrbs; i++)
         {
-            var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;//Vector3.left;
+            var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;
 
             Ray r = new Ray(transform.position, directionOfRay);
             var point = r.GetPoint(OrbDistanceFromPlayerCenter);
 
-            var gObjI = Instantiate(tmpGameObject, point, transform.rotation);
-            gObjI.transform.SetParent(transform);
-            gObjI.name = $"OrbSpawn-{i}";
-            _orbSpawns.Add(gObjI);
-        }
+            var orbSpawn = Instantiate(OrbSpawnPrefab, point, transform.rotation);
+            orbSpawn.transform.SetParent(transform);
+            orbSpawn.name = $"OrbSpawn-{i}";
+            orbSpawn.GetComponent<OrbSpawn>().Initialize(orbPrefab);
 
-        Destroy(tmpGameObject);
-    }
-
-    private void SpawnInitialOrbs()
-    {
-        foreach(var spawn in _orbSpawns)
-        {
-            var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
-            orb.name = $"Orb-{Guid.NewGuid()}";
-            orb.transform.SetParent(spawn.transform);
+            _orbSpawns.Add(orbSpawn);
         }
     }
-
+    
     private void Update()
     {
-        if(!_initialized || !enabled)
-        {
-            return;
-        }
-
         if(DrawDebugLines)
         {
             //Orb orbit
@@ -124,67 +85,34 @@ public class Ring : MonoBehaviourBase
 
         UpdateAttackCooldown();
         
-        if(GetCurrentOrbCount() < MaxOrbs)
-        {
-            UpdateOrbCooldown();
-        }
-
-        if(_canSpawnOrb)
-        {
-            _canSpawnOrb = false;
-            _orbCooldownCurrent = OrbRespawnRate;
-            SpawnOrb();
-        }
-
-        //Rotate orbs
+        //Rotate orbs spawns
         foreach(var spawn in _orbSpawns)
         {
             spawn.transform.RotateAround(
                 gameObject.transform.position, new Vector3(0,1,0)/*RotationAxis*/, AngularVelocity * Time.deltaTime);
         }
     }
-
-    private void SpawnOrb()
-    {
-        LogDebug("Spawning Orb");
-        var spawn = GetFirstVacantSpawn();
-        var orb = Instantiate(OrbPrefab, spawn.transform.position, Quaternion.identity);
-        orb.name = $"Orb-{Guid.NewGuid()}";
-        orb.transform.SetParent(spawn.transform);
-    }
-
-    private GameObject GetFirstOrb()
+    
+    private OrbSpawn GetLoadedOrbSpawn()
     {
         foreach(var spawn in _orbSpawns)
         {
-            if(spawn.transform.childCount != 0)
+            if(spawn.GetComponent<OrbSpawn>().HasOrb())
             {
-                return spawn.transform.GetChild(0).gameObject;
+                return spawn.GetComponent<OrbSpawn>();
             }
         }
 
         return null;
     }
-
-    private GameObject GetFirstVacantSpawn()
-    {
-        foreach(var spawn in _orbSpawns)
-        {
-            if(spawn.transform.childCount == 0)
-            {
-                return spawn;
-            }
-        }
-
-        return null;
-    }
-
+    
     private int GetCurrentOrbCount()
     {
         var count = 0;
         foreach(var spawn in _orbSpawns)
         {
-            if(spawn.transform.childCount != 0)
+            //Might need to cache the orb spawn to avoid GetComponent call
+            if(spawn.GetComponent<OrbSpawn>().HasOrb())
             {
                 count++;
             }
@@ -206,19 +134,9 @@ public class Ring : MonoBehaviourBase
         _canAttack = false;
         _attackCooldownCurrent = AttackCooldown;
 
-        var firstOrb = GetFirstOrb();
-        if(firstOrb == null)
-        {
-            LogError("First orb is null");
-            return;
-        }
-
-        var (enemyPos, projectileRotation) = FindEnemiesToAttack(firstOrb);
-
-        firstOrb.transform.parent = null;
-        firstOrb.transform.rotation = projectileRotation;
-        var orb = firstOrb.GetComponent<BaseOrb>();
-        orb.Fire();
+        var orbSpawn = GetLoadedOrbSpawn();
+        var (enemyPos, projectileRotation) = FindEnemiesToAttack(orbSpawn.gameObject);
+        orbSpawn.Fire(projectileRotation);
     }
 
     private void UpdateAttackCooldown()
@@ -227,10 +145,19 @@ public class Ring : MonoBehaviourBase
         _canAttack = _attackCooldownCurrent <= 0.0f;
     }
 
-    private void UpdateOrbCooldown()
+    private void GetUpgrades()
     {
-        _orbCooldownCurrent -= Time.deltaTime;
-        _canSpawnOrb = _orbCooldownCurrent <= 0.0f;
+        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
+        var upgrades = abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryRing);
+        foreach(var upgrade in upgrades)
+        {
+            switch(upgrade.AttackUpgrade)
+            {
+                case Constants.Enums.AttackUpgrade.PrimaryIncreaseOrbs:
+                    MaxOrbs++;
+                    break;
+            }
+        }
     }
 
     protected (Vector3, Quaternion) FindEnemiesToAttack(GameObject orb)
@@ -241,7 +168,6 @@ public class Ring : MonoBehaviourBase
         if(this == null)
         {
             return (retVector, projectileRotation); 
-            //return (new Vector3(0, 0, 0), Quaternion.identity);
         }
 
         //Watch for performance issues - might need to put enemies on their own layer

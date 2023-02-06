@@ -82,7 +82,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
     private void Update()
     {
-        if(_inZone1Start && _currentlyDeadEnemies == 1)
+        if(_inZone1Start && _currentlyDeadEnemies >= 1)
         {
             _inZone1Start = false;
             _eventManager.OnEncounterEnded();

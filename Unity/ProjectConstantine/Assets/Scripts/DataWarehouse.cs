@@ -10,6 +10,9 @@ public class DataWarehouse : MonoBehaviourBase
     public UpgradeData[] ShopItemData;
     public GameObject ShopItemUiTemplate;
 
+    [Header("Orbs")]
+    public GameObject PrimaryOrbPrefab;
+
     private static DataWarehouse _instance;
 
     private void Awake()

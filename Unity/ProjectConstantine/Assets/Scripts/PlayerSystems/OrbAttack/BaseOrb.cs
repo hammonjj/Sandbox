@@ -41,17 +41,20 @@ public class BaseOrb : MonoBehaviourBase
         }
     }
 
-    public void Fire()
+    public void Fire(Vector3 orbStartPos)
     {
         _hasBeenFired = true;
-
-        //Can also pass this in if this becomes a problem
-        _initialPosition = GameObject.FindGameObjectWithTag(Constants.Tags.OrbStartPos).transform.position;
+        _initialPosition = orbStartPos;
         LogDebug($"Initial Position: {_initialPosition}");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if(!_hasBeenFired)
+        {
+            return;
+        }
+
         var destroyObject = BaseOrbData.OnHit(other, _hasBeenFired);
         if(destroyObject)
         {

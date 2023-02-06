@@ -1,3 +1,4 @@
+//This class can get deleted with the next refactor
 public class RingManager : MonoBehaviourBase
 {
     private Ring _primaryRing;
@@ -11,18 +12,14 @@ public class RingManager : MonoBehaviourBase
     //Similar to Syndra or Aurelion Sol
     private void Start()
     {
-        _primaryRing = VerifyComponent<Ring>(Constants.Tags.PrimaryRing);
         _secondaryRing = VerifyComponent<Ring>(Constants.Tags.SecondaryRing);
-
         GetUpgrades();
-
-        _primaryRing.Initialize();
-        _secondaryRing.Initialize();
     }
 
     private void GetUpgrades()
     {
         _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
+        /*
         var upgrades = _abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryRing);
         foreach(var upgrade in upgrades)
         {
@@ -33,7 +30,7 @@ public class RingManager : MonoBehaviourBase
                     break;
             }
         }
-
+        */
         _secondaryRing.enabled = _abilityTracker.SecondaryRingActive;
     }
 }
