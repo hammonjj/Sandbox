@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ef6788b3ff34a66b2eb77d630f7206, type: 3}
+  m_Script: {fileID: 11500000, guid: 21c6cab94534c0a46828deec4a325127, type: 3}
   m_Name: BulletPassThrough
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Title: 
+  Title: Passthrough
   Description: Your basic attacks go through enemies
   Cost: 0
   Id: b609ea15-e7a7-429b-ab76-b94a26667f95
   UpgradeType: 0
-  AttackUpgrade: 2
+  UpgradeName: 1

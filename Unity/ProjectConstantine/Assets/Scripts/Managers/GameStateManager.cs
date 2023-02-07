@@ -127,7 +127,7 @@ public class GameStateManager : MonoBehaviourBase
     {
         if(state == PlayModeStateChange.ExitingPlayMode)
         {
-            Helper.LogDebug("Reseting AbilityTracker");
+            Helper.LogDebug("Reseting GameStateManager");
             _instance = null;
         }
     }

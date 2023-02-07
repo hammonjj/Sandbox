@@ -1,0 +1,11 @@
+using UnityEngine;
+
+    #ROOTNAMESPACEBEGIN#
+public class #SCRIPTNAME# : ScriptableObjectBase
+{
+    private void Awake()
+    {
+        #NOTRIM#
+    }
+}
+#ROOTNAMESPACEEND#

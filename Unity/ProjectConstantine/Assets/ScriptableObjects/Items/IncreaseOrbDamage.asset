@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ef6788b3ff34a66b2eb77d630f7206, type: 3}
-  m_Name: ExplosiveOrbShopData
+  m_Script: {fileID: 11500000, guid: 21c6cab94534c0a46828deec4a325127, type: 3}
+  m_Name: IncreaseOrbDamage
   m_EditorClassIdentifier: 
   LoggingLevel: 0
-  Title: 
-  Description: A secondary attack that explodes on contact with an enemy
-  Cost: 10
-  Id: a7c87a95-0e9f-4fc5-bd65-c76446c642ca
+  Title: More Damage
+  Description: Increases orb base damage by 2
+  Cost: 0
+  Id: 
   UpgradeType: 0
-  AttackUpgrade: 3
+  UpgradeName: 0

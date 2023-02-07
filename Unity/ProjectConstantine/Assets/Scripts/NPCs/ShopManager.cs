@@ -46,6 +46,7 @@ public class ShopManager : MonoBehaviourBase
         var shopItemDataList = ShopItemData.ToList();
         foreach(var upgrade in upgrades)
         {
+            //Upgrades with an empty ID can be purchased multiple times
             if(upgrade.Id == string.Empty)
             {
                 continue;

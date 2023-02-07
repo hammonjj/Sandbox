@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PrimaryOrbData", menuName = "Orbs/PrimaryOrbData")]
@@ -16,6 +17,7 @@ public class PrimaryOrbData : BaseOrbData
             Constants.Tags.GameStateManager).GetComponent<PlayerTracker>();
 
         GetUpgrades();
+        EditorApplication.playModeStateChanged += OnPlayModeChange;
     }
 
     private void GetUpgrades()
@@ -23,13 +25,17 @@ public class PrimaryOrbData : BaseOrbData
         var upgrades = _abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryAttack);
         foreach(var upgrade in upgrades)
         {
-            switch(upgrade.AttackUpgrade)
+            var upgradeCast = (PrimaryWeaponUpgradeData)upgrade;
+            switch(upgradeCast.UpgradeName)
             {
-                case Constants.Enums.AttackUpgrade.IncreaseCritChance:
+                case PrimaryWeaponUpgradeData.Upgrade.IncreaseCritChance:
                     CritChance += 10f;
                     break;
-                case Constants.Enums.AttackUpgrade.ProjectilePassThrough:
+                case PrimaryWeaponUpgradeData.Upgrade.ProjectilePassThrough:
                     CanPassThroughEnemies = true;
+                    break;
+                case PrimaryWeaponUpgradeData.Upgrade.IncreaseOrbDamage:
+                    AttackDamage += 2;
                     break;
             }
         }
@@ -66,5 +72,18 @@ public class PrimaryOrbData : BaseOrbData
         }
 
         return destroy;
+    }
+
+    protected override void OnPlayModeChange(PlayModeStateChange state)
+    {
+        Helper.LogDebug("Reseting PrimaryOrbData");
+        if(state == PlayModeStateChange.ExitingPlayMode)
+        {
+            Helper.LogDebug("Reseting PrimaryOrbData");
+            base.OnPlayModeChange(state);
+            CritChance = 0f;
+            CritModifier = 1.50f;
+            CanPassThroughEnemies = false;
+        }
     }
 }

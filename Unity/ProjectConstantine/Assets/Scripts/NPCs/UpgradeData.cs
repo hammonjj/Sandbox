@@ -12,5 +12,4 @@ public class UpgradeData : ScriptableObjectBase
     //Add ShopImage
 
     public Constants.Enums.UpgradeType UpgradeType;
-    public Constants.Enums.AttackUpgrade AttackUpgrade;
 }

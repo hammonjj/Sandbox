@@ -2974,11 +2974,9 @@ MonoBehaviour:
   OrbDistanceFromPlayerCenter: 1
   RotationAxis: {x: 0.5, y: 0.5, z: 0}
   AngularVelocity: 150
-  OrbRespawnRate: 3
-  OrbPrefab: {fileID: 2752842888426458132, guid: 78f2a3de89a694c7893d408b624fbfcd,
-    type: 3}
   AttackCooldown: 0.5
   MaxOrbs: 0
+  OrbSpawnPrefab: {fileID: 0}
   AttackType: 1
 --- !u!1 &7217209293975416171
 GameObject:
@@ -3381,11 +3379,10 @@ MonoBehaviour:
   OrbDistanceFromPlayerCenter: 0.75
   RotationAxis: {x: 0, y: 1, z: 0}
   AngularVelocity: 200
-  OrbRespawnRate: 1
-  OrbPrefab: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
-    type: 3}
   AttackCooldown: 0.5
   MaxOrbs: 3
+  OrbSpawnPrefab: {fileID: 5539337395922491519, guid: aee8cf62c3327462397421bd5d02d167,
+    type: 3}
   AttackType: 0
 --- !u!1 &7456026485845639109
 GameObject:

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -151,9 +150,10 @@ public class Ring : MonoBehaviourBase
         var upgrades = abilityTracker.GetCurrentUpgrades(Constants.Enums.UpgradeType.PrimaryRing);
         foreach(var upgrade in upgrades)
         {
-            switch(upgrade.AttackUpgrade)
+            var upgradeCast = (PrimaryRingUpgradeData)upgrade;
+            switch(upgradeCast.UpgradeName)
             {
-                case Constants.Enums.AttackUpgrade.PrimaryIncreaseOrbs:
+                case PrimaryRingUpgradeData.Upgrade.IncreaseOrbs:
                     MaxOrbs++;
                     break;
             }

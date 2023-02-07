@@ -99,9 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: 0
   ShopItemData:
-  - {fileID: 11400000, guid: 327eb173e9f4d4cc8a2371debfbe269c, type: 2}
-  - {fileID: 11400000, guid: 846f2031c7daa4e80aca41495e9e493e, type: 2}
-  - {fileID: 11400000, guid: 9b6b22f56950543038888ce7137471f5, type: 2}
-  - {fileID: 11400000, guid: 0b1a5d3deb13a4151a9bf3fdedae2240, type: 2}
+  - {fileID: 11400000, guid: 6bb97d81ba6321b4cb1fbcede1adf56c, type: 2}
+  - {fileID: 11400000, guid: 9e48aa2738b68bd438c81a7caf0227ad, type: 2}
+  - {fileID: 11400000, guid: fe535b64fd1a0e34bace7a5ca72fbe1b, type: 2}
   ShopItemUiTemplate: {fileID: 3743625115963535172, guid: 82b026196d42f4a59a053086e8917dc2,
+    type: 3}
+  PrimaryOrbPrefab: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
     type: 3}

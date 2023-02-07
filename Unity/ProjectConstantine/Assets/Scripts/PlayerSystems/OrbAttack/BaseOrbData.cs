@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BaseOrbData", menuName = "Orbs/BaseOrbData")]
@@ -10,7 +9,11 @@ public class BaseOrbData : ScriptableObjectBase
     public float AttackRange = 10f;
     public float ProjectileSpeed = 20f;
 
-    public virtual void Initialize() { }
+    public virtual void Initialize() 
+    {
+        EditorApplication.playModeStateChanged += OnPlayModeChange;
+    }
+
     public virtual void OnMaxRangePassed(Vector3 currPos) { }
 
     //Returns true if the orb should be destroyed
@@ -43,4 +46,14 @@ public class BaseOrbData : ScriptableObjectBase
         return true;
     }
 
+    protected virtual void OnPlayModeChange(PlayModeStateChange state)
+    {
+        if(state == PlayModeStateChange.ExitingPlayMode)
+        {
+            Helper.LogDebug("Reseting BaseOrbData");
+            AttackDamage = 10;
+            AttackRange = 10f;
+            ProjectileSpeed = 20f;
+        }
+    }
 }

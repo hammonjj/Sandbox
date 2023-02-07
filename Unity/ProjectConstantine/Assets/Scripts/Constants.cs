@@ -37,6 +37,7 @@ public static class Constants
         public static string SecondaryRing = "SecondaryRing";
         public static string RingManager = "RingManager";
         public static string Projectile = "Projectile";
+        public static string PlayerEnergyBar = "PlayerEnergyBar";
     }
 
     public static class Enums

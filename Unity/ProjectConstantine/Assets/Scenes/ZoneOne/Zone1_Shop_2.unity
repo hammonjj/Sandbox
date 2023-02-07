@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1609,11 +1609,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6846382381005063990, guid: 2951cdc54b32db44ca8618b2041efd23,
-        type: 3}
-      propertyPath: m_TagString
-      value: RingManager
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2951cdc54b32db44ca8618b2041efd23, type: 3}
 --- !u!1 &940579736
@@ -2715,41 +2710,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemUiTemplate
-      value: 
-      objectReference: {fileID: 3743625115963535172, guid: 82b026196d42f4a59a053086e8917dc2,
-        type: 3}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemData.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemData.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 327eb173e9f4d4cc8a2371debfbe269c,
-        type: 2}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemData.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 846f2031c7daa4e80aca41495e9e493e,
-        type: 2}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemData.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9b6b22f56950543038888ce7137471f5,
-        type: 2}
-    - target: {fileID: 6955556999893504629, guid: e9d4293b7439564488ae65d2d8d60c1d,
-        type: 3}
-      propertyPath: ShopItemData.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 0b1a5d3deb13a4151a9bf3fdedae2240,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9d4293b7439564488ae65d2d8d60c1d, type: 3}
 --- !u!1 &1103007548
@@ -3898,7 +3858,7 @@ PrefabInstance:
     - target: {fileID: 8072506231797398104, guid: 7285e909a28d2493e963c8afaef47f62,
         type: 3}
       propertyPath: NumOfItems
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8072506231797398104, guid: 7285e909a28d2493e963c8afaef47f62,
         type: 3}
