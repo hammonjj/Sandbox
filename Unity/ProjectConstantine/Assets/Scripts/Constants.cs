@@ -48,8 +48,7 @@ public static class Constants
             PrimaryRing,
             PrimaryOrbSpawn,
             SecondaryAttack,
-            SecondaryRing,
-            Item,
+            SupportAbility,
             All
         }
 
@@ -61,6 +60,13 @@ public static class Constants
             ProjectilePassThrough,
             PrimaryIncreaseOrbs,
             SecondaryExplosiveOrb
+        }
+
+        public enum SupportAbilities
+        {
+            None,
+            PersonalForceField,
+            TimeSlowDown
         }
 
         public enum AttackType

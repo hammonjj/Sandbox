@@ -4,56 +4,68 @@ using UnityEngine.SceneManagement;
 
 public class PlayerEnergy : MonoBehaviourBase
 {
-    private int _currentEnergy;
+    public int CurrentEnergy { private set; get; }
+
     [SerializeField] private int _maxEnergy;
     [SerializeField] private float _rechargeRateTicks;
     [SerializeField] private float _rechargeRatePercent;
 
+    private IEnumerator rechargeEnergyCoroutine;
+    private EventManager _eventManager;
     private PlayerTracker _abilityTracker;
+
     
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        EventManager.GetInstance().onSceneEnding += OnSceneEnding;
+        CurrentEnergy = 100;
 
-        StartCoroutine(RechargeEnergy());
         _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
-    }
-
-    private void UseEnergy(int energyUsed)
-    {
-        LogDebug($"Using Energy: {energyUsed}");
-        _currentEnergy -= energyUsed;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
         _maxEnergy = _abilityTracker.EnergyTracking.MaxEnergy;
         _rechargeRateTicks = _abilityTracker.EnergyTracking.RechargeRate;
+
+        _eventManager = EventManager.GetInstance();
+        _eventManager.onSceneEnding += OnSceneEnding;
+
+        //rechargeEnergyCoroutine = RechargeEnergy();
+        //StartCoroutine(rechargeEnergyCoroutine);
+    }
+
+    public void UseEnergy(int energyUsed)
+    {
+        CurrentEnergy -= energyUsed;
+        UpdateEnergy();
     }
 
     private void OnSceneEnding()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         _abilityTracker.EnergyTracking.MaxEnergy = _maxEnergy;
         _abilityTracker.EnergyTracking.RechargeRate = _rechargeRateTicks;
+    }
+
+    private void UpdateEnergy()
+    {
+        _eventManager.OnEnergyUsed((float)CurrentEnergy / _maxEnergy);
     }
 
     private IEnumerator RechargeEnergy()
     {
         while(true)
         {
-            if(_currentEnergy >= _maxEnergy)
+            if(CurrentEnergy >= _maxEnergy)
             {
                 continue;
             }
 
-            _currentEnergy = (int)(_currentEnergy *_rechargeRatePercent);
-            if(_currentEnergy > _maxEnergy)
+            var tmpEnergy = CurrentEnergy;
+            CurrentEnergy = (int)(CurrentEnergy * _rechargeRatePercent);
+            if(CurrentEnergy > _maxEnergy)
             {
-                _currentEnergy = _maxEnergy;
+                CurrentEnergy = _maxEnergy;
             }
 
+            LogDebug($"Energy Recharged - Previous: {tmpEnergy} - Current: {CurrentEnergy}");
+            UpdateEnergy();
             yield return new WaitForSeconds(_rechargeRateTicks);
         }
     }

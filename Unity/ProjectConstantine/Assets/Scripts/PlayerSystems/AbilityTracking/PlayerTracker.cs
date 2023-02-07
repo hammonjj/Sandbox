@@ -10,6 +10,7 @@ public class PlayerTracker : MonoBehaviourBase
     public List<UpgradeData> PlayerUpgrades = new();
     public AbilityTracking.HealthTracker HealthTracker = new();
     public AbilityTracking.EnergyTracker EnergyTracking = new();
+    public AbilityTracking.SupportAbilityTracker SupportAbilityTracker = new();
 
     //Secondary Ring Stats - Will delete with secondary weapon refactor
     public bool SecondaryRingActive = false;

@@ -62,7 +62,7 @@ namespace Constantine
                 return;
             }
 
-            _eventManager.OnUseItem();
+            _eventManager.OnSupportAbility();
 		}
 
         public void OnDash(InputValue value)

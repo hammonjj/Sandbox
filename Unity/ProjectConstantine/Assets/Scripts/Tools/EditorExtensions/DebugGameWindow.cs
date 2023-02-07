@@ -60,6 +60,15 @@ public class DebugGameWindow : EditorWindow
 
             menu.ShowAsContext();
         }
+
+        if(GUI.Button(new Rect(0, 180, 200, 25), "Use 10 Energy"))
+        {
+            Helper.LogDebug("Using 10 Energy");
+            var playerEnergy = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
+                .GetComponent<PlayerEnergy>();
+
+            playerEnergy.UseEnergy(10);
+        }
     }
 
     private void AddSceneToMenu(GenericMenu menu, string menuPath, string sceneName)

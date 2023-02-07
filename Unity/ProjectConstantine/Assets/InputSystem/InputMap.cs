@@ -303,6 +303,17 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ad4c716b-d659-4b30-9f04-c3480d2e6322"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d27bfa74-415f-43df-b8a7-86687f2b6142"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",

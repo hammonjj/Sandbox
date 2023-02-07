@@ -10,11 +10,10 @@ public class EventManager
     public Action onEncounterEnded;
     public Action onSceneEnding;
     public Action onGameReset;
-
     public Action<UpgradeData> onUpgradePurchase;
 
     //Player Inputs
-    public Action onUseItem;
+    public Action onSupportAbility;
     public Action onPlayerDash;
     public Action onPlayerPrimaryAttack;
     public Action onPlayerSecondaryAttack;
@@ -22,6 +21,7 @@ public class EventManager
 
     //Misc. Player Actions
     public Action onPause;
+    public Action<float> onEnergyUsed;
     public Action<bool> onAdvanceScenePressed;
 
     //Debugging
@@ -58,13 +58,20 @@ public class EventManager
         onEnemyDeath = null;
         onPlayerDeath = null;
         onEncounterEnded = null;
-        onUseItem = null;
+        onSupportAbility = null;
         onPlayerDash = null;
         onPlayerPrimaryAttack = null;
         onPlayerSecondaryAttack = null;
         onPause = null;
         onAdvanceScenePressed = null;
         onSceneEnding = null;
+        onGameReset = null;
+        onEnergyUsed = null;
+    }
+
+    public void OnEnergyUsed(float energy)
+    {
+        onEnergyUsed?.Invoke(energy);
     }
 
     public void OnGameReset()
@@ -102,9 +109,9 @@ public class EventManager
         onEnemyDeath?.Invoke();
     }
 
-    public void OnUseItem()
+    public void OnSupportAbility()
     {
-        onUseItem?.Invoke();
+        onSupportAbility?.Invoke();
     }
 
     public void OnPlayerDash()
