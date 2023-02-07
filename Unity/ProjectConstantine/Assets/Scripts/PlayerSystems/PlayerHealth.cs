@@ -3,8 +3,10 @@ public class PlayerHealth : MonoBehaviourBase
     private int _maxHealth;
     private int _currentHealth;
 
+    private bool _playerDead = false;
     private HealthBar _healthBar;
     private EventManager _eventManager;
+    private PlayerTracker _abilityTracker;
 
     private void Awake()
     {
@@ -14,9 +16,9 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void Start()
     {
-        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
-        _maxHealth = abilityTracker.PlayerHealthTracker.MaxHealth;
-        _currentHealth = abilityTracker.PlayerHealthTracker.CurrentHealth;
+        _abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
+        _maxHealth = _abilityTracker.HealthTracker.MaxHealth;
+        _currentHealth = _abilityTracker.HealthTracker.CurrentHealth;
 
         _healthBar = VerifyComponent<HealthBar>();
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
@@ -24,13 +26,19 @@ public class PlayerHealth : MonoBehaviourBase
 
     public void TakeDamage(int incomingDamage)
     {
+        if(_playerDead)
+        {
+            return;
+        }
+
         _currentHealth -= incomingDamage;
         LogDebug($"Updating Health: {_currentHealth} - MaxHealth: {_maxHealth}");
 
         if(_currentHealth <= 0)
         {
-            //Invoke Death Animation
+            _playerDead = true;
             _eventManager.onPlayerDeath();
+            _eventManager.onSceneEnding -= SceneEnding;
         }
 
         _healthBar.UpdateHealth((float)_currentHealth / _maxHealth);
@@ -38,8 +46,7 @@ public class PlayerHealth : MonoBehaviourBase
 
     private void SceneEnding()
     {
-        var abilityTracker = VerifyComponent<PlayerTracker>(Constants.Tags.GameStateManager);
-        abilityTracker.PlayerHealthTracker.CurrentHealth = _currentHealth;
-        abilityTracker.PlayerHealthTracker.MaxHealth = _maxHealth;
+        _abilityTracker.HealthTracker.MaxHealth = _maxHealth;
+        _abilityTracker.HealthTracker.CurrentHealth = _currentHealth;
     }
 }

@@ -18,6 +18,7 @@ public class PrimaryOrbData : BaseOrbData
 
         GetUpgrades();
         EditorApplication.playModeStateChanged += OnPlayModeChange;
+        EventManager.GetInstance().onPlayerDeath += OnPlayerDeath;
     }
 
     private void GetUpgrades()
@@ -85,5 +86,13 @@ public class PrimaryOrbData : BaseOrbData
             CritModifier = 1.50f;
             CanPassThroughEnemies = false;
         }
+    }
+
+    private void OnPlayerDeath()
+    {
+        LogDebug("Player Died: Reseting PrimaryOrbData");
+        CritChance = 0f;
+        CritModifier = 1.50f;
+        CanPassThroughEnemies = false;
     }
 }

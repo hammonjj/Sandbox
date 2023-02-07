@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEngine.SceneManagement;
@@ -143,6 +144,21 @@ public class SceneStateManager : MonoBehaviourBase
     public void OnPlayerDeath()
     {
         LogDebug("Player has died");
+        //All objects needs to save themselves if they have trackable items
+        //  - Out of run currency
+        //  - States
+        //  - etc.
+        //Play death animation and add any story elements that need to be run
+
+        //Fire off onGameReset and have the game state manager handle game reset
+        //  - Adding short delay for the moment to simulate ending animation
+        StartCoroutine(FireGameResetEvent());
+    }
+
+    private IEnumerator FireGameResetEvent()
+    {
+        yield return new WaitForSeconds(2);
+        _eventManager.OnGameReset();
     }
 
     public void AdvanceToScene(

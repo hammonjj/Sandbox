@@ -3,13 +3,15 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+//Will need to update namespace later
 public class PlayerTracker : MonoBehaviourBase
 {
     public int Currency;
     public List<UpgradeData> PlayerUpgrades = new();
-    public PlayerHealthTracker PlayerHealthTracker = new();
+    public AbilityTracking.HealthTracker HealthTracker = new();
+    public AbilityTracking.EnergyTracker EnergyTracking = new();
 
-    //Secondary Ring Stats
+    //Secondary Ring Stats - Will delete with secondary weapon refactor
     public bool SecondaryRingActive = false;
     public int SecondaryMaxOrbs = 3;
     public GameObject SecondaryOrbPrefab;
@@ -22,8 +24,9 @@ public class PlayerTracker : MonoBehaviourBase
         {
             _instance = this;
             DontDestroyOnLoad(this);
-            EventManager.GetInstance().onEnemyDeath += EnemyDeath;
-            EventManager.GetInstance().onUpgradePurchase += Upgrade;
+            EventManager.GetInstance().onEnemyDeath += OnEnemyDeath;
+            EventManager.GetInstance().onUpgradePurchase += OnUpgradeAcquired;
+            EventManager.GetInstance().onPlayerDeath += OnPlayerDeath;
             EditorApplication.playModeStateChanged += OnPlayModeChange;
         }
         else
@@ -42,7 +45,7 @@ public class PlayerTracker : MonoBehaviourBase
         return PlayerUpgrades.Where(x => x.UpgradeType == upgradeType).ToList();
     }
 
-    private void Upgrade(UpgradeData upgradeData)
+    private void OnUpgradeAcquired(UpgradeData upgradeData)
     {
         if(upgradeData.Id == string.Empty || !PlayerUpgrades.Any(x => x.Id == upgradeData.Id))
         {
@@ -55,11 +58,19 @@ public class PlayerTracker : MonoBehaviourBase
         if(state == PlayModeStateChange.ExitingPlayMode)
         {
             Helper.LogDebug("Reseting AbilityTracker");
+            Destroy(_instance);
             _instance = null;
         }
     }
 
-    private void EnemyDeath()
+    private void OnPlayerDeath()
+    {
+        LogDebug("Player died: Reseting Tracking");
+        Destroy(this);
+        _instance = null;
+    }
+
+    private void OnEnemyDeath()
     {
         //Need to add currency to enemies - will hardcode for now
         LogDebug("EnemyDeath");

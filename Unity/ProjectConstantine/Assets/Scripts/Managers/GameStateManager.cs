@@ -41,6 +41,7 @@ public class GameStateManager : MonoBehaviourBase
             SceneManager.sceneLoaded += OnSceneLoaded;
             AvailableZoneFightChambers = Constants.Enums.Zone1FightRooms;
             EditorApplication.playModeStateChanged += OnPlayModeChange;
+            EventManager.GetInstance().onGameReset += OnGameReset;
         }
         else
         {
@@ -82,6 +83,13 @@ public class GameStateManager : MonoBehaviourBase
             _sceneStateManager.CurrentSceneType, currentZone);
 
         _doorManager.AssignOptionsToDoors(roomOptions);
+    }
+
+    private void OnGameReset()
+    {
+        LogDebug("Reseting Game");
+        SceneManager.LoadScene(Constants.Enums.Scenes.WorldHub.ToString());
+        _instance = null;
     }
 
     private void AcquireManagers()

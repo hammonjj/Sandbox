@@ -73,12 +73,17 @@ public class DebugGameWindow : EditorWindow
         {
             if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
-                EditorSceneManager.OpenScene($"Assets/Scenes/ZoneOne/{sceneName}.unity");
+                //Eventually this will need to be fixed
+                EditorSceneManager.OpenScene(sceneName == "WorldHub" ?
+                    $"Assets/Scenes/{sceneName}.unity" :
+                    $"Assets/Scenes/ZoneOne/{sceneName}.unity");
             }
         }
         else
         {
-            EditorSceneManager.OpenScene($"Assets/Scenes/ZoneOne/{sceneName}.unity");
+            EditorSceneManager.OpenScene(sceneName == "WorldHub" ?
+                    $"Assets/Scenes/{sceneName}.unity" :
+                    $"Assets/Scenes/ZoneOne/{sceneName}.unity");
         }
     }
 }

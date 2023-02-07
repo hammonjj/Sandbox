@@ -12,6 +12,7 @@ public class BaseOrbData : ScriptableObjectBase
     public virtual void Initialize() 
     {
         EditorApplication.playModeStateChanged += OnPlayModeChange;
+        EventManager.GetInstance().onPlayerDeath += OnPlayerDeath;
     }
 
     public virtual void OnMaxRangePassed(Vector3 currPos) { }
@@ -50,10 +51,18 @@ public class BaseOrbData : ScriptableObjectBase
     {
         if(state == PlayModeStateChange.ExitingPlayMode)
         {
-            Helper.LogDebug("Reseting BaseOrbData");
+            LogDebug("Reseting BaseOrbData");
             AttackDamage = 10;
             AttackRange = 10f;
             ProjectileSpeed = 20f;
         }
+    }
+
+    private void OnPlayerDeath()
+    {
+        LogDebug("Reseting BaseOrbData");
+        AttackDamage = 10;
+        AttackRange = 10f;
+        ProjectileSpeed = 20f;
     }
 }

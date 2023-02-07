@@ -9,6 +9,7 @@ public class EventManager
     public Action onPlayerDeath;
     public Action onEncounterEnded;
     public Action onSceneEnding;
+    public Action onGameReset;
 
     public Action<UpgradeData> onUpgradePurchase;
 
@@ -64,6 +65,11 @@ public class EventManager
         onPause = null;
         onAdvanceScenePressed = null;
         onSceneEnding = null;
+    }
+
+    public void OnGameReset()
+    {
+        onGameReset?.Invoke();
     }
 
     public void OnUpgradePurchase(UpgradeData itemData)
