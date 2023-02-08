@@ -10,6 +10,7 @@ public class Ring : MonoBehaviourBase
     public float AttackCooldown = 0.50f;
     public int MaxOrbs = 1;
 
+    public GameObject OrbStartPosition;
     public GameObject OrbSpawnPrefab;
     public Constants.Enums.AttackType AttackType;
 
@@ -134,7 +135,11 @@ public class Ring : MonoBehaviourBase
         _attackCooldownCurrent = AttackCooldown;
 
         var orbSpawn = GetLoadedOrbSpawn();
-        var (enemyPos, projectileRotation) = FindEnemiesToAttack(orbSpawn.gameObject);
+        var (enemyPos, projectileRotation) = FindEnemiesToAttack(OrbStartPosition); //orbSpawn.gameObject
+        LogError($"EnemyPos: {enemyPos}");
+
+        //Need to convert this to using the enemy location pointing the orb to fire on a ray through that position
+        //The rotation is causing projectiles to miss either when close up or by millimeters on either side
         orbSpawn.Fire(projectileRotation);
     }
 
@@ -160,7 +165,7 @@ public class Ring : MonoBehaviourBase
         }
     }
 
-    protected (Vector3, Quaternion) FindEnemiesToAttack(GameObject orb)
+    protected (Vector3, Quaternion) FindEnemiesToAttack(GameObject orbStartPos)
     {
         var projectileRotation = gameObject.transform.rotation;
         Vector3 retVector = Vector3.zero;
@@ -185,11 +190,11 @@ public class Ring : MonoBehaviourBase
                 continue;
             }
 
-            var normalizedColliderVector = colliderHit.transform.position - orb.transform.position;
+            var normalizedColliderVector = colliderHit.transform.position - orbStartPos.transform.position;
             normalizedColliderVector.Normalize();
 
             //0 = 180 degree arc - 0.5 = 90 degree arc
-            if(Vector3.Dot(normalizedColliderVector, orb.transform.forward) < 0.5f)
+            if(Vector3.Dot(normalizedColliderVector, orbStartPos.transform.forward) < 0.5f)
             {
                 continue;
             }

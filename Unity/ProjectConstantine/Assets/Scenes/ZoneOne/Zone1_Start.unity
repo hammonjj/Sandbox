@@ -1480,7 +1480,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4330834943053168776, guid: 2951cdc54b32db44ca8618b2041efd23,
+        type: 3}
+      propertyPath: OrbStartPosition
+      value: 
+      objectReference: {fileID: 753367101}
+    m_RemovedComponents:
+    - {fileID: 2690771912148945959, guid: 2951cdc54b32db44ca8618b2041efd23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2951cdc54b32db44ca8618b2041efd23, type: 3}
 --- !u!1 &753367099 stripped
 GameObject:
@@ -1504,6 +1510,12 @@ MonoBehaviour:
   _maxEnergy: 100
   _rechargeRateTicks: 1
   _rechargeRatePercent: 0.05
+--- !u!1 &753367101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5972261277621789119, guid: 2951cdc54b32db44ca8618b2041efd23,
+    type: 3}
+  m_PrefabInstance: {fileID: 753367098}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &753367115
 MonoBehaviour:
   m_ObjectHideFlags: 0
