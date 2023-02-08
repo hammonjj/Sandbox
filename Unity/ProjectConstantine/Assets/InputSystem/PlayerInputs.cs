@@ -10,6 +10,7 @@ namespace Constantine
 		[DisplayWithoutEdit()]
 		public Vector2 Move;
 
+        private bool _supportAbilityDebounce = false;
 		private bool _pausePlayerController = false;
 		private EventManager _eventManager;
 
@@ -62,8 +63,20 @@ namespace Constantine
                 return;
             }
 
+            if(_supportAbilityDebounce)
+            {
+                return;
+            }
+
+            _supportAbilityDebounce = true;
+            Invoke(nameof(SupportAbilityDebounce), 0.25f);
             _eventManager.OnSupportAbility();
 		}
+
+        private void SupportAbilityDebounce()
+        {
+            _supportAbilityDebounce = false;
+        }
 
         public void OnDash(InputValue value)
 		{
