@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OrbSpawn : MonoBehaviourBase
@@ -11,6 +9,7 @@ public class OrbSpawn : MonoBehaviourBase
     private float _currentOrbRespawn;
     private GameObject _orbPrefab;
     private GameObject _orbStartPos;
+    private Transform _playerTransform;
 
     //Pulled from Orb prefab for convenience
     private float _attackRange;
@@ -22,6 +21,9 @@ public class OrbSpawn : MonoBehaviourBase
         _orbPrefab = orbPrefab;
         _attackRange = _orbPrefab.GetComponent<BaseOrb>().BaseOrbData.AttackRange;
         _orbStartPos = GameObject.FindGameObjectWithTag(Constants.Tags.OrbStartPos);
+
+        _playerTransform = GameObject.FindGameObjectWithTag(Constants.Tags.Player)
+           .GetComponent<Transform>();
     }
 
     private void Update()
@@ -30,6 +32,8 @@ public class OrbSpawn : MonoBehaviourBase
         {
             return;
         }
+
+        transform.rotation = _playerTransform.rotation;
 
         if(!HasOrb())
         {
@@ -42,7 +46,7 @@ public class OrbSpawn : MonoBehaviourBase
         }
     }
 
-    public void Fire(Quaternion rotation)
+    public void Fire(Quaternion rotation, Vector3 enemyPos)
     {
         if(!HasOrb())
         {
@@ -53,8 +57,9 @@ public class OrbSpawn : MonoBehaviourBase
         var currentOrb = transform.GetChild(0);
         currentOrb.transform.parent = null;
         currentOrb.transform.rotation = rotation;
+
         var orb = currentOrb.GetComponent<BaseOrb>();
-        orb.Fire(_orbStartPos.transform.position);
+        orb.Fire(_orbStartPos.transform.position, enemyPos);
     }
 
     private void SpawnOrb()

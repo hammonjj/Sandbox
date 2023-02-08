@@ -4,16 +4,16 @@ using UnityEngine;
 public class Ring : MonoBehaviourBase
 {
     public bool DrawDebugLines = true;
-    public float OrbDistanceFromPlayerCenter = 0.75f;
-    public Vector3 RotationAxis;
+    public float SoftAimLock = 0.5f;
     public float AngularVelocity = 20f;
     public float AttackCooldown = 0.50f;
-    public int MaxOrbs = 1;
-
+    public float OrbDistanceFromPlayerCenter = 0.75f;
+    public Vector3 RotationAxis;
     public GameObject OrbStartPosition;
     public GameObject OrbSpawnPrefab;
     public Constants.Enums.AttackType AttackType;
 
+    [SerializeField] private int _maxOrbs = 3;
     private bool _canAttack;
     private float _attackCooldownCurrent;
     private List<GameObject> _orbSpawns = new();
@@ -46,12 +46,12 @@ public class Ring : MonoBehaviourBase
         // (-0.5, 0.5, 0) -> Right High, Left Low
         // (0.5, 0.5, 0) -> Left High, Right Low
         
-        var degreesBetweenSections = (float)360 / MaxOrbs;
+        var degreesBetweenSections = (float)360 / _maxOrbs;
         var orbPrefab = VerifyComponent<DataWarehouse>(Constants.Tags.GameStateManager).PrimaryOrbPrefab;
         _attackRange = orbPrefab.GetComponent<BaseOrb>().BaseOrbData.AttackRange;
 
         //Works for flat ring only
-        for(int i = 0; i < MaxOrbs; i++)
+        for(int i = 0; i < _maxOrbs; i++)
         {
             var directionOfRay = Quaternion.AngleAxis(i * degreesBetweenSections, RotationAxis) * Vector3.forward;
 
@@ -89,7 +89,7 @@ public class Ring : MonoBehaviourBase
         foreach(var spawn in _orbSpawns)
         {
             spawn.transform.RotateAround(
-                gameObject.transform.position, new Vector3(0,1,0)/*RotationAxis*/, AngularVelocity * Time.deltaTime);
+                gameObject.transform.position, new Vector3(0,1,0), AngularVelocity * Time.deltaTime);
         }
     }
     
@@ -135,12 +135,9 @@ public class Ring : MonoBehaviourBase
         _attackCooldownCurrent = AttackCooldown;
 
         var orbSpawn = GetLoadedOrbSpawn();
-        var (enemyPos, projectileRotation) = FindEnemiesToAttack(OrbStartPosition); //orbSpawn.gameObject
-        LogError($"EnemyPos: {enemyPos}");
+        var (enemyPos, projectileRotation) = FindEnemiesToAttack(OrbStartPosition);
 
-        //Need to convert this to using the enemy location pointing the orb to fire on a ray through that position
-        //The rotation is causing projectiles to miss either when close up or by millimeters on either side
-        orbSpawn.Fire(projectileRotation);
+        orbSpawn.Fire(projectileRotation, enemyPos);
     }
 
     private void UpdateAttackCooldown()
@@ -159,7 +156,7 @@ public class Ring : MonoBehaviourBase
             switch(upgradeCast.UpgradeName)
             {
                 case PrimaryRingUpgradeData.Upgrade.IncreaseOrbs:
-                    MaxOrbs++;
+                    _maxOrbs++;
                     break;
             }
         }
@@ -194,7 +191,7 @@ public class Ring : MonoBehaviourBase
             normalizedColliderVector.Normalize();
 
             //0 = 180 degree arc - 0.5 = 90 degree arc
-            if(Vector3.Dot(normalizedColliderVector, orbStartPos.transform.forward) < 0.5f)
+            if(Vector3.Dot(normalizedColliderVector, orbStartPos.transform.forward) < SoftAimLock)
             {
                 continue;
             }

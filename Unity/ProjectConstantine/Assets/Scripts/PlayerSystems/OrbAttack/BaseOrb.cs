@@ -41,10 +41,15 @@ public class BaseOrb : MonoBehaviourBase
         }
     }
 
-    public void Fire(Vector3 orbStartPos)
+    public void Fire(Vector3 orbStartPos, Vector3 enemyPos)
     {
         _hasBeenFired = true;
         _initialPosition = orbStartPos;
+        if(enemyPos != Vector3.zero)
+        {
+            transform.LookAt(enemyPos);
+        }
+        
         LogDebug($"Initial Position: {_initialPosition}");
     }
 
