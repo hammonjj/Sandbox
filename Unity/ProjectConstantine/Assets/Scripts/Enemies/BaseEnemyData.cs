@@ -8,6 +8,7 @@ public class BaseEnemyData : ScriptableObjectBase
     [Header("Base")]
     public string Name;
     public int MaxHealth = 100;
+    public int Currency = 1;
 
     [Header("Movement")]
     public float MovementSpeed = 2f;

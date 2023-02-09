@@ -31,7 +31,7 @@ public class DebugGameWindow : EditorWindow
             var enemies = GameObject.FindGameObjectsWithTag(Constants.Tags.Enemy);
             foreach(var enemy in enemies)
             {
-                EventManager.GetInstance().OnEnemyDeath();
+                EventManager.GetInstance().OnEnemyDeath(1);
                 Destroy(enemy);
             }
         }

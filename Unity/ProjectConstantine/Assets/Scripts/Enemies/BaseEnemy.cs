@@ -82,7 +82,7 @@ public class BaseEnemy : MonoBehaviourBase
     {
         if(EmitDeathEvent)
         {
-            EventManager.GetInstance().OnEnemyDeath();
+            EventManager.GetInstance().OnEnemyDeath(EnemyData.Currency);
         }
 
         LogDebug("I Died");

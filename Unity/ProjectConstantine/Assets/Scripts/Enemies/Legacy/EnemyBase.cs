@@ -105,7 +105,7 @@ public class EnemyBase : MonoBehaviourBase
         if(_currentHealth <= 0)
         {
             LogDebug("I Died");
-            EventManager.GetInstance().OnEnemyDeath();
+            EventManager.GetInstance().OnEnemyDeath(1);
             Destroy(gameObject);
             return;
         }

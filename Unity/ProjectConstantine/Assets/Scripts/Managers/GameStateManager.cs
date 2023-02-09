@@ -38,15 +38,20 @@ public class GameStateManager : MonoBehaviourBase
         {
             _instance = this;
             DontDestroyOnLoad(this);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            RegisterEventListeners();
             AvailableZoneFightChambers = Constants.Enums.Zone1FightRooms;
-            EditorApplication.playModeStateChanged += OnPlayModeChange;
-            EventManager.GetInstance().onGameReset += OnGameReset;
         }
         else
         {
             Destroy(this);
         }
+    }
+
+    private void RegisterEventListeners()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        EventManager.GetInstance().onGameReset += OnGameReset;
+        EditorApplication.playModeStateChanged += OnPlayModeChange;
     }
 
     private void Update()
@@ -89,6 +94,8 @@ public class GameStateManager : MonoBehaviourBase
     {
         LogDebug("Reseting Game");
         SceneManager.LoadScene(Constants.Enums.Scenes.WorldHub.ToString());
+
+        Destroy(_instance);
         _instance = null;
     }
 
@@ -96,29 +103,20 @@ public class GameStateManager : MonoBehaviourBase
     {
         if(_sceneStateManager == null)
         {
-            _sceneStateManager = GameObject.FindGameObjectWithTag(Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
-
-            if(_sceneStateManager == null)
-            {
-                return;
-            }
-
-            LogDebug("Acquired SceneStateManager");
+            _sceneStateManager = GameObject.FindGameObjectWithTag(
+                Constants.Tags.SceneStateManager)?.GetComponent<SceneStateManager>();
         }
 
         if(_doorManager == null)
         {
-            _doorManager = GameObject.FindGameObjectWithTag(Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
-
-            if(_doorManager == null)
-            {
-                return;
-            }
-
-            LogDebug("Acquired DoorManager");
+            _doorManager = GameObject.FindGameObjectWithTag(
+                Constants.Tags.DoorManager)?.GetComponent<DoorManager>();
         }
 
-        _isInitialized = true;
+        if(_doorManager != null && _sceneStateManager != null)
+        {
+            _isInitialized = true;
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -129,6 +127,8 @@ public class GameStateManager : MonoBehaviourBase
         _sceneStateManager = null;
         _isInitialized = false;
         _recalculateRoomOptions = true;
+
+        RegisterEventListeners();
     }
 
     private static void OnPlayModeChange(PlayModeStateChange state)
@@ -136,6 +136,7 @@ public class GameStateManager : MonoBehaviourBase
         if(state == PlayModeStateChange.ExitingPlayMode)
         {
             Helper.LogDebug("Reseting GameStateManager");
+            Destroy(_instance);
             _instance = null;
         }
     }

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoggingLevel: 0
   Name: Zone1EnemySpawner
-  MaxHealth: 100
+  MaxHealth: 50
+  Currency: 1
   MovementSpeed: 2
   DetectionRange: 5
   PatrolPathRange: 3

@@ -157,7 +157,9 @@ public class SceneStateManager : MonoBehaviourBase
 
     private IEnumerator FireGameResetEvent()
     {
+        LogDebug("Starting wait for game reset");
         yield return new WaitForSeconds(2);
+        LogDebug("Retruning from wait");
         _eventManager.OnGameReset();
     }
 

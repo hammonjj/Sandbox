@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class EventManager
 {
     //Game Events
-    public Action onEnemyDeath;
+    public Action<int> onEnemyDeath;
     public Action onPlayerDeath;
     public Action onEncounterEnded;
     public Action onSceneEnding;
@@ -58,15 +58,21 @@ public class EventManager
         onEnemyDeath = null;
         onPlayerDeath = null;
         onEncounterEnded = null;
+        onSceneEnding = null;
+        onGameReset = null;
+        onUpgradePurchase = null;
+
         onSupportAbility = null;
         onPlayerDash = null;
         onPlayerPrimaryAttack = null;
         onPlayerSecondaryAttack = null;
+        onPausePlayerController = null;
+
         onPause = null;
         onAdvanceScenePressed = null;
-        onSceneEnding = null;
-        onGameReset = null;
         onEnergyUsed = null;
+
+        onSpawnEnemies = null;
     }
 
     public void OnEnergyUsed(float energy)
@@ -104,9 +110,9 @@ public class EventManager
         onPlayerDeath?.Invoke();
     }
 
-    public void OnEnemyDeath()
+    public void OnEnemyDeath(int currency)
     {
-        onEnemyDeath?.Invoke();
+        onEnemyDeath?.Invoke(currency);
     }
 
     public void OnSupportAbility()

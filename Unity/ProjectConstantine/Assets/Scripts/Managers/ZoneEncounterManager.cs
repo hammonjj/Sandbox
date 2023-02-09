@@ -35,6 +35,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         var sceneType = _sceneManager.CurrentSceneType;
         var currentZone = _sceneManager.GetCurrentZone();
+
         LogDebug($"Current Scene Type: {sceneType}");
         if(sceneType == Constants.Enums.SceneType.None &&
             currentZone == Constants.Enums.Zones.Zone1)
@@ -115,7 +116,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
         }
     }
 
-    private void OnEnemyDeath()
+    private void OnEnemyDeath(int currency)
     {
         _currentlyDeadEnemies += 1;
         LogDebug("onEnemyDied event received");
@@ -130,9 +131,6 @@ public class ZoneEncounterManager : MonoBehaviourBase
         {
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
             var randomPrefab = Helper.RandomInclusiveRange(0, _normalEnemyPrefabs.Count - 1);
-
-            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
-            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
 
             Instantiate(
                 _normalEnemyPrefabs[randomPrefab],
