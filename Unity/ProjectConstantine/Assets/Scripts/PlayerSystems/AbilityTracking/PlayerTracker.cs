@@ -59,7 +59,7 @@ public class PlayerTracker : MonoBehaviourBase
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LogDebug("OnSceneLoaded Called");
-        RegisterEventListeners();
+        //RegisterEventListeners();
     }
 
     private static void OnPlayModeChange(PlayModeStateChange state)

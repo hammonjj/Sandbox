@@ -11,15 +11,6 @@ public class TurretEnemyData : BaseEnemyData
 
     public override void Setup(GameObject parentGameObject)
     {
-        /*
-        _firingPosition = GameObjectExtensions.RecursiveFindChild(
-            parentGameObject.transform, Constants.ObjectNames.FiringPosition);
-
-        if(_firingPosition == null)
-        {
-            LogError("Firing Position not found");
-        }
-        */
         parentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         _playerBodyAttackTarget = GameObject.FindGameObjectWithTag(Constants.Tags.PlayerBodyAttackTarget);
     }

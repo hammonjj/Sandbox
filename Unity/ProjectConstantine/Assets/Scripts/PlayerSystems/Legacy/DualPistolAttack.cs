@@ -57,7 +57,7 @@ namespace Assets.Scripts.PlayerSystems
             {
                 if(this == null)
                 {
-                    StopAllCoroutines();
+                    //StopAllCoroutines();
                 }
             }
 

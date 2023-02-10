@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class ZoneDataContainer : MonoBehaviourBase
 {
-    public GameObject[] Zone1Enemies;
+    [System.Serializable]
+    public class EnemyEntry
+    {
+        public int MaxPerWave;
+        public GameObject Prefab;
+    }
 
-    private Dictionary<(Constants.Enums.Zones, Constants.Enums.RoomType), GameObject[]> _enemyDictionary = new();
+    public EnemyEntry[] Zone1Enemies;
+    private Dictionary<(Constants.Enums.Zones, Constants.Enums.RoomType), EnemyEntry[]> _enemyDictionary = new();
 
     private void Awake()
     {
@@ -26,7 +32,7 @@ public class ZoneDataContainer : MonoBehaviourBase
         return ret;
     }
 
-    public List<GameObject> GetAvailableNormalEnemies(Constants.Enums.Zones zone, Constants.Enums.RoomType roomType)
+    public List<EnemyEntry> GetAvailableNormalEnemies(Constants.Enums.Zones zone, Constants.Enums.RoomType roomType)
     {
         return (_enemyDictionary[(zone, roomType)]).ToList();
     }

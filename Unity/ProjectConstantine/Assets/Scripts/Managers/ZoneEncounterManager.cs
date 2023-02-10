@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
     public int WavesToSpawn = 3;
     public int EnemiesToSpawn = 5;
     public int TimeBetweenWaves = 3;
-    public float InitialTimeBeforeSpawn = 1500f;
+    public int InitialTimeBeforeSpawn = 5;
 
     public GameObject[] BossEnemyPrefabs; //GetAvailableBossEnemies(Zone, Room);
     public GameObject[] EliteEnemyPrefabs; //GetAvailableEliteEnemies(Zone, Room);
@@ -21,7 +22,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
     private EventManager _eventManager;
     private SceneStateManager _sceneManager;
     private ZoneDataContainer _zoneDataContainer;
-    private List<GameObject> _normalEnemyPrefabs;
+    private List<ZoneDataContainer.EnemyEntry> _normalEnemyPrefabs;
 
     private bool _inZone1Start = false;
     private void Start()
@@ -76,7 +77,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
             }
 
             //Encounters start with enemies already spawned but pause first to let player get their bearings
-            InstantiateWave();
+            StartCoroutine(InstantiateWave(InitialTimeBeforeSpawn));
             //Future: Calculate the following number of waves
         }
     }
@@ -106,7 +107,7 @@ public class ZoneEncounterManager : MonoBehaviourBase
         if(_currentWave < WavesToSpawn)
         {
             _currentWave += 1;
-            InstantiateWave();
+            StartCoroutine(InstantiateWave(TimeBetweenWaves));
             return;
         }
         else
@@ -122,23 +123,48 @@ public class ZoneEncounterManager : MonoBehaviourBase
         LogDebug("onEnemyDied event received");
     }
 
-    private void InstantiateWave()
+    private IEnumerator InstantiateWave(int waitTime)
     {
         LogDebug($"Instantiating wave {_currentWave} of {WavesToSpawn}");
 
+        yield return new WaitForSeconds(waitTime);
+
+        LogDebug($"Wait over after {waitTime} seconds");
         var unusedSpawns = SpawnPoints.ToList();
+        var usedEnemiesDict = new Dictionary<ZoneDataContainer.EnemyEntry, int>();
+        var prefabsCache = _normalEnemyPrefabs;
         for(int i = 0; i < EnemiesToSpawn; i++)
         {
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
-            var randomPrefab = Helper.RandomInclusiveRange(0, _normalEnemyPrefabs.Count - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, prefabsCache.Count - 1);
 
+
+            LogDebug($"RandomPrefab: {randomPrefab} - PrefabCache.Count: {prefabsCache.Count}");
             Instantiate(
-                _normalEnemyPrefabs[randomPrefab],
+                prefabsCache[randomPrefab].Prefab,
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
-
+            LogDebug("");
             //Prevent enemies from spawning on top of each other
             unusedSpawns.RemoveAt(spawnPoint);
+            LogDebug("");
+            //Remove enemies that have been used too much
+            if(!usedEnemiesDict.ContainsKey(prefabsCache[randomPrefab]))
+            {
+                usedEnemiesDict.Add(prefabsCache[randomPrefab], 1);
+            }
+            else
+            {
+                usedEnemiesDict[prefabsCache[randomPrefab]] = 
+                    usedEnemiesDict[prefabsCache[randomPrefab]] + 1;
+            }
+            LogDebug("");
+            if(usedEnemiesDict[prefabsCache[randomPrefab]] >= prefabsCache[randomPrefab].MaxPerWave)
+            {
+                prefabsCache.Remove(prefabsCache[randomPrefab]);
+            }
+
+            LogDebug("");
         }
 
         LogDebug($"Finished instantiating wave {_currentWave} of {WavesToSpawn}");
@@ -160,11 +186,8 @@ public class ZoneEncounterManager : MonoBehaviourBase
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
             var randomPrefab = Helper.RandomInclusiveRange(0, _normalEnemyPrefabs.Count - 1);
 
-            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - SpawnPoint Index: {spawnPoint} - SpawnPointCount: {unusedSpawns.Count}");
-            //LogDebug($"Spawning Enemy #{EnemiesToSpawn} - RandomPrefab Index: {randomPrefab} - NormalEnemyPrefabsLength: {NormalEnemyPrefabs.Length}");
-
             Instantiate(
-                _normalEnemyPrefabs[randomPrefab],
+                _normalEnemyPrefabs[randomPrefab].Prefab,
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
 
