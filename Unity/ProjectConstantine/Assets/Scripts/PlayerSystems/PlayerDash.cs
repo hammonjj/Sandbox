@@ -34,7 +34,7 @@ public class PlayerDash : MonoBehaviourBase
     private float _totaldashTime;
     private float _dashTimeoutCurrent;
 
-    private void Awake()
+    private void Start()
     {
         EventManager.GetInstance().onPlayerDash += OnDash;
     }

@@ -77,7 +77,6 @@ public class PrimaryOrbData : BaseOrbData
 
     protected override void OnPlayModeChange(PlayModeStateChange state)
     {
-        Helper.LogDebug("Reseting PrimaryOrbData");
         if(state == PlayModeStateChange.ExitingPlayMode)
         {
             Helper.LogDebug("Reseting PrimaryOrbData");

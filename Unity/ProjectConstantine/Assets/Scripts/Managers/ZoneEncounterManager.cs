@@ -129,7 +129,6 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         yield return new WaitForSeconds(waitTime);
 
-        LogDebug($"Wait over after {waitTime} seconds");
         var unusedSpawns = SpawnPoints.ToList();
         var usedEnemiesDict = new Dictionary<ZoneDataContainer.EnemyEntry, int>();
         var prefabsCache = _normalEnemyPrefabs;
@@ -138,16 +137,14 @@ public class ZoneEncounterManager : MonoBehaviourBase
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
             var randomPrefab = Helper.RandomInclusiveRange(0, prefabsCache.Count - 1);
 
-
-            LogDebug($"RandomPrefab: {randomPrefab} - PrefabCache.Count: {prefabsCache.Count}");
             Instantiate(
                 prefabsCache[randomPrefab].Prefab,
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
-            LogDebug("");
+
             //Prevent enemies from spawning on top of each other
             unusedSpawns.RemoveAt(spawnPoint);
-            LogDebug("");
+
             //Remove enemies that have been used too much
             if(!usedEnemiesDict.ContainsKey(prefabsCache[randomPrefab]))
             {
@@ -158,13 +155,11 @@ public class ZoneEncounterManager : MonoBehaviourBase
                 usedEnemiesDict[prefabsCache[randomPrefab]] = 
                     usedEnemiesDict[prefabsCache[randomPrefab]] + 1;
             }
-            LogDebug("");
+
             if(usedEnemiesDict[prefabsCache[randomPrefab]] >= prefabsCache[randomPrefab].MaxPerWave)
             {
                 prefabsCache.Remove(prefabsCache[randomPrefab]);
             }
-
-            LogDebug("");
         }
 
         LogDebug($"Finished instantiating wave {_currentWave} of {WavesToSpawn}");

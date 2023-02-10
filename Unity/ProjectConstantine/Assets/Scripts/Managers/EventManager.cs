@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +27,9 @@ public class EventManager
 
     //Debugging
     public Action onSpawnEnemies;
+    public Guid InstanceId;
+
+    private int _sceneIndex;
 
     //Private Members
     private static EventManager _instance;
@@ -35,44 +39,48 @@ public class EventManager
         if(_instance == null)
         {
             _instance = new EventManager();
-            SceneManager.activeSceneChanged += _instance.OnSceneLoaded;
-            EditorApplication.playModeStateChanged += OnPlayModeChange;
+            _instance.InstanceId = Guid.NewGuid();
+            _instance._sceneIndex = SceneManager.GetActiveScene().buildIndex;
         }
 
         return _instance;
     }
 
-    private static void OnPlayModeChange(PlayModeStateChange state)
+    public static void Reset()
     {
-        if(state == PlayModeStateChange.ExitingPlayMode)
+        //Eventually convert this to use reflection to reset all Actions on Reset
+        if(_instance == null)
         {
-            Helper.LogDebug("Reseting Event Manager");
-            _instance = null;
+            return;
         }
-    }
 
-    public void OnSceneLoaded(Scene scene, Scene mode)
-    {
-        Helper.LogDebug("EventManager Reloading");
+        if(SceneManager.GetActiveScene().buildIndex == _instance._sceneIndex)
+        {
+            //No need to reset since we're still in the same scene
+            return;
+        }
 
-        onEnemyDeath = null;
-        onPlayerDeath = null;
-        onEncounterEnded = null;
-        onSceneEnding = null;
-        onGameReset = null;
-        onUpgradePurchase = null;
+        Debug.Log("Reseting EventManager");
+        _instance.onEnemyDeath = null;
+        _instance.onPlayerDeath = null;
+        _instance.onEncounterEnded = null;
+        _instance.onSceneEnding = null;
+        _instance.onGameReset = null;
+        _instance.onUpgradePurchase = null;
 
-        onSupportAbility = null;
-        onPlayerDash = null;
-        onPlayerPrimaryAttack = null;
-        onPlayerSecondaryAttack = null;
-        onPausePlayerController = null;
+        _instance.onSupportAbility = null;
+        _instance.onPlayerDash = null;
+        _instance.onPlayerPrimaryAttack = null;
+        _instance.onPlayerSecondaryAttack = null;
+        _instance.onPausePlayerController = null;
 
-        onPause = null;
-        onAdvanceScenePressed = null;
-        onEnergyUsed = null;
+        _instance.onPause = null;
+        _instance.onAdvanceScenePressed = null;
+        _instance.onEnergyUsed = null;
 
-        onSpawnEnemies = null;
+        _instance.onSpawnEnemies = null;
+
+        _instance = null;
     }
 
     public void OnEnergyUsed(float energy)
@@ -127,6 +135,7 @@ public class EventManager
 
     public void OnPlayerPrimaryAttack()
     {
+        Debug.Log($"OnPrimaryAttackInvoked");
         onPlayerPrimaryAttack?.Invoke();
     }
 

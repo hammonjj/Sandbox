@@ -32,14 +32,15 @@ public class GameStateManager : MonoBehaviourBase
 
     private void Awake()
     {
+        EventManager.Reset();
         _recalculateRoomOptions = true;
 
         if(_instance == null)
         {
             _instance = this;
             DontDestroyOnLoad(this);
-            RegisterEventListeners();
             AvailableZoneFightChambers = Constants.Enums.Zone1FightRooms;
+            RegisterEventListeners();
         }
         else
         {
@@ -49,8 +50,8 @@ public class GameStateManager : MonoBehaviourBase
 
     private void RegisterEventListeners()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
         EventManager.GetInstance().onGameReset += OnGameReset;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         EditorApplication.playModeStateChanged += OnPlayModeChange;
     }
 

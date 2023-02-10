@@ -11,7 +11,6 @@ public class Ring : MonoBehaviourBase
     public Vector3 RotationAxis;
     public GameObject OrbStartPosition;
     public GameObject OrbSpawnPrefab;
-    public Constants.Enums.AttackType AttackType;
 
     [SerializeField] private int _maxOrbs = 3;
     private bool _canAttack;
@@ -25,14 +24,7 @@ public class Ring : MonoBehaviourBase
     {
         GetUpgrades();
         CalculateOrbSpawns();
-        if(AttackType == Constants.Enums.AttackType.Primary)
-        {
-            EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
-        }
-        else if(AttackType == Constants.Enums.AttackType.Secondary)
-        {
-            EventManager.GetInstance().onPlayerSecondaryAttack += OnAttack;
-        }
+        EventManager.GetInstance().onPlayerPrimaryAttack += OnAttack;
     }
     
     private void CalculateOrbSpawns()
@@ -123,6 +115,7 @@ public class Ring : MonoBehaviourBase
 
     private void OnAttack()
     {
+        LogDebug("Ring.OnAttackCalled");
         //Select orb and fire it at enemy
         if(!_canAttack || GetCurrentOrbCount() == 0)
         {

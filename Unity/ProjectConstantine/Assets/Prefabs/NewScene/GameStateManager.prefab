@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 651517544391637067}
   - component: {fileID: 1032467070}
   - component: {fileID: 6955556999893504629}
+  - component: {fileID: 2047443638}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: GameStateManager
@@ -64,11 +65,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: -1
+  EnemiesKilled: 0
   Currency: 0
   PlayerUpgrades: []
-  SecondaryRingActive: 0
-  SecondaryMaxOrbs: 3
-  SecondaryOrbPrefab: {fileID: 0}
 --- !u!114 &6955556999893504629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,3 +89,17 @@ MonoBehaviour:
     type: 3}
   PrimaryOrbPrefab: {fileID: 2752842888426458132, guid: 98d834b4342a2c940a9a7bfcc120b43c,
     type: 3}
+--- !u!114 &2047443638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5740002400781328042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6c9ab7ea4e84532aede8efc6003c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerDeaths: 0
+  HasFinishedZone1: 0
