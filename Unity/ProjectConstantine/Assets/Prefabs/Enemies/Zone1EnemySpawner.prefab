@@ -108,6 +108,7 @@ MonoBehaviour:
     type: 3}
   FiringPosition: {fileID: 0}
   EmitDeathEvent: 1
+  HelpPingRange: 6.5
 --- !u!114 &5137792871103746287
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -136,6 +136,9 @@ MonoBehaviour:
   EnemyData: {fileID: 11400000, guid: 0968f24e382cda841b19747fb412a147, type: 2}
   FloatingCombatText: {fileID: 8125645889426680208, guid: f0ab56c4dad5c934aafc0960b791b6b4,
     type: 3}
+  FiringPosition: {fileID: 0}
+  EmitDeathEvent: 1
+  HelpPingRange: 6.5
 --- !u!195 &5383475913913071379
 NavMeshAgent:
   m_ObjectHideFlags: 0

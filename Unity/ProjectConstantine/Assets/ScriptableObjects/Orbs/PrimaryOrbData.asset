@@ -17,5 +17,5 @@ MonoBehaviour:
   AttackRange: 10
   ProjectileSpeed: 20
   CritChance: 0
-  CritModifier: 10
+  CritModifier: 1.5
   CanPassThroughEnemies: 0

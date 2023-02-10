@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class EventManager
 {
     //Game Events
+    public Action<Vector3> onEnemyHelpPing;
     public Action<int> onEnemyDeath;
     public Action onPlayerDeath;
     public Action onEncounterEnded;
@@ -61,6 +61,7 @@ public class EventManager
         }
 
         Debug.Log("Reseting EventManager");
+        _instance.onEnemyHelpPing = null;
         _instance.onEnemyDeath = null;
         _instance.onPlayerDeath = null;
         _instance.onEncounterEnded = null;
@@ -81,6 +82,11 @@ public class EventManager
         _instance.onSpawnEnemies = null;
 
         _instance = null;
+    }
+
+    public void OnEnemyHelpPing(Vector3 playerPos)
+    {
+        onEnemyHelpPing?.Invoke(playerPos);
     }
 
     public void OnEnergyUsed(float energy)
