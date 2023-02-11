@@ -76,6 +76,9 @@ public class ZoneEncounterManager : MonoBehaviourBase
                 LogError($"No enemy prefabs for zone/roomType: {currentZone}, Normal");
             }
 
+            var chamberData = _zoneDataContainer.GetDataForChamber(_sceneManager.GetCurrentScene(), currentZone);
+            EnemiesToSpawn = chamberData == null ? EnemiesToSpawn : chamberData.EnemiesPerWave;
+
             //Encounters start with enemies already spawned but pause first to let player get their bearings
             StartCoroutine(InstantiateWave(InitialTimeBeforeSpawn));
             //Future: Calculate the following number of waves
@@ -129,7 +132,12 @@ public class ZoneEncounterManager : MonoBehaviourBase
 
         yield return new WaitForSeconds(waitTime);
 
-        var unusedSpawns = SpawnPoints.ToList();
+        SpawnEnemyWave(Constants.Enums.EnemyType.Static);
+        SpawnEnemyWave(Constants.Enums.EnemyType.Dynamic);
+        /*
+        var unusedSpawns = SpawnPoints.Where(
+            x => x.GetComponent<SpawnPoint>().Type == SpawnPoint.SpawnType.DynamicEnemy).ToList();
+
         var usedEnemiesDict = new Dictionary<ZoneDataContainer.EnemyEntry, int>();
         var prefabsCache = _normalEnemyPrefabs;
         for(int i = 0; i < EnemiesToSpawn; i++)
@@ -161,8 +169,46 @@ public class ZoneEncounterManager : MonoBehaviourBase
                 prefabsCache.Remove(prefabsCache[randomPrefab]);
             }
         }
-
+        */
         LogDebug($"Finished instantiating wave {_currentWave} of {WavesToSpawn}");
+    }
+
+    private void SpawnEnemyWave(Constants.Enums.EnemyType enemyType)
+    {
+        var unusedSpawns = SpawnPoints
+            .Where(x => x.GetComponent<SpawnPoint>().EnemyType == enemyType).ToList();
+
+        var usedEnemiesDict = new Dictionary<ZoneDataContainer.EnemyEntry, int>();
+        var prefabsCache = _normalEnemyPrefabs.Where(x => x.EnemyType == enemyType).ToList();
+        for(int i = 0; i < EnemiesToSpawn; i++)
+        {
+            var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
+            var randomPrefab = Helper.RandomInclusiveRange(0, prefabsCache.Count - 1);
+
+            Instantiate(
+                prefabsCache[randomPrefab].Prefab,
+                unusedSpawns[spawnPoint].transform.position,
+                unusedSpawns[spawnPoint].transform.rotation);
+
+            //Prevent enemies from spawning on top of each other
+            unusedSpawns.RemoveAt(spawnPoint);
+
+            //Remove enemies that have been used too much
+            if(!usedEnemiesDict.ContainsKey(prefabsCache[randomPrefab]))
+            {
+                usedEnemiesDict.Add(prefabsCache[randomPrefab], 1);
+            }
+            else
+            {
+                usedEnemiesDict[prefabsCache[randomPrefab]] =
+                    usedEnemiesDict[prefabsCache[randomPrefab]] + 1;
+            }
+
+            if(usedEnemiesDict[prefabsCache[randomPrefab]] >= prefabsCache[randomPrefab].MaxPerWave)
+            {
+                prefabsCache.Remove(prefabsCache[randomPrefab]);
+            }
+        }
     }
 
     //This comes through the debugging window

@@ -9,9 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 674e086d4bcd4ec4fa404d02e3fdab86, type: 3}
-  m_Name: DualPistolProjectile
+  m_Script: {fileID: 11500000, guid: 170c24ea1d61c3e44ab539da7b5b9023, type: 3}
+  m_Name: Zone1ChamberData
   m_EditorClassIdentifier: 
-  AttackDamage: 5
-  AttackSpeed: 20
-  AttackRange: 10
+  LoggingLevel: 0
+  Zone: 1
+  ZoneLength: 10
+  ChamberDataObj:
+  - EnemiesPerWave: 8
+    Scene: 9
+  - EnemiesPerWave: 12
+    Scene: 10
+  - EnemiesPerWave: 10
+    Scene: 11

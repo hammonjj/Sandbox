@@ -9,9 +9,21 @@ public class ZoneDataContainer : MonoBehaviourBase
     {
         public int MaxPerWave;
         public GameObject Prefab;
+        public Constants.Enums.EnemyType EnemyType;
     }
-
+    /*
+    [System.Serializable]
+    public class ChamberData
+    {
+        public int EnemiesPerWave;
+        public Constants.Enums.Scenes Scene;
+    }
+    */
+    public ZoneChamberData[] ZoneChamberData;
+    
     public EnemyEntry[] Zone1Enemies;
+    //public ChamberData[] Zone1ChamberData;
+
     private Dictionary<(Constants.Enums.Zones, Constants.Enums.RoomType), EnemyEntry[]> _enemyDictionary = new();
 
     private void Awake()
@@ -35,5 +47,18 @@ public class ZoneDataContainer : MonoBehaviourBase
     public List<EnemyEntry> GetAvailableNormalEnemies(Constants.Enums.Zones zone, Constants.Enums.RoomType roomType)
     {
         return (_enemyDictionary[(zone, roomType)]).ToList();
+    }
+
+    public ZoneChamberData.ChamberData GetDataForChamber(Constants.Enums.Scenes scene, Constants.Enums.Zones zone)
+    {
+
+        try
+        {
+            return ZoneChamberData.Where(x => x.Zone == zone).First().ChamberDataObj.Where(x => x.Scene == scene).First();
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

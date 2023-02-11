@@ -17,6 +17,11 @@ public class SceneStateManager : MonoBehaviourBase
     private GameStateManager _gameStateManager;
     private NavMeshSurface _navMeshSurface;
 
+    public Constants.Enums.Scenes GetCurrentScene()
+    {
+        return Enum.Parse<Constants.Enums.Scenes>(SceneManager.GetActiveScene().name);
+    }
+
     public Constants.Enums.Zones GetCurrentZone()
     {
         DetermineZone(SceneManager.GetActiveScene().name);
