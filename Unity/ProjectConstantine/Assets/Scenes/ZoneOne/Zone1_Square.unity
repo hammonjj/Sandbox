@@ -8912,11 +8912,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3100015151856859729, guid: 316f3f6554c4c4dcba9630f0c7adf413,
-        type: 3}
-      propertyPath: CurrentFightType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3100015152666338632, guid: 316f3f6554c4c4dcba9630f0c7adf413,
         type: 3}
       propertyPath: m_RootOrder

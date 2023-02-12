@@ -185,10 +185,15 @@ public class ZoneEncounterManager : MonoBehaviourBase
             var spawnPoint = Helper.RandomInclusiveRange(0, unusedSpawns.Count - 1);
             var randomPrefab = Helper.RandomInclusiveRange(0, prefabsCache.Count - 1);
 
+            var prefab = prefabsCache[randomPrefab].Prefab;
+            unusedSpawns[spawnPoint].GetComponent<SpawnPoint>().SpawnEnemy(prefab);
+            
+            /*
             Instantiate(
                 prefabsCache[randomPrefab].Prefab,
                 unusedSpawns[spawnPoint].transform.position,
                 unusedSpawns[spawnPoint].transform.rotation);
+            */
 
             //Prevent enemies from spawning on top of each other
             unusedSpawns.RemoveAt(spawnPoint);

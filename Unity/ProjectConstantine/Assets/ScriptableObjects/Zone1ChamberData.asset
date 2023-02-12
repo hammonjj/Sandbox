@@ -22,3 +22,7 @@ MonoBehaviour:
     Scene: 10
   - EnemiesPerWave: 10
     Scene: 11
+  - EnemiesPerWave: 15
+    Scene: 14
+  - EnemiesPerWave: 15
+    Scene: 15
