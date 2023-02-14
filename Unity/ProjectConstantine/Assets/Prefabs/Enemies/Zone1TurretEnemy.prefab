@@ -219,6 +219,8 @@ MonoBehaviour:
   FloatingCombatText: {fileID: 8125645889426680208, guid: f0ab56c4dad5c934aafc0960b791b6b4,
     type: 3}
   FiringPosition: {fileID: 404824753721793349}
+  EmitDeathEvent: 1
+  HelpPingRange: 6.5
 --- !u!54 &404824753213774663
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -426,6 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoggingLevel: 0
+  _timeToDrain: 0.15
 --- !u!224 &3512120723616217447 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3829105074811138381, guid: e538802fba5b84c5fbe7f7add168a44a,

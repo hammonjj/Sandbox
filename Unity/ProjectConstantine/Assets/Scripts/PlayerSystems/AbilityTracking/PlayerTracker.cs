@@ -21,6 +21,9 @@ public class PlayerTracker : MonoBehaviourBase
         {
             _instance = this;
             DontDestroyOnLoad(this);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            EditorApplication.playModeStateChanged += OnPlayModeChange;
+
             RegisterEventListeners();
         }
         else
@@ -31,11 +34,9 @@ public class PlayerTracker : MonoBehaviourBase
 
     private void RegisterEventListeners()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
         EventManager.GetInstance().onEnemyDeath += OnEnemyDeath;
         EventManager.GetInstance().onUpgradePurchase += OnUpgradeAcquired;
-        EventManager.GetInstance().onPlayerDeath += OnPlayerDeath;
-        EditorApplication.playModeStateChanged += OnPlayModeChange;
+        EventManager.GetInstance().onPlayerDeath += OnPlayerDeath;   
     }
 
     public List<UpgradeData> GetCurrentUpgrades(Constants.Enums.UpgradeType upgradeType)
@@ -59,7 +60,7 @@ public class PlayerTracker : MonoBehaviourBase
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LogDebug("OnSceneLoaded Called");
-        //RegisterEventListeners();
+        RegisterEventListeners();
     }
 
     private static void OnPlayModeChange(PlayModeStateChange state)

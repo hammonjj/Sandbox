@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8131589999075475979}
   - component: {fileID: 8131589999075475972}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: StaticSpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66adf200942bdb4ba005b5242f41820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoggingLevel: 0
+  EnemyType: 1

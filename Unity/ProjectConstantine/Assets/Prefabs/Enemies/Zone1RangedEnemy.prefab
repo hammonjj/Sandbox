@@ -267,6 +267,8 @@ MonoBehaviour:
   FloatingCombatText: {fileID: 8125645889426680208, guid: f0ab56c4dad5c934aafc0960b791b6b4,
     type: 3}
   FiringPosition: {fileID: 3333077835886450565}
+  EmitDeathEvent: 1
+  HelpPingRange: 6.5
 --- !u!195 &3333077836274934116
 NavMeshAgent:
   m_ObjectHideFlags: 0

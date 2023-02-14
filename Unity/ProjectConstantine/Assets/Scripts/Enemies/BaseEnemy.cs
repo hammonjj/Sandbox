@@ -10,6 +10,7 @@ public class BaseEnemy : MonoBehaviourBase
     public GameObject FloatingCombatText;
     public Transform FiringPosition;
     public bool EmitDeathEvent = true;
+    public float HelpPingRange = 5f;
 
     private bool _resetAttack;
     private bool _foundPlayer = false;
@@ -25,7 +26,8 @@ public class BaseEnemy : MonoBehaviourBase
         _healthBar = transform.Find(Constants.ObjectNames.EnemyHealthBarCanvas).GetComponent<HealthBar>();
         _currentHealth = EnemyData.MaxHealth;
         _player = GameObject.FindGameObjectWithTag(Constants.Tags.Player);
-        
+
+        EventManager.GetInstance().onEnemyHelpPing += OnEnemyHelpPing;
         EnemyData.Setup(gameObject);
         EnemyData.onAttackEnded += OnAttackEnded;
         EnemyData.onDeath += OnDeath;
@@ -73,6 +75,14 @@ public class BaseEnemy : MonoBehaviourBase
         }
     }
 
+    private void OnEnemyHelpPing(Vector3 playerPosition)
+    {
+        if(Vector3.Distance(playerPosition, gameObject.transform.position) <= HelpPingRange)
+        {
+            _foundPlayer = true;
+        }
+    }
+
     private void OnAttackEnded()
     {
         _resetAttack = true;
@@ -92,6 +102,7 @@ public class BaseEnemy : MonoBehaviourBase
 
     public void TakeDamage(int damage)
     {
+        _foundPlayer = true;
         _currentHealth -= damage;
         LogDebug($"I got hit - Attack Damage: {damage} - Current Health: {_currentHealth}");
 
