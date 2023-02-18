@@ -68,8 +68,7 @@ img {
 
 /* Intro */
 #intro {
-    padding: 4rem 1rem 10rem 1rem;
-    padding-bottom: 10rem;
+    padding: 4rem 1rem 8rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -170,6 +169,22 @@ nav [class*="fa-"]:hover {
     background-color: var(--hotmag);
 }
 
+/* About */
+#about {
+    padding: 4rem 1rem;
+}
+
+#about h2 {
+    font-size: 2.5rem;
+    margin-bottom: calc(2.5rem * 1.5);
+}
+
+#about img {
+    margin: 1rem 0 4rem 8rem;
+    padding: 1rem;
+    border-radius: 50%;
+    max-width: 50%;
+}
 
 /* Projects */
 #projects {
@@ -254,14 +269,33 @@ footer ul {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
     }
+    
+    #about {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #about img {
+        grid-column: 1/6;
+        grid-row: 1/2;
+    }
+    
+    #about .text {
+        grid-column: 6/11;
+        grid-row: 1/2;
+        order: 2;
+    }
+
     #projects {
         max-width: 1200px;
         margin: 0 auto;
     }
+    
     #projects img {
         grid-column: 1/6;
         grid-row: 1/2;
     }
+
     .text {
         grid-column: 5/11;
         grid-row: 1/2;
