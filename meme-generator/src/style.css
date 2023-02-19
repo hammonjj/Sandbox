@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .search-input {
+        @apply w-60 mb-5 block;
+    }
+
+    .meme {
+        margin: auto;
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+    }
+
+    .debug {
+        border-width:3px; border-style:solid; border-color:#FF0000;
+    }
+
+    .meme-text {
+        cursor: move;
+        font-family: impact;
+        font-size: 2.5em;
+        text-transform: uppercase;
+        color: white;
+        letter-spacing: 1px;
+        text-shadow:2px 2px 0px #000,
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px 2px 0 #000,
+            0px 2px 0 #000,
+            2px 0px 0 #000,
+            0px -2px 0 #000,
+            -2px 0px 0 #000,
+            2px 2px 5px #000;
+        display: inline-block;
+    }
+}
+
+@layer utilities {
+    .grayed-out-disabled {
+        @apply disabled:opacity-50;
+    }
+}
