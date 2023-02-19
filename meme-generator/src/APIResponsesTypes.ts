@@ -15,13 +15,3 @@ export interface IMemeAPIResponse {
   success: boolean;
   data: IData;
 }
-
-export interface IGeneratedMemeAPIResponse {
-    success: boolean;
-    data: IGeneratedMemeAPIResponse_Data; 
-}
-
-export interface IGeneratedMemeAPIResponse_Data {
-    url: URL;
-    page_url: URL;
-}

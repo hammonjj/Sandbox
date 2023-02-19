@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import fetchSearch from "./fetchSearch";
 import Results from "./Results";
@@ -9,17 +9,16 @@ const SearchParams = () => {
   const memeList = results?.data?.data?.memes ?? [];
 
   return (
-    <div className="my-0 mx-auto w-11/12">
+    <div className="my-0 mx-auto w-11/12 py-4">
       <form
-        className="mb-10 flex flex-col items-center justify-center rounded-lg bg-purple-700 p-10 shadow-lg">
+        className="template-search">
         <label htmlFor="template">
-          Template Name
           <input
             type="text"
             className="search-input"
             name="template"
             id="template"
-            placeholder="Template"
+            placeholder="Search Template"
             onChange={(e) => {
               setMemeTemplate(e.target.value);
             }}

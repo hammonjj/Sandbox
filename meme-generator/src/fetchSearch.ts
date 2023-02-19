@@ -5,7 +5,7 @@ const fetchSearch: QueryFunction<IMemeAPIResponse, ["search", ""]> = async () =>
   const res = await fetch(`https://api.imgflip.com/get_memes`);
 
   if (!res.ok) {
-    throw new Error(`meme search not ok`);
+    throw new Error(`Error fetching memes from imgflip API`);
   }
 
   return res.json();

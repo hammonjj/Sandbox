@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import SelectedMemeContext from "./SelectedMemeContext";
 import Draggable from "react-draggable";
 import * as htmlToImage from 'html-to-image';
+import { Link } from "react-router-dom";
 
 const Details = () => {
   const [topText, setTopText] = useState("");
@@ -44,76 +45,84 @@ const Details = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div
-        id="meme-div"
-        className="meme" 
-        style={{
-          backgroundImage: `url("${meme.url.toString()}")`,
-          width: memeWidth + "px",
-          height: memeHeight + "px",
-          maxWidth: memeWidth + "px",
-          maxHeight: memeHeight + "px"
-        }}>
-        <Draggable bounds="parent">
-          <div className="meme-text">
-            {topText}
-          </div>
-        </Draggable>
-        <Draggable bounds="parent">
-          <div className="meme-text">
-            {bottomText}
-          </div>
-        </Draggable>
-        {renderThirdText ? (
-          <Draggable bounds="parent">
-          <div className="meme-text">
-            {thirdText}
-          </div>
-        </Draggable>
-        ) : null}
+    <div>
+      <br/>
+      <div className="meme-header mt-0 mb-6 mx-auto w-11/12 py-4">
+        <Link className="font-semibold text-xl tracking-tight" to="/">
+          Home
+        </Link>
       </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div
+          id="meme-div"
+          className="meme" 
+          style={{
+            backgroundImage: `url("${meme.url.toString()}")`,
+            width: memeWidth + "px",
+            height: memeHeight + "px",
+            maxWidth: memeWidth + "px",
+            maxHeight: memeHeight + "px"
+          }}>
+          <Draggable bounds="parent">
+            <div className="meme-text">
+              {topText}
+            </div>
+          </Draggable>
+          <Draggable bounds="parent">
+            <div className="meme-text">
+              {bottomText}
+            </div>
+          </Draggable>
+          {renderThirdText ? (
+            <Draggable bounds="parent">
+            <div className="meme-text">
+              {thirdText}
+            </div>
+          </Draggable>
+          ) : null}
+        </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          downloadMeme();
-        }}>
-        <label htmlFor="topText">Top Text
-          <input
-            type="text"
-            className="search-input"
-            name="topText"
-            id="topText"
-            placeholder="topText"
-            onChange={(e) => {
-              setTopText(e.target.value);
-            }} />
-        </label>
-        <label htmlFor="bottomText">Top Text
-          <input
-            type="text"
-            className="search-input"
-            name="bottomText"
-            id="bottomText"
-            placeholder="bottomText" 
-            onChange={(e) => {
-              setBottomText(e.target.value);
-            }} />
-        </label>
-        {renderThirdText ? (<label htmlFor="thirdText">Third Text
-          <input
-            type="text"
-            className="search-input"
-            name="thirdText"
-            id="thirdText"
-            placeholder="thirdText" 
-            onChange={(e) => {
-              setThirdText(e.target.value);
-            }} />
-        </label>): null}
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Meme</button>
-      </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            downloadMeme();
+          }}>
+          <label htmlFor="topText">
+            <input
+              type="text"
+              className="search-input"
+              name="topText"
+              id="topText"
+              placeholder="Top Text"
+              onChange={(e) => {
+                setTopText(e.target.value);
+              }} />
+          </label>
+          <label htmlFor="bottomText">
+            <input
+              type="text"
+              className="search-input"
+              name="bottomText"
+              id="bottomText"
+              placeholder="Bottom Text" 
+              onChange={(e) => {
+                setBottomText(e.target.value);
+              }} />
+          </label>
+          {renderThirdText ? (<label htmlFor="thirdText">Third Text
+            <input
+              type="text"
+              className="search-input"
+              name="thirdText"
+              id="thirdText"
+              placeholder="Text" 
+              onChange={(e) => {
+                setThirdText(e.target.value);
+              }} />
+          </label>): null}
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Meme</button>
+        </form>
+      </div>
     </div>
   );
 };

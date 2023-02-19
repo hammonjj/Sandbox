@@ -4,7 +4,7 @@
 
 @layer components {
     .search-input {
-        @apply w-60 mb-5 block;
+        @apply w-60 block rounded-lg mb-2;
     }
 
     .meme {
@@ -12,6 +12,20 @@
         background-repeat: no-repeat;
         background-size: contain;
         position: relative;
+    }
+
+    .meme-header {
+        @apply mb-4 flex flex-row rounded-lg p-4 shadow-lg;
+        background-color: #E76F51;
+    }
+    .template-search {
+        @apply mb-4 flex flex-row rounded-lg pb-2 pt-4 px-4 shadow-lg;
+        background-color: #E76F51;
+    }   
+
+    .main-background {
+        @apply m-0 p-0 min-h-screen;
+        background-color: #F4A261;
     }
 
     .debug {
@@ -35,11 +49,5 @@
             -2px 0px 0 #000,
             2px 2px 5px #000;
         display: inline-block;
-    }
-}
-
-@layer utilities {
-    .grayed-out-disabled {
-        @apply disabled:opacity-50;
     }
 }
