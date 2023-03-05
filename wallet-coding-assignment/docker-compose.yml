@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  db:
+    image: equi-watch-assignment-postgres
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+      target: db
+    environment:
+      POSTGRES_USER: equi
+      POSTGRES_PASSWORD: equi123
+      POSTGRES_DB: equi
+    volumes:
+      - ./packages/database/init:/docker-entrypoint-initdb.d:Z
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', '-U', 'equi', '-d', 'equi' ]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+      start_period: 1s
+    ports:
+      - '5432:5432'
+  api:
+    build:
+      context: .
+      target: api
+      dockerfile: ./Dockerfile
+    stop_signal: SIGKILL
+    command: bash -c 'npm run prisma:migrate:container; npm run dev'
+    ports:
+      - 3001:3001
+      - 9229:9229
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-f',
+          'http://localhost:3001/healthcheck'
+        ]
+      timeout: 5s
+      retries: 50
+      start_period: 5s
+      interval: 15s
+    environment:
+      DATABASE_URL: postgres://equi:equi123@db/equi?schema=public&connect_timeout=300
+
+    volumes:
+      - ./packages/api/src:/usr/src/app/packages/api/src
+
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+  webapp:
+    build:
+      context: .
+      target: webapp
+      dockerfile: ./Dockerfile
+    stop_signal: SIGKILL
+    command: npm run start
+    ports:
+      - 3000:3000
+    environment:
+      API_URL: http://api:3001/
+
+    volumes:
+      - ./packages/webapp/src/:/usr/src/app/packages/webapp/src
+      - ./packages/webapp/public/:/usr/src/app/packages/webapp/public
+      - ./packages/webapp/tsconfig.json:/usr/src/app/packages/webapp/tsconfig.json
+    restart: unless-stopped
+
+volumes:
+  db-data:
