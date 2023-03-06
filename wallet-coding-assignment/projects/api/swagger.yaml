@@ -1,0 +1,193 @@
+tags:
+  - name: users
+    description: users API
+  - name: transactions
+    description: transactions API
+
+paths:
+  /transactions/balance/{ownerId}:
+    get:
+      tags:
+        - transactions
+      summary: Get Account Balance
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: OwnerId is Empty
+        '409':
+          description: OwnerId doesn't exist
+
+  /transactions:
+    post:
+      tags:
+        - transactions
+      summary: Create transaction
+      parameters:
+        - name: body
+          in: body
+          description: transaction Data
+          required: true
+          schema:
+            $ref: '#/definitions/transactions'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+
+  '/transactions?ownerId={ownerId}&transactionCount={transactionCount}':
+    get:
+      tags:
+        - transactions
+      summary: Get recent transactions
+      parameters:
+        - name: ownerId
+          in: query
+          schema:
+            type: integer
+        - name: transactionCount
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: OwnerId is Empty
+        '409':
+          description: OwnerId doesn't exist
+
+  # [GET] users
+  /users:
+    get:
+      tags:
+        - users
+      summary: Find All Users
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+    # [POST] users
+    post:
+      tags:
+        - users
+      summary: Add User
+      parameters:
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: '#/definitions/users'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+  # [GET] users/id
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Find User By Id
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    # [PUT] users/id
+    put:
+      tags:
+        - users
+      summary: Update User By Id
+      parameters:
+        - name: id
+          in: path
+          description: user Id
+          required: true
+          type: integer
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: '#/definitions/users'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    # [DELETE] users/id
+    delete:
+      tags:
+        - users
+      summary: Delete User By Id
+      parameters:
+        - name: id
+          in: path
+          description: user Id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# definitions
+definitions:
+  users:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        description: user Email
+      password:
+        type: string
+        description: user Password
+
+  transactions:
+    type: object
+    required:
+      - ownerId
+      - amount
+    properties:
+      ownerId:
+        type: integer
+        description: account owner Id
+      amount:
+        type: decimal
+        description: transaction amount
+
+schemes:
+  - https
+  - http
