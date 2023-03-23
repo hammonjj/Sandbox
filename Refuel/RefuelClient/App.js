@@ -16,7 +16,7 @@ export default function App() {
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
-              if (route.name === 'Home') {
+              if (route.name === 'Refuel') {
                 return (
                   <Ionicons
                     name={
@@ -38,7 +38,7 @@ export default function App() {
             tabBarActiveTintColor: 'tomato',
           })}
         >
-          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Refuel" component={Home} />
           <Tab.Screen name="Metrics" component={Metrics} />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
@@ -49,12 +49,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
