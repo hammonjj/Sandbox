@@ -1,0 +1,1 @@
+export const API_URL = "https://rfuelr-api.up.railway.app";
