@@ -1,8 +1,0 @@
-./ngrok http {your server port} (3000)
-https://7b0e-73-169-35-127.ngrok-free.app
-https://create-react-app.dev/docs/making-a-progressive-web-app/
-
-
-Serve with a static server:
-    npm install -g serve
-    serve -s build
