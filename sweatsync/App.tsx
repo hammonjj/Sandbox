@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DefaultTheme, MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import { MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import React, { useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js'
@@ -42,7 +42,7 @@ export default function App() {
       <PaperProvider theme={MD3DarkTheme}>
         <NavigationContainer>
           <Tab.Navigator>
-            {isSignedIn ? (
+            {session ? (
               <>
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Settings" component={SettingsScreen} />

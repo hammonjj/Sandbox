@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "es6"],
+    "esModuleInterop": true
   },
   "extends": "expo/tsconfig.base"
 }
