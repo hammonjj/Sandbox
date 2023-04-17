@@ -1,6 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 import { createClient } from '@supabase/supabase-js'
+import { setupURLPolyfill } from 'react-native-url-polyfill'
 
+setupURLPolyfill();
 
 const ExpoSecureStoreAdapter = {
   getItem: (key: string) => {

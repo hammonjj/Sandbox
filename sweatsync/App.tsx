@@ -1,8 +1,9 @@
 import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MD3DarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider, adaptNavigationTheme, configureFonts } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import React, { useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js'
@@ -16,13 +17,33 @@ import SignUpScreen from './screens/SignUpScreen';
 const queryClient = new QueryClient();
 const Tab = createBottomTabNavigator();
 
-const getIsSignedIn = () => {
-  // custom logic
-  return true;
-};
+
 
 export default function App() {
-  const isSignedIn = getIsSignedIn();
+  const { LightTheme, DarkTheme } = adaptNavigationTheme({
+    reactNavigationLight: NavigationDefaultTheme,
+    reactNavigationDark: NavigationDarkTheme,
+  });
+
+  const CombinedDefaultTheme = {
+    ...MD3LightTheme,
+    ...LightTheme,
+    colors: {
+      ...MD3LightTheme.colors,
+      ...LightTheme.colors,
+    },
+  };
+
+  const CombinedDarkTheme = {
+    ...MD3DarkTheme,
+    ...DarkTheme,
+    colors: {
+      ...MD3DarkTheme.colors,
+      ...DarkTheme.colors,
+    },
+  };
+
+  const combinedTheme = true ? CombinedDarkTheme : CombinedDefaultTheme;
 
   const [session, setSession] = useState<Session | null>(null)
 
@@ -38,25 +59,62 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-    <QueryClientProvider client={queryClient}>
-      <PaperProvider theme={MD3DarkTheme}>
-        <NavigationContainer>
-          <Tab.Navigator>
-            {session ? (
-              <>
-                <Tab.Screen name="Home" component={HomeScreen} />
-                <Tab.Screen name="Settings" component={SettingsScreen} />
-              </>
-            ) : (
-              <>
-                <Tab.Screen name="SignIn" component={SignInScreen} />
-                <Tab.Screen name="SignUp" component={SignUpScreen} />
-              </>
-            )}
-          </Tab.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <PaperProvider theme={combinedTheme}>
+          <NavigationContainer
+            theme={combinedTheme}
+            >
+            <Tab.Navigator
+              screenOptions={({ route }: { route: any }) => ({
+                headerStyle: {
+                  backgroundColor: 'rgb(77, 67, 87)',
+                },
+              })}>
+              {session && session.user ? (
+                <>
+                  <Tab.Screen 
+                    name="Home" 
+                    component={HomeScreen} 
+                    options={{
+                      tabBarIcon: ({ color, size }) => {
+                        return <Icon name="home" size={size} color={color} />;
+                      },
+                    }}/>
+                  <Tab.Screen 
+                    name="Settings" 
+                    component={SettingsScreen}
+                    options={{
+                      tabBarIcon: ({ color, size }) => {
+                        return <Icon name="cog" size={size} color={color} />;
+                      },
+                    }} />
+                </>
+              ) : (
+                <>
+                  <Tab.Screen 
+                    name="SignIn" 
+                    component={SignInScreen} 
+                    options={{
+                      tabBarIcon: ({ color, size }) => {
+                        return <Icon name="account" size={size} color={color} />;
+                      },
+                    }}
+                    />
+                  <Tab.Screen 
+                    name="SignUp" 
+                    component={SignUpScreen} 
+                    options={{
+                      tabBarIcon: ({ color, size }) => {
+                        return <Icon name="account-plus" size={size} color={color} />;
+                      },
+                    }}
+                    />
+                </>
+              )}
+            </Tab.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </QueryClientProvider>
     </View>
   );
 }
