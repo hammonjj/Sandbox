@@ -17,8 +17,6 @@ import SignUpScreen from './screens/SignUpScreen';
 const queryClient = new QueryClient();
 const Tab = createBottomTabNavigator();
 
-
-
 export default function App() {
   const { LightTheme, DarkTheme } = adaptNavigationTheme({
     reactNavigationLight: NavigationDefaultTheme,
