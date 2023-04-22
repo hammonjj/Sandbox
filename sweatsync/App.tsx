@@ -14,8 +14,40 @@ import SettingsScreen from './screens/SettingsScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 
+import AppleHealthKit, {
+  HealthValue,
+  HealthKitPermissions,
+} from 'react-native-health'
+
 const queryClient = new QueryClient();
 const Tab = createBottomTabNavigator();
+
+//Healthkit initialization
+/* Permission options */
+const permissions = {
+  permissions: {
+    read: [
+      AppleHealthKit.Constants.Permissions.ActivitySummary,
+      AppleHealthKit.Constants.Permissions.Weight,
+      //Workout
+      //LeanBodyMass
+      //BodyFatPercentage
+  ],
+    //write: [AppleHealthKit.Constants.Permissions.Steps],
+  },
+} as HealthKitPermissions
+
+AppleHealthKit.initHealthKit(permissions, (error: string) => {
+  /* Called after we receive a response from the system */
+
+  if (error) {
+    console.log('[ERROR] Cannot grant permissions!')
+  }
+
+  /* Can now read or write to HealthKit */
+
+  
+})
 
 export default function App() {
   const { LightTheme, DarkTheme } = adaptNavigationTheme({

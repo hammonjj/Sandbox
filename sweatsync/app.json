@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    [
+      "react-native-health",
+      {
+        "healthUpdatePermission": "Custom health update permission"
+      }
+    ]
+  ],
+  "ios": {
+    "bundleIdentifier": "com.jhammond1987.sweatsync"
+  },
+  "extra": {
+    "eas": {
+      "projectId": "071d46a8-bc40-48f8-b920-a17b66590f3a"
+    }
+  }
+}

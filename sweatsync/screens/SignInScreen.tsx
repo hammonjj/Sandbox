@@ -9,8 +9,8 @@ export default function SignInScreen() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [securePasswordEntry, setSecurePasswordEntry] = useState(true);
-
     const [visible, setVisible] = React.useState(false);
+
     async function signInWithEmail() {
         setLoading(true)
         const { error } = await supabase.auth.signInWithPassword({
