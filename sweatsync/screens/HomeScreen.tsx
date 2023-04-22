@@ -11,6 +11,7 @@ import AppleHealthKit, {
 export default function HomeScreen() {
     const theme = useTheme();
 
+    const [weightValues, setWeightValues] = React.useState<HealthValue[]>([]);
     function onDateChange(date: Date) {
         //Date is epoch time
         const formattedDate = new Date(date);
@@ -32,19 +33,23 @@ export default function HomeScreen() {
                 console.log('error getting weight samples: ', err)
                 return
               }
-              console.log("Weight Samples: " + results)
+              console.log("Weight Samples: " + results);
+              setWeightValues(results);
             },
           )
     }
 
     return (
         <View>
-            <CalendarContainer onDateChange={onDateChange} />
-            <View>
-                <Text>Activity Container</Text>
-            </View>
+          <CalendarContainer onDateChange={onDateChange} />
+          <View>
+            <Text>Activity Container</Text>
+            {weightValues.map((value) => (
+              <Text key={value.id}>{value.value}</Text>
+            ))}
+          </View>
         </View>
-    );
+      );
 }
 
 const styles = StyleSheet.create({

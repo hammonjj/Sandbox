@@ -14,5 +14,23 @@
     "eas": {
       "projectId": "071d46a8-bc40-48f8-b920-a17b66590f3a"
     }
+  },
+  "expo": {
+    "name": "SweatSync",
+    "slug": "SweatSync",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1B2542"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "63797ce0-9a17-4edd-a5ea-135a451ab01f"
+      }
+    }
   }
 }
